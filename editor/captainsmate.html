@@ -82,6 +82,7 @@ details#exd{margin-top:8px}details#exd>summary{cursor:pointer;color:var(--mu);fo
 <h3 style="margin:14px 0 4px">Battery</h3>
 <div class="row"><label>Charge batteries</label><input type="checkbox" id="chgm" data-p="battery_charge" data-t="bool"></div>
 <p class="hint">Off by default. Turns on the pedal's built-in 250 mA charger (same GP6 switch as the stock firmware). Use <b>only</b> with rechargeable NiMH AAs. Never enable it with alkaline batteries.</p>
+<div class="row"><label>Idle LED %</label><input data-p="led_idle" data-t="number" type="number" min="0" max="100" placeholder="12" style="width:70px"><span class="hint">How dim unlit keys glow (0 = off)</span></div>
 <div class="row"><label>Show battery</label><input type="checkbox" id="bdm" data-p="battery_display" data-t="bool"></div>
 <div class="row"><label>Style</label><select data-p="battery_style" id="bsty"><option value="voltage">Voltage (2.7V)</option><option value="percent">Percent (85%)</option><option value="icon">Battery icon</option></select></div>
 <div class="row"><label>Battery type</label><select data-p="battery_type" id="btyp"><option value="nimh">NiMH (rechargeable)</option><option value="alkaline">Alkaline</option></select></div>
@@ -168,7 +169,7 @@ if(old.startsWith('Counter')&&to==='Sequence'){const hi=b.cc_max??127,lo2=b.cc_m
 b.short=Array.from({length:n},(_,i)=>({color:col,label:names?names[i]:String(lo2+i*step),up:[M('cc',lo2+i*step)]}));b.long=[];CF.forEach(k=>delete b[k]);return}
 CF.forEach(k=>delete b[k]);
 if(to==='Momentary'){b.short=[{color:col,down:[M('cc',127)],up:[M('cc',0)]}];b.long=[]}
-else if(to==='Toggle'){b.short=[{color:col,label:'ON',up:[M('cc',127)]},{color:'off',label:'OFF',up:[M('cc',0)]}];b.long=[]}
+else if(to==='Toggle'){b.short=[{color:col,label:'ON',lit:true,up:[M('cc',127)]},{color:col,label:'OFF',up:[M('cc',0)]}];b.long=[]}
 else if(to==='Sequence'&&sh.length<2){b.short=[0,1,2].map(i=>({color:col,label:'State '+(i+1),up:[M('cc',i)]}));b.long=b.long||[]}
 b.short=b.short||[];b.long=b.long||[]}
 const KH={'Momentary':'Sends one value while held and another on release (like a stomp switch).','Toggle':'Each tap flips between ON and OFF.','Counter (up)':'Each tap steps a value up. Turn on wrap and names to cycle through choices on a single key. Pair with a Counter (down) key that uses the same CC.','Counter (down)':'Each tap steps the value down. Share the CC with a Counter (up) key.','Sequence':'Each tap steps to the next state. Every state can send any messages and have its own LED color.','Page up':'Switches to the next page.','Page down':'Switches to the previous page.'};
@@ -177,7 +178,7 @@ const hexBytes=t=>(String(t||'').match(/[0-9a-f]{1,2}/gi)||[]).map(x=>parseInt(x
 const isPage=b=>(b.type||'').startsWith('page');
 function msgs(path,list){let h='';(list||[]).forEach((m,i)=>{const q=`${path}.${i}`;h+=`<div class="m">${sel_(q+'.type',m.type,Object.keys(MF),'msgtype')}${(MF[m.type]||[]).map(f=>f==='data'?`${f}${inp(q+'.data',m.data,'hex','230px')}`:`${f}${inp(q+'.'+f,m[f],'number')}`).join('')}${m.type==='sysex'?'':`ch${inp(q+'.channel',m.channel,'number','44px')}`}<button class="x" data-act="delMsg" data-p="${q}">✕</button></div>`});return h+`<button data-act="addMsg" data-p="${path}">+ message</button>`}
 function states(P,w,b){const list=b[w]||[];let h=`<h4>${w==='short'?'Short press (each tap steps to the next state)':'Long press'}</h4>`;
-list.forEach((s,i)=>{const q=`${P}.${w}.${i}`;h+=`<div class="card"><div class="row"><label>#${i+1}</label>${inp(q+'.label',s.label,'text')}${colSel(q+'.color',s.color)}<button class="x" data-act="delState" data-p="${q}">✕</button></div><div class="hint">On press</div>${msgs(q+'.down',s.down)}<div class="hint">On release</div>${msgs(q+'.up',s.up)}</div>`});
+list.forEach((s,i)=>{const q=`${P}.${w}.${i}`;h+=`<div class="card"><div class="row"><label>#${i+1}</label>${inp(q+'.label',s.label,'text')}${colSel(q+'.color',s.color)}<label title="Stay brightly lit after this state fires (for example a toggle that is ON). Unticked states glow dim.">lit${chk(q+'.lit',s.lit)}</label><button class="x" data-act="delState" data-p="${q}">✕</button></div><div class="hint">On press</div>${msgs(q+'.down',s.down)}<div class="hint">On release</div>${msgs(q+'.up',s.up)}</div>`});
 return h+`<button data-act="addState" data-p="${P}.${w}">+ state</button>`}
 function inspector(){const b=cfg.pages[pg].buttons[sel],P=`pages.${pg}.buttons.${sel}`;
 let h=`<h3>Key ${sel+1}</h3><div class="row"><label>Label</label>${inp(P+'.label',b.label)}</div><div class="row"><label>Color</label>${colSel(P+'.color',b.color)}</div><div class="row"><label>Type</label>${sel_(P,ktype(b),KT,'ktype')}</div><div class="hint">${KH[ktype(b)]}</div>`;

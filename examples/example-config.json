@@ -26,10 +26,11 @@
                   "cc": 19,
                   "value": 127
                 }
-              ]
+              ],
+              "lit": true
             },
             {
-              "color": "off",
+              "color": "red",
               "label": "OFF",
               "up": [
                 {
@@ -56,10 +57,11 @@
                   "cc": 28,
                   "value": 127
                 }
-              ]
+              ],
+              "lit": true
             },
             {
-              "color": "off",
+              "color": "orange",
               "label": "OFF",
               "up": [
                 {
@@ -111,10 +113,11 @@
                   "cc": 30,
                   "value": 127
                 }
-              ]
+              ],
+              "lit": true
             },
             {
-              "color": "off",
+              "color": "magenta",
               "label": "OFF",
               "up": [
                 {
@@ -175,10 +178,11 @@
                   "cc": 31,
                   "value": 127
                 }
-              ]
+              ],
+              "lit": true
             },
             {
-              "color": "off",
+              "color": "yellow",
               "label": "OFF",
               "up": [
                 {
@@ -288,10 +292,11 @@
                   "cc": 60,
                   "value": 127
                 }
-              ]
+              ],
+              "lit": true
             },
             {
-              "color": "off",
+              "color": "red",
               "label": "OFF",
               "up": [
                 {
@@ -318,10 +323,11 @@
                   "cc": 61,
                   "value": 127
                 }
-              ]
+              ],
+              "lit": true
             },
             {
-              "color": "off",
+              "color": "green",
               "label": "OFF",
               "up": [
                 {
@@ -373,10 +379,11 @@
                   "cc": 66,
                   "value": 127
                 }
-              ]
+              ],
+              "lit": true
             },
             {
-              "color": "off",
+              "color": "blue",
               "label": "OFF",
               "up": [
                 {

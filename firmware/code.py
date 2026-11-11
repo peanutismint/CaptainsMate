@@ -187,6 +187,7 @@ vals = {}          # footer values
 step_idx = {}      # (page, key) -> next short state
 long_idx = {}
 led_col = [(255, 255, 255)] * 10
+led_lit = [False] * 10
 cells = []
 popup_until = 0
 
@@ -250,15 +251,16 @@ def paint_leds(pressed=-1):
             c = led_col[i]
         else:
             c = (0, 0, 0)
-        c = c if i == pressed else dim(c, 0.12)
+        c = c if (i == pressed or led_lit[i]) else dim(c, cfg.get("led_idle", 12) / 100.0)
         for j in range(3):
             neo[i * 3 + j] = c
     neo.show()
 
 
 def load_page():
-    global led_col
+    global led_col, led_lit
     led_col = []
+    led_lit = [False] * 10
     for i in range(10):
         b = btns()[i] if i < len(btns()) else None
         led_col.append(rgb(b.get("color")) if b else (0, 0, 0))
@@ -728,6 +730,7 @@ def on_up(i, now):
             vals[("s", i)] = s.get("label") or str(step_idx.get((page, i), 0))
         if s.get("color"):
             led_col[i] = rgb(s["color"])
+            led_lit[i] = bool(s.get("lit"))
         step_idx[(page, i)] = step_idx.get((page, i), 0) + 1
         if r:
             show_popup(b, s.get("label") or b.get("label"), r)

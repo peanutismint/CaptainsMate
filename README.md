@@ -4,6 +4,8 @@
 
 ![The CaptainsMate editor showing a looper page, a counter key, and the pedal screen preview](docs/screenshot.png)
 
+**[Try the test emulator in your browser](https://peanutismint.github.io/captainsmate/)**, no pedal or install needed. Build pages, press the keys on screen and watch the pedal's screen preview react. If you do have a pedal, the same page can connect to it over USB (Chrome or Edge).
+
 The MIDI Captain 10 STD is a great little foot controller, but changing what a footswitch does usually means digging through a config file, ejecting the USB drive and rebooting the pedal. CaptainsMate is my attempt to make that painless: a point-and-click editor that runs in your browser, plus a small custom firmware that takes changes live over USB.
 
 It's built for people who just want their pedal to do the right thing on stage, in the studio or at the practice space, without becoming MIDI programmers first.
@@ -63,6 +65,7 @@ Each key has a **type**. Each type can respond to a **tap** and to a **long pres
 - **Pop-up display:** shows a big number or name on the pedal's screen. A zero point can be subtracted, so a counter centered on 64 can read as 0.
 - **Encoder wheel:** scroll through pages, or send a CC as you turn it.
 - **Expression inputs (EXP1 and EXP2):** send a CC that follows a pedal's position, like wah or volume. They start switched off, so you won't get stray signals.
+- **LED feedback:** unlit keys glow dimly in their own color, so you can see at a glance what each key will do. Toggles light up brightly while they're ON and go back to dim when OFF (tick **lit** on any state to get this on other key types). The idle brightness is adjustable in settings.
 - **Battery:** shows the level as voltage, percent or an icon, and can optionally charge rechargeable NiMH batteries (experimental, leave it off with alkaline batteries).
 
 ## Installing on the pedal
