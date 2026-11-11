@@ -1,0 +1,6 @@
+__pycache__/
+*.bak*
+*.uf2
+*.pdf
+config.local.json
+.DS_Store

@@ -1,0 +1,817 @@
+{
+  "active_page": 0,
+  "dev_mode": true,
+  "device": "std10",
+  "usb_drive_name": "MIDICAPTAIN",
+  "long_press_threshold_ms": 600,
+  "midi_channel": 1,
+  "battery_display": true,
+  "battery_style": "icon",
+  "battery_type": "alkaline",
+  "pages": [
+    {
+      "name": "Stage",
+      "buttons": [
+        {
+          "color": "red",
+          "label": "DRIVE",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "red",
+              "label": "ON",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 19,
+                  "value": 127
+                }
+              ]
+            },
+            {
+              "color": "off",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 19,
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "orange",
+          "label": "DELAY",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "orange",
+              "label": "ON",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 28,
+                  "value": 127
+                }
+              ]
+            },
+            {
+              "color": "off",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 28,
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "cyan",
+          "label": "REVERB",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "cyan",
+              "down": [
+                {
+                  "type": "cc",
+                  "cc": 29,
+                  "value": 127
+                }
+              ],
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 29,
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "magenta",
+          "label": "FX LOOP",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "magenta",
+              "label": "ON",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 30,
+                  "value": 127
+                }
+              ]
+            },
+            {
+              "color": "off",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 30,
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "label": "PG UP",
+          "type": "page_inc"
+        },
+        {
+          "color": "white",
+          "label": "TAP",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "white",
+              "down": [
+                {
+                  "type": "cc",
+                  "cc": 64,
+                  "value": 127
+                }
+              ]
+            }
+          ],
+          "long": [
+            {
+              "color": "purple",
+              "down": [
+                {
+                  "type": "cc",
+                  "cc": 68,
+                  "value": 127
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "color": "yellow",
+          "label": "BOOST",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "yellow",
+              "label": "ON",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 31,
+                  "value": 127
+                }
+              ]
+            },
+            {
+              "color": "off",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 31,
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "long": [
+            {
+              "color": "off",
+              "down": [
+                {
+                  "type": "cc",
+                  "cc": 31,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "color": "green",
+          "label": "PRE -",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "up": [
+                {
+                  "type": "pc_dec"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "src": "pc",
+            "zero": -1,
+            "caption": "Preset"
+          }
+        },
+        {
+          "color": "green",
+          "label": "PRE +",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "up": [
+                {
+                  "type": "pc_inc"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "src": "pc",
+            "zero": -1,
+            "caption": "Preset"
+          }
+        },
+        {
+          "color": "white",
+          "label": "PG DN",
+          "type": "page_dec"
+        }
+      ],
+      "encoder": {
+        "enabled": true,
+        "action": "page"
+      },
+      "expression": {
+        "exp1": {
+          "enabled": true,
+          "label": "WAH",
+          "cc": 1,
+          "min": 0,
+          "max": 127
+        },
+        "exp2": {
+          "enabled": true,
+          "label": "VOL",
+          "cc": 7,
+          "min": 0,
+          "max": 127
+        }
+      }
+    },
+    {
+      "name": "Looper",
+      "buttons": [
+        {
+          "color": "red",
+          "label": "REC",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "red",
+              "label": "ON",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 60,
+                  "value": 127
+                }
+              ]
+            },
+            {
+              "color": "off",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 60,
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "green",
+          "label": "PLAY",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "label": "ON",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 61,
+                  "value": 127
+                }
+              ]
+            },
+            {
+              "color": "off",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 61,
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "orange",
+          "label": "UNDO",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "orange",
+              "down": [
+                {
+                  "type": "cc",
+                  "cc": 62,
+                  "value": 127
+                }
+              ],
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 62,
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "blue",
+          "label": "x2 SPEED",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "blue",
+              "label": "ON",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 66,
+                  "value": 127
+                }
+              ]
+            },
+            {
+              "color": "off",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 66,
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "label": "PG UP",
+          "type": "page_inc"
+        },
+        {
+          "color": "cyan",
+          "label": "SCENE -",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "cc_dec"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "cc": 40,
+          "cc_min": 0,
+          "cc_max": 3,
+          "cc_step": 1,
+          "cc_wrap": true,
+          "initial": 0
+        },
+        {
+          "color": "cyan",
+          "label": "SCENE +",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "cc_inc"
+                }
+              ]
+            }
+          ],
+          "long": [
+            {
+              "color": "cyan",
+              "down": [
+                {
+                  "type": "cc",
+                  "cc": 40,
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "cc": 40,
+          "cc_min": 0,
+          "cc_max": 3,
+          "cc_step": 1,
+          "cc_wrap": true,
+          "initial": 0,
+          "show": {
+            "caption": "Scene"
+          },
+          "names": [
+            "Verse",
+            "Chorus",
+            "Bridge",
+            "Solo"
+          ]
+        },
+        {
+          "color": "magenta",
+          "label": "AMP CH",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "label": "CLEAN",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 23,
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "color": "yellow",
+              "label": "CRUNCH",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 23,
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "color": "red",
+              "label": "LEAD",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 23,
+                  "value": 2
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "caption": "Amp"
+          }
+        },
+        {
+          "color": "purple",
+          "label": "BANK",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "purple",
+              "up": [
+                {
+                  "type": "cc_inc"
+                }
+              ]
+            }
+          ],
+          "long": [
+            {
+              "color": "purple",
+              "down": [
+                {
+                  "type": "cc",
+                  "cc": 32,
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "cc": 32,
+          "cc_min": 0,
+          "cc_max": 7,
+          "cc_step": 1,
+          "cc_wrap": true,
+          "initial": 0,
+          "show": {
+            "src": "cc",
+            "zero": -1,
+            "caption": "Bank"
+          }
+        },
+        {
+          "color": "white",
+          "label": "PG DN",
+          "type": "page_dec"
+        }
+      ],
+      "encoder": {
+        "enabled": true,
+        "action": "page"
+      },
+      "expression": {
+        "exp1": {
+          "enabled": true,
+          "label": "WAH",
+          "cc": 1,
+          "min": 0,
+          "max": 127
+        },
+        "exp2": {
+          "enabled": true,
+          "label": "VOL",
+          "cc": 7,
+          "min": 0,
+          "max": 127
+        }
+      }
+    },
+    {
+      "name": "Extras",
+      "buttons": [
+        {
+          "color": "red",
+          "label": "KICK",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "red",
+              "down": [
+                {
+                  "type": "note",
+                  "note": 36,
+                  "velocity": 110,
+                  "channel": 10
+                }
+              ],
+              "up": [
+                {
+                  "type": "note",
+                  "note": 36,
+                  "velocity": 0,
+                  "channel": 10
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "orange",
+          "label": "SNARE",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "orange",
+              "down": [
+                {
+                  "type": "note",
+                  "note": 38,
+                  "velocity": 110,
+                  "channel": 10
+                }
+              ],
+              "up": [
+                {
+                  "type": "note",
+                  "note": 38,
+                  "velocity": 0,
+                  "channel": 10
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "yellow",
+          "label": "HI-HAT",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "yellow",
+              "down": [
+                {
+                  "type": "note",
+                  "note": 42,
+                  "velocity": 110,
+                  "channel": 10
+                }
+              ],
+              "up": [
+                {
+                  "type": "note",
+                  "note": 42,
+                  "velocity": 0,
+                  "channel": 10
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "cyan",
+          "label": "SUSTAIN",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "cyan",
+              "down": [
+                {
+                  "type": "cc",
+                  "cc": 64,
+                  "value": 127,
+                  "channel": 2
+                }
+              ],
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 64,
+                  "value": 0,
+                  "channel": 2
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "label": "PG UP",
+          "type": "page_inc"
+        },
+        {
+          "color": "green",
+          "label": "SONG -",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "up": [
+                {
+                  "type": "pc_dec",
+                  "channel": 2
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "src": "pc",
+            "zero": -1,
+            "caption": "Song"
+          }
+        },
+        {
+          "color": "green",
+          "label": "SONG +",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "up": [
+                {
+                  "type": "pc_inc",
+                  "channel": 2
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "src": "pc",
+            "zero": -1,
+            "caption": "Song"
+          }
+        },
+        {
+          "color": "blue",
+          "label": "MASTER",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "blue",
+              "label": "FULL",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 7F 7F 04 01 00 7F F7"
+                }
+              ]
+            },
+            {
+              "color": "cyan",
+              "label": "75%",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 7F 7F 04 01 00 60 F7"
+                }
+              ]
+            },
+            {
+              "color": "yellow",
+              "label": "50%",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 7F 7F 04 01 00 40 F7"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "caption": "Master vol"
+          }
+        },
+        {
+          "color": "white",
+          "label": "PANIC",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "white",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 123,
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "label": "PG DN",
+          "type": "page_dec"
+        }
+      ],
+      "encoder": {
+        "enabled": true,
+        "action": "page"
+      },
+      "expression": {
+        "exp1": {
+          "enabled": true,
+          "label": "WAH",
+          "cc": 1,
+          "min": 0,
+          "max": 127
+        },
+        "exp2": {
+          "enabled": true,
+          "label": "VOL",
+          "cc": 7,
+          "min": 0,
+          "max": 127
+        }
+      }
+    }
+  ]
+}

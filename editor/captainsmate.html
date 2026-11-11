@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CaptainsMate</title>
+<style>
+:root{--bg:#0d0e11;--p:#16181d;--p2:#1e2128;--ln:#2a2e37;--tx:#e7e9ee;--mu:#8a909c;--ac:#4da3ff}
+@media(prefers-color-scheme:light){:root:not([data-theme]){--bg:#f3f4f7;--p:#ffffff;--p2:#eceef3;--ln:#d3d8e0;--tx:#1a1d23;--mu:#5d6470;--ac:#1f7ae0}}
+:root[data-theme=light]{--bg:#f3f4f7;--p:#ffffff;--p2:#eceef3;--ln:#d3d8e0;--tx:#1a1d23;--mu:#5d6470;--ac:#1f7ae0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:13px/1.4 system-ui,Segoe UI,sans-serif}
+header{flex-wrap:wrap;display:flex;gap:8px;align-items:center;padding:10px 16px;background:var(--p);border-bottom:1px solid var(--ln)}
+.logo{font-weight:700;letter-spacing:.14em;margin-right:14px}.logo b{color:var(--ac)}
+button,select,input{font:inherit;color:var(--tx);background:var(--p2);border:1px solid var(--ln);border-radius:6px;padding:5px 9px}
+button.ic{display:inline-flex;align-items:center;justify-content:center;padding:5px 7px}button{cursor:pointer}button:hover{border-color:var(--ac)}button.pri{background:var(--ac);color:#04121f;border-color:var(--ac);font-weight:600}
+input[type=checkbox]{width:auto}input{min-width:0}
+main{display:grid;grid-template-columns:1fr 370px;gap:12px;padding:12px;height:calc(100vh - 90px)}
+aside,section,.insp{background:var(--p);border:1px solid var(--ln);border-radius:10px;padding:12px;overflow:auto}
+h3{margin:0 0 10px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mu)}h4{margin:14px 0 6px;color:var(--mu);font-size:12px}
+.pg{display:flex;justify-content:space-between;padding:7px 9px;border-radius:6px;cursor:pointer;margin-bottom:4px}.pg.on{background:var(--p2);outline:1px solid var(--ac)}
+.row{display:flex;gap:8px;align-items:center;margin-bottom:7px}.row label{width:64px;color:var(--mu)}.row input,.row select{flex:1}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.key{background:var(--p2);border:1px solid var(--ln);border-radius:10px;padding:8px;cursor:pointer;min-height:100px;padding-bottom:28px;position:relative;user-select:none}
+.key.on{outline:2px solid var(--ac)}.led{height:6px;border-radius:3px;margin-bottom:8px}.key b{display:block;font-size:14px}.key small{color:var(--mu)}
+.top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:start}.scr{width:240px;height:240px;background:#000;border:6px solid #2b2f38;border-radius:8px;display:grid;grid-template-rows:40px 1fr 40px;font-family:Consolas,monospace;flex:none}
+.scr .h{display:grid;grid-template-columns:1fr auto 1fr}.scr .h .bt{color:#8a909c;font-size:10px;padding:2px 6px}.scr .f{display:grid;grid-template-columns:repeat(4,1fr)}.scr .c{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6px}
+.scr .h div,.scr .f div{border:1px solid #222;display:flex;align-items:center;justify-content:center;font-size:11px;padding:2px;text-align:center}
+.scr .c.pop{background:#10243a}.scr .c big{font-size:30px;font-weight:700}.scr .c span{font-size:15px;color:#9fd0ff}
+.card{background:var(--p2);border:1px solid var(--ln);border-radius:8px;padding:8px;margin-bottom:8px}.card .row label{width:auto}
+.m{display:flex;gap:5px;align-items:center;margin:4px 0;flex-wrap:wrap}.m input{width:56px}.m select{width:84px}.x{padding:2px 7px;color:#ff7b72}
+.ex{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.ex div{background:var(--p2);border:1px solid var(--ln);border-radius:8px;padding:8px}
+.ex .m input{width:50px}#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--ac);color:#04121f;padding:8px 14px;border-radius:8px;display:none;font-weight:600}
+.hint{color:var(--mu);font-size:11px;margin:6px 0}
+label.tg{display:flex;align-items:center;gap:5px;color:var(--mu);cursor:pointer}
+#setm{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;z-index:9}#setm.on{display:flex}#setm>div{background:var(--p);border:1px solid var(--ln);border-radius:10px;width:min(460px,92vw);padding:18px 22px}#setm .row{display:flex;gap:10px;align-items:center;margin:8px 0}
+#basics{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;z-index:9}
+#basics.on{display:flex}#basics>div{background:var(--p);border:1px solid var(--ln);border-radius:10px;max-width:640px;max-height:84vh;overflow:auto;padding:18px 22px}
+#basics h4{margin:14px 0 4px;color:var(--ac)}#basics p{margin:4px 0}
+.dot{width:9px;height:9px;border-radius:50%;background:#555;display:inline-block}.dot.on{background:#3ddc84}
+#man{position:fixed;top:0;right:0;bottom:0;width:min(440px,100vw);background:var(--p);border-left:1px solid var(--ln);z-index:8;display:none;flex-direction:column}
+#man.on{display:flex}#manh{display:flex;gap:8px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--ln)}#manh b{flex:1}
+#manb{overflow:auto;flex:1;padding:0}
+body.mo main{margin-right:min(440px,100vw)}body.mo header{margin-right:min(440px,100vw)}
+#mant{font-size:14px;line-height:1.55}#mant h1{font-size:19px;margin:0 0 8px}#mant h2{font-size:15px;margin:20px 0 4px;color:var(--ac)}#mant nav{display:flex;flex-wrap:wrap;gap:4px 12px;margin:8px 0}#mant a{color:var(--ac);text-decoration:none}#mant li{margin:3px 0}
+.sep{width:1px;height:22px;background:var(--ln);margin:0 4px}
+.chip{padding:2px 10px;border-radius:12px;background:var(--p2);border:1px solid var(--ln);color:var(--mu);font-size:12px;white-space:nowrap}
+.chip.ok{color:#3ddc84;border-color:#3ddc84}.chip.busy{color:#f5b942;border-color:#f5b942}.chip.err{color:#ff7b72;border-color:#ff7b72}
+button:disabled{opacity:.4;cursor:default}
+.pbar{display:flex;gap:6px;align-items:center;margin-bottom:12px}.pbar select{min-width:150px;font-weight:600}.pbar input{flex:1;min-width:120px}
+.tabs{display:flex;gap:6px;margin-bottom:12px}.tabs button.on{border-color:var(--ac);color:var(--ac)}.tp{display:none}.tp.on{display:block}
+#setm>div{width:min(540px,94vw);max-height:90vh;overflow:auto}
+details#exd{margin-top:8px}details#exd>summary{cursor:pointer;color:var(--mu);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:6px 0}details#exd>summary span{text-transform:none;letter-spacing:0;font-size:12px;margin-left:8px}details#exd[open]>summary{margin-bottom:8px}
+#mid{container-type:inline-size}
+@container (max-width:760px){.top{grid-template-columns:minmax(0,1fr)}}
+@container (max-width:520px){.ex{grid-template-columns:1fr}}
+@container (max-width:430px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:900px){main{grid-template-columns:1fr;height:auto}aside,section,.insp{overflow:visible}}
+.cp{position:relative;flex:1;min-width:0}.cpb{width:100%;display:flex;align-items:center;gap:8px;text-align:left}
+.cp i{width:14px;height:14px;border-radius:50%;border:1px solid #fff4;flex:none;display:inline-block}
+.cpl{position:absolute;z-index:6;top:calc(100% + 4px);left:0;min-width:100%;background:var(--p);border:1px solid var(--ln);border-radius:8px;padding:4px;display:grid;grid-template-columns:repeat(2,1fr);gap:2px;box-shadow:0 8px 24px #0006}
+.cpl div{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;cursor:pointer}.cpl div:hover,.cpl div.on{background:var(--p2)}.cpl div.on{outline:1px solid var(--ac)}
+.warn{background:#3a2a0a;border:1px solid #f5b942;color:#f5b942;border-radius:8px;padding:6px 10px;margin:-4px 0 10px;font-size:12px}
+.bi{display:inline-block;width:24px;height:10px;border:1px solid #aaa;border-radius:2px;vertical-align:middle;padding:1px}.bi i{display:block;width:80%;height:100%;background:#3ddc84}
+.kb{position:absolute;bottom:4px;right:4px;display:flex;gap:2px;opacity:0;transition:opacity .12s}.key:hover .kb,.key.on .kb{opacity:1}@media(hover:none){.kb{opacity:1}}.kb button{padding:2px 4px;border-radius:5px;background:var(--p);color:var(--mu)}.kb button:hover:not(:disabled){color:var(--ac)}
+</style></head><body>
+<header><div class="logo">CAPTAINS<b>MATE</b></div>
+<button id="bOpen">Open JSON</button><button id="bSave">Download JSON</button><span class="sep"></span>
+<button id="bConn" class="pri">Connect pedal</button><span id="chip" class="chip">Not connected</span><button id="bPush">Send</button><button id="bPull">Receive</button>
+<label class="tg" id="lLive"><input type="checkbox" id="live">Live</label><span class="sep"></span>
+<button id="bUndo" class="ic"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-15-6.7L3 13"/></svg></button><button id="bRedo" class="ic"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 15-6.7L21 13"/></svg></button><span style="flex:1"></span>
+<button id="bTheme" class="ic"></button><button id="bSet" class="ic"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button><button id="bBasics" class="ic"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></button><button id="bManual" class="ic"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></button><label class="tg" id="lTip"><input type="checkbox" id="tipOn" checked>Tooltips</label>
+<span id="st" class="hint"></span><input id="f" type="file" accept=".json" hidden></header>
+<main><section id="mid"></section><div class="insp" id="insp"></div></main><div id="toast"></div>
+<div id="setm" class="ov"><div><h3>Settings</h3>
+<div class="tabs"><button class="on" data-tab="g">General</button><button data-tab="d">Display &amp; battery</button><button data-tab="p">Pedal</button><button data-tab="l">Log</button></div>
+<div class="tp on" data-tp="g">
+<div class="row"><label>Device</label><input data-p="device" data-t="text"></div>
+<div class="row"><label>Drive name</label><input data-p="usb_drive_name" data-t="text"></div>
+<div class="row"><label>Hold ms</label><input data-p="long_press_threshold_ms" data-t="number" type="number"></div>
+<div class="row"><label>MIDI ch</label><input data-p="midi_channel" data-t="number" type="number" min="1" max="16"></div>
+<p class="hint">MIDI ch is the default channel for every message (1-16). A single message can override it with its own ch box.</p></div>
+<div class="tp" data-tp="d">
+<div class="row"><label>SPI MHz</label><input data-p="spi_mhz" data-t="number" type="number"></div>
+<p class="hint">Screen bus speed. Higher is faster; needs a pedal restart.</p>
+<h3 style="margin:14px 0 4px">Battery</h3>
+<div class="row"><label>Charge batteries</label><input type="checkbox" id="chgm" data-p="battery_charge" data-t="bool"></div>
+<p class="hint">Off by default. Turns on the pedal's built-in 250 mA charger (same GP6 switch as the stock firmware). Use <b>only</b> with rechargeable NiMH AAs. Never enable it with alkaline batteries.</p>
+<div class="row"><label>Show battery</label><input type="checkbox" id="bdm" data-p="battery_display" data-t="bool"></div>
+<div class="row"><label>Style</label><select data-p="battery_style" id="bsty"><option value="voltage">Voltage (2.7V)</option><option value="percent">Percent (85%)</option><option value="icon">Battery icon</option></select></div>
+<div class="row"><label>Battery type</label><select data-p="battery_type" id="btyp"><option value="nimh">NiMH (rechargeable)</option><option value="alkaline">Alkaline</option></select></div>
+<p class="hint">Percent and icon estimate charge from the voltage, so they need the correct sense pin below. The icon is green from 100 to 25 percent and red below that, and it flashes between full and current level while charging is on.</p>
+<div class="row"><label>Sense pin</label><select data-p="battery_pin" id="bpin"><option>GP29</option><option>GP26</option></select><label>Divider</label><input data-p="battery_ratio" data-t="number" id="brat" type="number" step="0.1" style="width:60px"></div>
+<p class="hint">The battery-sense pin isn't confirmed for this model yet. Click Probe, then compare the readings with the battery's real voltage (about 2.4 to 3.2 V for 2 AAs); pick the pin and divider that match.</p>
+<button id="bProbe">Probe battery pins</button> <span id="probeR" class="hint"></span></div>
+<div class="tp" data-tp="p">
+<div class="row"><label>Dev mode</label><input type="checkbox" id="devm" data-p="dev_mode" data-t="bool"></div>
+<p class="hint">Dev mode ON: the pedal shows up as a USB drive every time it is plugged in, but it can't save its own config while mounted, and live edits are not kept after power-off. OFF (recommended): no drive, live edits save automatically. Holding switch 1 while plugging in always gives you the drive. Takes effect after a restart.</p>
+<button id="bReboot">Restart pedal</button>
+<h3 style="margin:16px 0 4px">boot.py</h3>
+<p class="hint">If dev mode doesn't make the drive appear, the pedal may still have an old boot.py from another firmware. This installs the right one over USB. Restart the pedal afterwards.</p>
+<button id="bBoot">Install boot.py on pedal</button>
+<h3 style="margin:16px 0 4px">Advanced: USB drive method</h3>
+<p class="hint">The old way: pick the pedal's drive folder and save config.json into it, then eject and reboot. Not needed with live update.</p>
+<button id="bDev">Open device folder</button> <button id="bDevSave">Save to device</button></div>
+<div class="tp" data-tp="l"><p class="hint">Connection log. If something fails, click Copy and paste it into the chat.</p>
+<textarea id="logT" readonly rows="14" style="width:100%;font:12px/1.4 Consolas,monospace;background:var(--p2);color:var(--tx);border:1px solid var(--ln);border-radius:6px"></textarea><br>
+<button id="bLogCopy">Copy log</button> <button id="bLogClr">Clear</button> <button id="bInfo">Ask pedal for info</button> <button id="bBootLog">Pedal boot log</button></div>
+<div style="margin-top:16px;text-align:right"><button id="bSetX">Close</button></div></div></div>
+<div id="man"><div id="manh"><b>User guide</b><button id="manPop">Pop out</button><button id="manX" class="ic" title="Close">✕</button></div><div id="manb"><div id="mant" style="padding:16px 20px"><h1>CaptainsMate guide</h1>
+<nav><a href="#m1">Quick start</a><a href="#m2">The screen</a><a href="#m3">Keys &amp; states</a><a href="#m4">Messages</a><a href="#m5">Pages</a><a href="#m6">Expression &amp; encoder</a><a href="#m7">Global &amp; settings</a><a href="#m8">Live update</a><a href="#m9">Saving &amp; backups</a><a href="#m10">Troubleshooting</a></nav>
+<h2 id="m1">Quick start</h2><ol><li>Click the folder button <b>Open JSON</b> to load your config (or start with the default).</li><li>Click a key in the grid. Its settings appear on the right.</li><li>Click <b>Connect pedal</b> (Chrome or Edge). From then on every edit is sent to the pedal after half a second.</li></ol>
+<h2 id="m2">The screen</h2><p><b>Left:</b> pages and global settings. <b>Middle:</b> the 10 keys, expression and encoder, and a preview of the pedal screen. <b>Right:</b> the inspector for the selected key. Click a key to simulate a tap; Shift-click simulates a long press. The preview shows the pop-up the pedal would show.</p>
+<h2 id="m3">Keys &amp; states</h2><p>Each key has a <b>label</b> and <b>color</b>. <b>Action</b> is either <i>keytimes</i> (send MIDI) or a page key. A keytimes key has <b>short</b> (tap) and <b>long</b> (hold) <b>states</b>. With several short states, each tap moves to the next one, which is how a key toggles on/off or steps through choices. Each state has its own label and LED color, and lists of messages sent on <b>down</b> (press) and <b>up</b> (release).</p>
+<h2 id="m4">Messages</h2><p>Use <b>+ message</b> inside a state. Types:</p><ul><li><b>cc</b>: control change, number 0-127 and value 0-127.</li><li><b>pc</b>: program change to a preset number. <b>pc_inc / pc_dec</b> step to the next or previous preset.</li><li><b>cc_inc / cc_dec</b>: step a counter between its min and max (set on the key), optionally wrapping.</li><li><b>note</b>: note number and velocity.</li></ul><p>The <b>ch</b> box on a message sets its MIDI channel (1-16). Blank uses the global channel.</p>
+<h2 id="m5">Pages</h2><p>A page is a full set of 10 keys. Add pages with <b>+ page</b>. Set a key's Action to <i>page_inc</i> or <i>page_dec</i> to move between pages from the pedal.</p>
+<h2 id="m6">Expression &amp; encoder</h2><p>Each expression input sends a CC that follows the pedal between <b>min</b> and <b>max</b>; <b>ch</b> sets its channel. The encoder (wheel) can send a CC when turned, or move between pages (set <b>does</b> to page; <b>reverse</b> swaps direction). Leave Expression off until a pedal is plugged in. Untick <b>on</b> to disable an input, which is best for unplugged pedals.</p>
+<h2 id="m7">Global &amp; settings</h2><ul><li><b>MIDI ch</b>: default channel for everything.</li><li><b>Hold ms</b>: how long counts as a long press.</li><li><b>SPI MHz</b>: screen speed; needs a restart.</li><li><b>Settings (gear)</b>: <b>Dev mode</b> shows the pedal as a USB drive at every boot, and <b>Restart pedal</b>. <b>Battery</b>: charging for NiMH AAs (off by default, never with alkaline), an on-screen battery display as voltage, percent or an icon, and a Probe button to find the right sense pin.</li><li><b>Sun/moon icon</b> cycles Auto, Light and Dark. <b>Tooltips</b> turns hover hints on or off.</li></ul>
+<h2 id="m8">Live update</h2><p>Click <b>Connect pedal</b>, pick the pedal's port, and keep <b>Live update</b> ticked. The green dot means connected. <b>Send</b> pushes your config to the pedal now; <b>Receive</b> loads what the pedal has. Close other serial programs first, since only one can use the port.</p>
+<h2 id="m9">Saving &amp; backups</h2><p><b>Download JSON</b> saves a file on your computer; do this before big changes. With dev mode off, live edits are also saved on the pedal. With the USB drive mounted the pedal cannot save, so changes last until power-off. Holding switch 1 while plugging in always shows the drive.</p>
+<h2 id="m10">Troubleshooting</h2><ul><li><b>Connect fails:</b> close other serial consoles, and check the pedal runs code.py v0.3 or newer.</li><li><b>Device ignores the pedal:</b> check MIDI channel match, and USB versus 5-pin DIN cabling.</li><li><b>Preset off by one:</b> MIDI counts from 0, many devices from 1.</li><li><b>Counter out of sync:</b> the pedal can't read the device's value; reset the key or re-send.</li><li><b>Stray expression values:</b> disable unplugged inputs.</li></ul></div></div></div>
+<div id="basics"><div><h3>MIDI basics (click outside to close)</h3>
+<h4>What is MIDI?</h4><p>MIDI doesn't carry sound. It carries short commands, like a remote control: "switch to preset 5", "turn knob 11 to 64". Your pedal sends these to your amp, modeler, headphones, synth, or any other MIDI gear.</p>
+<h4>Channels (1-16)</h4><p>Think of channels as radio stations on one cable. A device only listens to messages on its own channel. If a device ignores your pedal, a channel mismatch is the number one suspect. Set it in Global &rarr; MIDI ch.</p>
+<h4>Control Change (CC)</h4><p>A knob or switch. Each has a CC number (0-127) and a value (0-127). "CC 11 = 64" means set control #11 to 64. Switches are usually 0 = off, 127 = on (or 0, 1, 2... for multi-position choices like an effect type or amp model).</p>
+<h4>Program Change (PC)</h4><p>Recalls a preset by number (0-127). Many devices show presets as 1-128 while MIDI counts from 0, so preset 1 is PC 0. This is the usual off-by-one.</p>
+<h4>SysEx</h4><p>System Exclusive messages are longer, device-specific commands, written as hex bytes (for example <code>F0 7E 7F 06 01 F7</code>). Your device's MIDI implementation chart lists them. The pedal adds the F0 start and F7 end bytes if you leave them out.</p><h4>Notes</h4><p>A key pressed on a keyboard: note number 0-127 (60 = middle C) and velocity (how hard, 1-127). Rarely needed for effects; useful for triggering synths or samplers.</p>
+<h4>Press, release, short, long</h4><p>Each key can send messages when pressed (down) and released (up). A long press (hold longer than "Hold ms") can do something different from a tap. Keys with several short states step through them on each tap.</p>
+<h4>Counters</h4><p>Up/down keys (cc_inc / cc_dec) remember a value and step it within min and max. The pedal can't ask the other device what it's set to, so if you change a knob on the unit itself, the pedal's number drifts out of sync.</p>
+<h4>USB vs 5-pin DIN</h4><p>The pedal sends everything to both. Hardware with 5-pin MIDI jacks uses the DIN cable; computers and USB gear use USB.</p>
+</div></div>
+<script>
+const COL={red:'#ff3b30',green:'#34c759',blue:'#3b82ff',yellow:'#ffd60a',magenta:'#ff2dd1',cyan:'#22d3ee',white:'#f2f2f7',orange:'#ff9f0a',purple:'#a855f7',off:'#333'};
+const MF={cc:['cc','value'],pc:['program'],note:['note','velocity'],pc_inc:[],pc_dec:[],cc_inc:[],cc_dec:[],sysex:['data']};
+const MD={cc:{type:'cc',cc:20,value:127},pc:{type:'pc',program:0},note:{type:'note',note:60,velocity:127},pc_inc:{type:'pc_inc'},pc_dec:{type:'pc_dec'},cc_inc:{type:'cc_inc'},cc_dec:{type:'cc_dec'},sysex:{type:'sysex',data:'F0 7E 7F 06 01 F7'}};
+let hist=[],redo=[],clip=null;let cfg,pg=0,sel=0,dirH=null,sim={pc:0,cc:{},st:{}},pop=null,pt;
+const $=s=>document.querySelector(s),col=c=>COL[c]||c||'#888',esc=s=>String(s??'').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+const gp=(o,p)=>p===''?o:p.split('.').reduce((a,k)=>a?.[k],o);
+function sp(o,p,v){const k=p.split('.'),l=k.pop();let c=o;for(const x of k){if(c[x]==null||typeof c[x]!=='object')c[x]={};c=c[x]}c[l]=v}
+const nb=i=>({color:'white',label:'KEY '+(i+1),mode:'keytimes',short:[{color:'white',up:[{type:'cc',cc:20+i,value:127}]}],long:[]});
+const np=()=>({buttons:[...Array(10)].map((_,i)=>i===4?{color:'white',label:'PG UP',type:'page_inc'}:i===9?{color:'white',label:'PG DN',type:'page_dec'}:nb(i)),encoder:{cc:11,enabled:false,initial:64,label:'ENC',max:127,min:0,push:{enabled:false,label:'PUSH',mode:'momentary',cc:14},steps:null},expression:{exp1:{cc:12,enabled:false,label:'EXP1',max:127,min:0,polarity:'normal',threshold:2},exp2:{cc:13,enabled:false,label:'EXP2',max:127,min:0,polarity:'normal',threshold:2}}});
+cfg={active_page:0,dev_mode:false,device:'std10',display:{button_text_size:'medium',expression_text_size:'medium',status_text_size:'medium'},long_press_threshold_ms:700,pages:[np()],usb_drive_name:'MIDICAPTAIN'};
+const toast=t=>{const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(e.t);e.t=setTimeout(()=>e.style.display='none',3500)};
+const inp=(p,v,t='text',w='')=>`<input data-p="${p}" data-t="${t}" type="${t==='number'?'number':'text'}" value="${esc(v)}" ${w?`style="width:${w}"`:''}>`;
+const chk=(p,v)=>`<input type="checkbox" data-p="${p}" data-t="bool" ${v?'checked':''}>`;
+const sel_=(p,v,o,t='text')=>`<select data-p="${p}" data-t="${t}">${o.map(x=>`<option ${x===v?'selected':''}>${x}</option>`).join('')}</select>`;
+let cpOpen=null;
+const colSel=(p,v)=>{const names=[...Object.keys(COL),...(COL[v]||!v?[]:[v])],hx=n=>COL[n]||(CSS.supports('color',n)?n:'#666');return`<div class="cp"><button type="button" class="cpb" data-cpo="${p}"><i style="background:${hx(v)}"></i>${esc(v||'none')}</button>${cpOpen===p?`<div class="cpl">${names.map(n=>`<div class="${n===v?'on':''}" data-cps="${p}" data-v="${esc(n)}"><i style="background:${hx(n)}"></i>${esc(n)}</div>`).join('')}</div>`:''}</div>`};
+const KT=['Momentary','Toggle','Counter (up)','Counter (down)','Sequence','Page up','Page down'];
+const CF=['cc','cc_step','cc_min','cc_max','cc_wrap','initial','names'];
+const allMsgs=b=>[...(b.short||[]),...(b.long||[])].flatMap(s=>[...(s.down||[]),...(s.up||[])]);
+function ktype(b){if(b.type==='page_inc')return'Page up';if(b.type==='page_dec')return'Page down';
+const m=allMsgs(b);if(m.some(x=>x.type==='cc_inc'))return'Counter (up)';if(m.some(x=>x.type==='cc_dec'))return'Counter (down)';
+const sh=b.short||[];const one=s=>[...(s.down||[]),...(s.up||[])];
+if(sh.length===1&&(sh[0].down||[]).length===1&&(sh[0].up||[]).length===1&&sh[0].down[0].type==='cc'&&sh[0].up[0].type==='cc')return'Momentary';
+if(sh.length===2&&sh.every(s=>one(s).length===1&&one(s)[0].type==='cc')&&one(sh[0])[0].cc===one(sh[1])[0].cc&&(one(sh[0])[0].value===0)!==(one(sh[1])[0].value===0))return'Toggle';
+if(sh.length>1)return'Sequence';return sh.length?'Momentary':'Sequence'}
+function convKey(b,to){const col=b.color||'white',old=ktype(b),sh=b.short||[];
+let cc=b.cc,ch,names=b.names&&b.names.length?b.names.slice():null,lo=b.cc_min??0,step=b.cc_step||1;
+const mm=allMsgs(b).find(x=>x.type==='cc');if(mm){if(cc==null)cc=mm.cc;ch=mm.channel}if(cc==null)cc=20;
+if(old==='Sequence'&&!names){const vs=sh.map(s=>{const o=[...(s.down||[]),...(s.up||[])];return o.length===1&&o[0].type==='cc'&&o[0].cc===cc?o[0].value:null});
+if(vs.length>1&&vs.every((v,i)=>v===i)){names=sh.map(x=>x.label||'')}}
+const M=(t,v)=>{const o={type:'cc',cc,value:v};if(ch)o.channel=ch;return o};
+if(to==='Page up'||to==='Page down'){CF.forEach(k=>delete b[k]);delete b.short;delete b.long;delete b.mode;b.type=to==='Page up'?'page_inc':'page_dec';return}
+delete b.type;b.mode='keytimes';
+if(to.startsWith('Counter')){const n=names?names.length:0;
+b.cc=cc;b.cc_step=step;b.cc_min=names?0:lo;b.cc_max=names?n-1:(b.cc_max??127);b.cc_wrap=!!(names||b.cc_wrap);b.initial=names?0:(b.initial??b.cc_min);
+if(names)b.names=names;else delete b.names;
+const t=to==='Counter (up)'?'cc_inc':'cc_dec',o={type:t};if(ch)o.channel=ch;
+b.short=[{color:col,up:[o]}];b.long=names?[{color:col,down:[M('cc',0)]}]:[];return}
+if(old.startsWith('Counter')&&to==='Sequence'){const hi=b.cc_max??127,lo2=b.cc_min??0,n=names?names.length:Math.min(Math.floor((hi-lo2)/step)+1,12);
+b.short=Array.from({length:n},(_,i)=>({color:col,label:names?names[i]:String(lo2+i*step),up:[M('cc',lo2+i*step)]}));b.long=[];CF.forEach(k=>delete b[k]);return}
+CF.forEach(k=>delete b[k]);
+if(to==='Momentary'){b.short=[{color:col,down:[M('cc',127)],up:[M('cc',0)]}];b.long=[]}
+else if(to==='Toggle'){b.short=[{color:col,label:'ON',up:[M('cc',127)]},{color:'off',label:'OFF',up:[M('cc',0)]}];b.long=[]}
+else if(to==='Sequence'&&sh.length<2){b.short=[0,1,2].map(i=>({color:col,label:'State '+(i+1),up:[M('cc',i)]}));b.long=b.long||[]}
+b.short=b.short||[];b.long=b.long||[]}
+const KH={'Momentary':'Sends one value while held and another on release (like a stomp switch).','Toggle':'Each tap flips between ON and OFF.','Counter (up)':'Each tap steps a value up. Turn on wrap and names to cycle through choices on a single key. Pair with a Counter (down) key that uses the same CC.','Counter (down)':'Each tap steps the value down. Share the CC with a Counter (up) key.','Sequence':'Each tap steps to the next state. Every state can send any messages and have its own LED color.','Page up':'Switches to the next page.','Page down':'Switches to the previous page.'};
+const hexBytes=t=>(String(t||'').match(/[0-9a-f]{1,2}/gi)||[]).map(x=>parseInt(x,16));
+const isPage=b=>(b.type||'').startsWith('page');
+function msgs(path,list){let h='';(list||[]).forEach((m,i)=>{const q=`${path}.${i}`;h+=`<div class="m">${sel_(q+'.type',m.type,Object.keys(MF),'msgtype')}${(MF[m.type]||[]).map(f=>f==='data'?`${f}${inp(q+'.data',m.data,'hex','230px')}`:`${f}${inp(q+'.'+f,m[f],'number')}`).join('')}${m.type==='sysex'?'':`ch${inp(q+'.channel',m.channel,'number','44px')}`}<button class="x" data-act="delMsg" data-p="${q}">✕</button></div>`});return h+`<button data-act="addMsg" data-p="${path}">+ message</button>`}
+function states(P,w,b){const list=b[w]||[];let h=`<h4>${w==='short'?'Short press (each tap steps to the next state)':'Long press'}</h4>`;
+list.forEach((s,i)=>{const q=`${P}.${w}.${i}`;h+=`<div class="card"><div class="row"><label>#${i+1}</label>${inp(q+'.label',s.label,'text')}${colSel(q+'.color',s.color)}<button class="x" data-act="delState" data-p="${q}">✕</button></div><div class="hint">On press</div>${msgs(q+'.down',s.down)}<div class="hint">On release</div>${msgs(q+'.up',s.up)}</div>`});
+return h+`<button data-act="addState" data-p="${P}.${w}">+ state</button>`}
+function inspector(){const b=cfg.pages[pg].buttons[sel],P=`pages.${pg}.buttons.${sel}`;
+let h=`<h3>Key ${sel+1}</h3><div class="row"><label>Label</label>${inp(P+'.label',b.label)}</div><div class="row"><label>Color</label>${colSel(P+'.color',b.color)}</div><div class="row"><label>Type</label>${sel_(P,ktype(b),KT,'ktype')}</div><div class="hint">${KH[ktype(b)]}</div>`;
+if(!isPage(b)){const uses=ktype(b).startsWith('Counter');const stt=states(P,'short',b)+states(P,'long',b);h+=uses?'':stt;
+{const sh=b.show||{};h+=`<h4>Pop-up display</h4><div class="card"><div class="m">big${sel_(P+'.show.src',sh.src||'label',['label','cc','pc'])}zero${inp(P+'.show.zero',sh.zero,'number')}+/-${chk(P+'.show.signed',sh.signed)}caption${inp(P+'.show.caption',sh.caption,'text','90px')}</div><div class="hint">label = show the key name. cc = big number from this key's counter, pc = current preset number. The zero point is subtracted (64 gives capo steps, -1 makes presets start at 1).</div></div>`}
+if(uses)h+=`<h4>Counter</h4><div class="card"><div class="m">`+[['cc',b.cc],['cc_step',b.cc_step],['cc_min',b.cc_min],['cc_max',b.cc_max],['initial',b.initial]].map(([k,v])=>`${k}${inp(P+'.'+k,v,'number')}`).join('')+`wrap${chk(P+'.cc_wrap',b.cc_wrap)}</div><div class="m">names${inp(P+'.names',(b.names||[]).join(', '),'list','100%')}</div><div class="hint">Optional. Comma-separated names shown big on the pedal for each value, starting at the min value (for example Clean, Crunch, Lead). Only one of the up/down keys needs them.</div></div>`+`<details><summary>Messages (advanced)</summary>${stt}</details>`}
+return h}
+function side(){const g=cfg;return`<h3>Pages</h3>`+g.pages.map((_,i)=>`<div class="pg ${i===pg?'on':''}" data-act="selPage" data-i="${i}">Page ${i+1}${g.pages.length>1?`<span class="x" data-act="delPage" data-i="${i}">✕</span>`:''}</div>`).join('')+`<button data-act="addPage">+ page</button><h3 style="margin-top:18px">Global</h3><div class="row"><label>Device</label>${inp('device',g.device)}</div><div class="row"><label>Drive</label>${inp('usb_drive_name',g.usb_drive_name)}</div><div class="row"><label>Hold ms</label>${inp('long_press_threshold_ms',g.long_press_threshold_ms,'number')}</div><div class="row"><label>MIDI ch</label>${inp('midi_channel',g.midi_channel,'number')}</div><div class="row"><label>SPI MHz</label>${inp('spi_mhz',g.spi_mhz,'number')}</div>`}
+function exr(P,e,f){return`<div><h3>${e.label||f}</h3><div class="m">on${chk(P+'.enabled',e.enabled)}name${inp(P+'.label',e.label,'text','64px')}cc${inp(P+'.cc',e.cc,'number')}ch${inp(P+'.channel',e.channel,'number','44px')}min${inp(P+'.min',e.min,'number')}max${inp(P+'.max',e.max,'number')}</div></div>`}
+const ck=(b,k)=>b.cc!=null?'c'+b.cc:k;
+const nameOwner=b=>b.names&&b.names.length?b:(b.cc==null?null:cfg.pages[pg].buttons.find(o=>o.cc===b.cc&&o.names&&o.names.length)||null);
+const findNames=b=>{const o=nameOwner(b);return o?o.names:null};
+const nameOf=(b,k)=>{const nm=findNames(b);if(!nm)return null;const v=simval(b,k);if(v==null)return null;const i=Math.floor((v-(b.cc_min??0))/(b.cc_step||1));return nm[i]||null};
+function simval(b,k){return sim.cc[ck(b,k)]??b.initial}
+function screen(){const p=cfg.pages[pg],bs=p.buttons;
+const cells=bs.map((b,i)=>[b,i]).filter(([b])=>!isPage(b)&&(b.cc!==undefined||(b.short||[]).length>1)).slice(0,4).map(([b,i])=>{const k=pg+':'+i;let v;if(b.cc!==undefined)v=nameOf(b,k)||simval(b,k);else{const s=sim.st[k];v=s===undefined?'-':(b.short[(s-1+b.short.length)%b.short.length].label||'')}return`<div>${esc(b.label)}<br>${esc(v)}</div>`});
+while(cells.length<4)cells.push('<div></div>');
+return`<div class="scr"><div class="h"><div>PAGE ${pg+1}/${cfg.pages.length}</div><div class="bt">${cfg.battery_display===false?'':cfg.battery_style==='percent'?'85%':cfg.battery_style==='icon'?'<span class="bi"><i></i></span>':'2.7V'+(cfg.battery_charge?'+':'')}</div><div>PC ${sim.pc}</div></div><div class="c ${pop?'pop':''}">${pop?`<big>${esc(pop.t)}</big><span>${esc(pop.s)}</span>`:'<span style="color:#555">READY</span>'}</div><div class="f">${cells.join('')}</div></div>`}
+let exOpen=false;try{exOpen=localStorage.getItem('exOpen')==='1'}catch(e){}
+const exsum=p=>{const x=p.expression||{},e=p.encoder||{};const f=(o,n)=>n+' '+(o&&o.enabled?'CC'+o.cc:'off');return f(x.exp1,'EXP1')+' \u00b7 '+f(x.exp2,'EXP2')+' \u00b7 '+'Encoder '+(e.enabled?(e.action==='page'?'pages':'CC'+e.cc):'off')};
+function pagebar(){const n=cfg.pages.length;return`<div class="pbar"><select id="pgSel">${cfg.pages.map((q,i)=>`<option value="${i}" ${i===pg?'selected':''}>Page ${i+1}${q.name?' \u00b7 '+esc(q.name):''}</option>`).join('')}</select>${inp(`pages.${pg}.name`,cfg.pages[pg].name,'text').replace('<input ','<input placeholder="Page name (optional)" ')}<button data-act="addPage">+ Add</button><button data-act="dupPage">Duplicate</button><button data-act="delPage" data-i="${pg}" ${n<2?'disabled':''}>Delete</button></div>${n>1&&!cfg.pages[pg].buttons.some(isPage)&&!(cfg.pages[pg].encoder&&cfg.pages[pg].encoder.enabled&&cfg.pages[pg].encoder.action==='page')?'<div class="warn">No page key on this page: once you switch to it you can\'t get back without restarting the pedal. Set a key\'s Action to page_inc or page_dec, or set the encoder to change pages.</div>':''}`}
+function mid(){const p=cfg.pages[pg];
+const grid=p.buttons.map((b,i)=>`<div class="key ${i===sel?'on':''}" data-act="key" data-i="${i}"><div class="kb"><button type="button" class="ic" data-act="copyKey" data-i="${i}"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button><button type="button" class="ic" data-act="pasteKey" data-i="${i}" ${clip?'':'disabled'}><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></button></div><div class="led" style="background:${col(b.color)}"></div><b>${esc(b.label)}</b><small>${isPage(b)?b.type:(b.short||[]).length+' short / '+(b.long||[]).length+' long'}</small></div>`).join('');
+const e=p.encoder,x=p.expression;
+return`<div class="top"><div style="min-width:0">${pagebar()}<div class="grid">${grid}</div><div class="hint">Click a key to edit and simulate a tap. Shift-click simulates a long press.</div>
+<details id="exd" ${exOpen?'open':''}><summary>Expression &amp; encoder<span>${exsum(p)}</span></summary><div class="ex">${exr(`pages.${pg}.expression.exp1`,x.exp1,'EXP1')}${exr(`pages.${pg}.expression.exp2`,x.exp2,'EXP2')}<div><h3>Encoder</h3><div class="m">on${chk(`pages.${pg}.encoder.enabled`,e.enabled)}does${sel_(`pages.${pg}.encoder.action`,e.action||'cc',['cc','page'])}cc${inp(`pages.${pg}.encoder.cc`,e.cc,'number')}init${inp(`pages.${pg}.encoder.initial`,e.initial,'number')}reverse${chk(`pages.${pg}.encoder.reverse`,e.reverse)}</div></div></div></details></div>
+<div><h3>Screen preview</h3><div id="scr">${screen()}</div><div class="hint">Pop-ups appear here when you simulate a press.</div></div></div>`}
+function render(){$('#mid').innerHTML=mid();$('#insp').innerHTML=inspector();$('#st').textContent=dirH?'Device folder connected':''}
+function showPop(b,l,sub,k){const sh=b.show;if(sh&&(sh.src==='cc'||sh.src==='pc')){let v=sh.src==='pc'?sim.pc:(simval(b,k)??b.cc_min??0);v-=(sh.zero||0);return popup(sh.signed&&v>0?'+'+v:''+v,sh.caption||l)}{const nt=nameOf(b,k);if(nt)return popup(nt,(sh&&sh.caption)||((nameOwner(b)||{}).show||{}).caption||b.label)}popup(l,sub)}
+function popup(t,s){pop={t,s};clearTimeout(pt);pt=setTimeout(()=>{pop=null;$('#scr').innerHTML=screen()},1400);$('#scr').innerHTML=screen()}
+function run(b,m,k){const lo=b.cc_min??0,hi=b.cc_max??127;
+if(m.type==='pc'){sim.pc=m.program;return'PC '+sim.pc}
+if(m.type==='pc_inc'||m.type==='pc_dec'){sim.pc=(sim.pc+(m.type==='pc_inc'?1:-1)+128)%128;return'PC '+sim.pc}
+if(/^cc_(inc|dec)$/.test(m.type)){let v=(simval(b,k)??lo)+(m.type==='cc_inc'?1:-1)*(b.cc_step??1);if(v>hi)v=b.cc_wrap?lo:hi;if(v<lo)v=b.cc_wrap?hi:lo;sim.cc[ck(b,k)]=v;return'CC '+b.cc+' = '+v}
+if(m.type==='cc'){if(m.cc===b.cc)sim.cc[ck(b,k)]=m.value;return'CC '+m.cc+' = '+m.value}
+if(m.type==='note')return'NOTE '+m.note;if(m.type==='sysex')return'SYSEX '+hexBytes(m.data).length+' bytes'}
+function press(i,long){const b=cfg.pages[pg].buttons[i];
+if(isPage(b)){popup(b.label,'PAGE '+(((pg+(b.type==='page_inc'?1:-1)+cfg.pages.length)%cfg.pages.length)+1));return}
+const k=pg+':'+i,list=long?b.long:b.short;if(!list||!list.length)return;
+const idx=long?0:(sim.st[k]??0),s=list[idx%list.length];let sub='';
+for(const m of[...(s.down||[]),...(s.up||[])])sub=run(b,m,k)||sub;
+if(!long)sim.st[k]=(idx+1)%list.length;showPop(b,s.label||b.label,sub,k)}
+document.addEventListener('change',e=>{const el=e.target,p=el.dataset.p,t=el.dataset.t;if(!p)return;let v=el.value;
+if(t==='number')v=v===''?null:+v;else if(t==='bool')v=el.checked;else if(t==='hex'){const bs=v.replace(/[^0-9a-fA-F\s,]/g,'').split(/[\s,]+/).filter(Boolean);if(bs.some(x=>x.length>2))toast('Use hex bytes of 2 digits, e.g. F0 7E 7F');v=bs.map(x=>x.toUpperCase().padStart(2,'0')).join(' ')}
+else if(t==='list'){v=v.split(',').map(x=>x.trim());if(!v.some(Boolean))v=undefined}
+else if(t==='msgtype'){sp(cfg,p.replace(/\.type$/,''),{...MD[v]});render();return}
+else if(t==='ktype'){convKey(gp(cfg,p),v);render();return}
+else if(t==='mode'){const b=gp(cfg,p);if(v==='keytimes'){delete b.type;b.mode='keytimes';b.short=b.short||[];b.long=b.long||[]}else{b.type=v;delete b.mode;delete b.short;delete b.long}render();return}
+sp(cfg,p,v);render()});
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el)return;const a=el.dataset.act,p=el.dataset.p,i=+el.dataset.i;e.stopPropagation();
+if(a==='key'){sel=i;press(i,e.shiftKey)}
+else if(a==='copyKey')doCopy(i)
+else if(a==='pasteKey'){doPaste(i);sel=i}
+else if(a==='selPage'){pg=i;sel=0}
+else if(a==='addPage'){cfg.pages.push(np());pg=cfg.pages.length-1;sel=0}
+else if(a==='dupPage'){const c=JSON.parse(JSON.stringify(cfg.pages[pg]));if(c.name)c.name+=' copy';cfg.pages.splice(pg+1,0,c);pg++;sel=0}
+else if(a==='delPage'){if(cfg.pages.length>1){cfg.pages.splice(i,1);pg=Math.max(0,Math.min(pg,cfg.pages.length-1))}}
+else if(a==='addState'){const l=gp(cfg,p)||(sp(cfg,p,[]),gp(cfg,p));l.push({color:'white',label:'',up:[]})}
+else if(a==='addMsg'){const l=gp(cfg,p)||(sp(cfg,p,[]),gp(cfg,p));l.push({...MD.cc})}
+else if(a==='delMsg'||a==='delState'){const k=p.split('.'),ix=k.pop();gp(cfg,k.join('.')).splice(+ix,1)}
+render()});
+$('#bOpen').onclick=()=>$('#f').click();
+$('#f').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{load(JSON.parse(await f.text()));toast('Loaded '+f.name)}catch(x){toast('Invalid JSON')}};
+function load(j){if(!Array.isArray(j.pages))throw 0;hist=[];redo=[];cfg=j;pg=0;sel=0;sim={pc:0,cc:{},st:{}};render()}
+$('#bSave').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(cfg,null,2)],{type:'application/json'}));a.download='config.json';a.click()};
+$('#bDev').onclick=async()=>{try{dirH=await showDirectoryPicker({mode:'readwrite'});try{const fh=await dirH.getFileHandle('config.json');load(JSON.parse(await(await fh.getFile()).text()));toast('Loaded config.json from device')}catch{toast('Folder opened, no config.json yet (Save to device will create it)')}render()}catch(x){toast(x.name==='AbortError'?'Cancelled':'Needs Chrome or Edge: '+x.message)}};
+$('#bDevSave').onclick=async()=>{if(!dirH)return toast('Open the device folder first (hold switch 1 while plugging in)');try{const fh=await dirH.getFileHandle('config.json',{create:true}),w=await fh.createWritable();await w.write(JSON.stringify(cfg,null,2));await w.close();toast('Saved. Eject the drive, then power-cycle the pedal.')}catch(x){toast('Save failed: '+x.message)}};
+
+// ---- tooltips
+const TIPS={
+'#bOpen':'Load a saved config .json from your computer.','#bSave':'Download the current config as a .json file (backup).',
+'#bDev':'Old way: pick the pedal USB drive folder (hold switch 1 while plugging in).','#bDevSave':'Old way: write config.json to the folder chosen above, then eject and reboot.',
+'#bConn':'Link the editor to the pedal over USB (Chrome/Edge). Close any other serial console first.','#bPush':'Send the current config to the pedal now.','#bPull':'Receive the pedal\'s current config and replace what you see here.',
+'#lLive':'When on, every edit is sent to the pedal about half a second later. No ejecting or rebooting.','#bSet':'Settings: dev mode and restart pedal.','#bTheme':'Theme: click to cycle Auto (follows your system), Light, Dark.','#bManual':'Open the full user guide. It has a pop-out button for side-by-side use.','#devm':'Show the pedal as a USB drive at every boot.','#chgm':'Charge NiMH batteries from USB/DC power. Off by default. Never use with alkaline batteries.','#bdm':'Show the battery voltage between the page number and PC number at the top of the pedal screen (on by default; a + means charging is on).','#bLogCopy':'Copy the connection log to paste for troubleshooting.','#bInfo':'Ask the pedal for its status and write it in the log.','#bpin':'Which pin reads the battery voltage. Use Probe to find out.','#brat':'Voltage divider multiplier for the sense pin (3 for GP29).','#bProbe':'Read the candidate sense pins and the charge pin from the pedal.','#bReboot':'Restart the pedal now (needed for dev mode / screen speed changes).','#bBasics':'Quick MIDI basics for beginners.','#bUndo':'Undo the last edit (Ctrl+Z).','#bRedo':'Redo (Ctrl+Y or Ctrl+Shift+Z).','#chip':'Connection and sync status.','#pgSel':'Choose which page of 10 keys to edit.','#lTip':'Turn these hover hints on or off.',
+label:{'Label':'Name shown on the pedal screen.','Color':'LED colour of this key.','Action':'keytimes = send MIDI. page_inc / page_dec = jump to next / previous page of keys.','Device':'Free-text name of your gear. Just a note.','Drive':'Name of the USB drive when mounted.','Hold ms':'How long (milliseconds) to hold a key for a long press.','MIDI ch':'MIDI channel 1-16 that all messages go out on. Must match the receiving device. Blank = 1.','SPI MHz':'Screen bus speed. Higher is faster but too high may glitch. Try 40. Needs a pedal restart.'},
+p:{label:'Name shown on screen.',color:'LED colour.',type:'Kind of MIDI message: cc = control knob/switch, pc = preset recall, pc_inc / pc_dec = next / previous preset, cc_inc / cc_dec = step a value up or down, note = play a note, sysex = send raw hex bytes.',cc:'CC number 0-127: which control to move (see your device\'s MIDI chart).',value:'Value 0-127 to send. Often 0 = off, 127 = on.',program:'Preset number 0-127 (PC 0 = preset 1 on most gear).',note:'Note number 0-127. 60 = middle C.',velocity:'Note strength 1-127.',cc_min:'Lowest value the counter can reach.',cc_max:'Highest value the counter can reach.',cc_step:'How much each press changes the counter.',cc_wrap:'When on, going past max jumps to min (and vice versa).',initial:'Starting value after power-up.',enabled:'Turn this input on or off.',min:'Value sent with the pedal at heel position.',max:'Value sent with the pedal at toe position.',threshold:'Ignore movements smaller than this, to reduce noise.',mode:'Key behaviour: keytimes or page change.',name:'A name for this page, for your own reference. Not shown on the pedal.',action:'What turning the wheel does: cc = send a CC value, page = move to the next or previous page.',reverse:'Swap the turning direction.',battery_style:'How battery charge is shown on the pedal screen.',battery_type:'Battery chemistry, used to turn voltage into a percentage.',names:'Names shown big on the pedal for each counter value, separated by commas, starting at the min value.',src:'What the big number on the pedal screen shows: label = key name, cc = this key\'s counter value, pc = current preset number.',zero:'Subtracted from the number before display. Use 64 to show capo steps, or -1 to count presets from 1.',signed:'Show a + in front of positive numbers.',caption:'Small text under the big number, for example CAPO.',midi_channel:'Channel 1-16 for all messages.',channel:'Optional MIDI channel 1-16 for just this message. Leave blank to use the global channel (Global > MIDI ch). Handy when one key controls two devices on different channels.',battery_charge:'Charge NiMH batteries (off by default).',battery_display:'Show battery voltage on screen (on by default).',battery_pin:'Battery sense pin.',battery_ratio:'Voltage divider multiplier.',dev_mode:'ON = pedal appears as a USB drive on every plug-in (no live saving). OFF = hidden drive, live edits are saved on the pedal.',device:'Free-text name of your gear.',usb_drive_name:'Name of the USB drive when mounted.',long_press_threshold_ms:'Hold time (ms) for a long press.',spi_mhz:'Screen bus speed. Needs a pedal restart.'},
+a:{copyKey:'Copy this key (all its settings). Then use the paste icon on any key, on this page or another.',pasteKey:'Replace this key with the copied one (disabled until you copy a key).',dupPage:'Copy this page (all 10 keys, expression and encoder) as a new page.',addPage:'Add a new page of 10 keys.',delPage:'Delete this page.',addState:'Add another state. Each tap steps to the next one.',addMsg:'Add another MIDI message sent by this state.',delMsg:'Remove this message.',delState:'Remove this state.',key:'Click to edit and simulate a tap. Shift-click = long press.',selPage:'Switch to this page.'},
+h:{'Pages':'Each page is a full set of 10 keys. Page keys switch between them.','Global':'Settings that apply to the whole pedal.','Screen preview':'Approximation of the pedal screen. Pop-ups appear when you simulate a press.','Encoder':'The wheel on the pedal. Can send a CC as you turn it.','EXP1':'Expression pedal input 1: sends a CC that follows the pedal position.','EXP2':'Expression pedal input 2.','Short press':'Messages sent on a tap. Several states = cycle through them.','Long press':'Messages sent when the key is held.','Footswitches':'The 10 keys, as on the pedal.'}};
+function applyTips(){const on=$('#tipOn').checked;
+const set=(el,t)=>{if(on&&t)el.title=t;else el.removeAttribute('title')};
+for(const k in TIPS)if(k[0]==='#'){const el=$(k);if(el)set(el,TIPS[k])}
+document.querySelectorAll('label').forEach(l=>{const t=TIPS.label[l.textContent.trim()];if(t)set(l,t)});
+document.querySelectorAll('[data-p]').forEach(el=>{const k=el.dataset.p.split('.').pop();set(el,TIPS.p[k]||TIPS.p[el.dataset.t])});
+document.querySelectorAll('[data-act]').forEach(el=>set(el,TIPS.a[el.dataset.act]));
+document.querySelectorAll('h3').forEach(h=>{const t=h.textContent.trim();const k=Object.keys(TIPS.h).find(x=>t.startsWith(x));if(k)set(h,TIPS.h[k])})}
+try{$('#tipOn').checked=localStorage.getItem('tipOn')!=='0'}catch(e){}
+$('#tipOn').onchange=()=>{try{localStorage.setItem('tipOn',$('#tipOn').checked?'1':'0')}catch(e){}applyTips()};
+$('#bBasics').onclick=()=>$('#basics').classList.add('on');
+$('#basics').onclick=e=>{if(e.target.id==='basics')$('#basics').classList.remove('on')};
+const TI={"auto": "<svg viewBox=\"0 0 24 24\" width=\"17\" height=\"17\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 3v18\" /><path d=\"M12 3a9 9 0 0 1 0 18z\" fill=\"currentColor\"/></svg>", "light": "<svg viewBox=\"0 0 24 24\" width=\"17\" height=\"17\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4\"/></svg>", "dark": "<svg viewBox=\"0 0 24 24\" width=\"17\" height=\"17\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z\"/></svg>"},TN={auto:'Auto',light:'Light',dark:'Dark'};
+let th='auto';try{th=localStorage.getItem('theme')||'auto'}catch(e){}
+const ap=()=>{th==='auto'?document.documentElement.removeAttribute('data-theme'):document.documentElement.setAttribute('data-theme',th);$('#bTheme').innerHTML=TI[th];$('#bTheme').dataset.cur=TN[th]};
+$('#bTheme').onclick=()=>{th={auto:'light',light:'dark',dark:'auto'}[th];try{localStorage.setItem('theme',th)}catch(e){}ap();toast('Theme: '+TN[th]);try{if(man&&!man.closed)man.document.documentElement.dataset.theme=th==='auto'?'':th}catch(e){}};
+ap();
+$('#bSet').onclick=()=>{$('#logT').value=logBuf.join('\n');document.querySelectorAll('#setm [data-p]').forEach(el=>{let v=gp(cfg,el.dataset.p);if(el.dataset.p==='battery_ratio'&&v==null)v=3;if(el.dataset.p==='battery_pin'&&!v)v='GP29';if(el.dataset.p==='battery_display'&&v==null)v=true;if(el.dataset.p==='battery_style'&&!v)v='voltage';if(el.dataset.p==='battery_type'&&!v)v='nimh';if(el.type==='checkbox')el.checked=!!v;else el.value=v??''});$('#setm').classList.add('on')};
+document.querySelectorAll('#setm [data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('#setm [data-tab]').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('#setm [data-tp]').forEach(x=>x.classList.toggle('on',x.dataset.tp===b.dataset.tab))});
+$('#bSetX').onclick=()=>$('#setm').classList.remove('on');
+$('#setm').onclick=e=>{if(e.target.id==='setm')$('#setm').classList.remove('on')};
+$('#bReboot').onclick=async()=>{if(!port)return toast('Connect the pedal first');await send('@REBOOT');toast('Restarting pedal. Reconnect in a few seconds.')};
+
+document.addEventListener('click',e=>{const o=e.target.closest('[data-cpo]'),c=e.target.closest('[data-cps]');
+if(c){snap();sp(cfg,c.dataset.cps,c.dataset.v);cpOpen=null;render();schedulePush();return}
+if(o){cpOpen=cpOpen===o.dataset.cpo?null:o.dataset.cpo;render();return}
+if(cpOpen){cpOpen=null;render()}},true);
+// ---- manual
+const MCSS='body{margin:0;padding:16px 20px;font:14px/1.55 system-ui,Segoe UI,sans-serif;background:var(--p);color:var(--tx)}h1{font-size:19px;margin:0 0 8px}h2{font-size:15px;margin:20px 0 4px;color:var(--ac)}nav{display:flex;flex-wrap:wrap;gap:4px 12px;margin:8px 0}nav a{color:var(--ac);text-decoration:none}nav a:hover{text-decoration:underline}li{margin:3px 0}',MVARS=':root{--bg:#0d0e11;--p:#16181d;--p2:#1e2128;--ln:#2a2e37;--tx:#e7e9ee;--mu:#8a909c;--ac:#4da3ff}:root[data-theme=light]{--bg:#f3f4f7;--p:#fff;--p2:#eceef3;--ln:#d3d8e0;--tx:#1a1d23;--mu:#5d6470;--ac:#1f7ae0}@media(prefers-color-scheme:light){:root:not([data-theme]){--bg:#f3f4f7;--p:#fff;--p2:#eceef3;--ln:#d3d8e0;--tx:#1a1d23;--mu:#5d6470;--ac:#1f7ae0}}';let man=null;
+const manOpen=on=>{$('#man').classList.toggle('on',on);document.body.classList.toggle('mo',on)};
+$('#bManual').onclick=()=>{if(man&&!man.closed)return man.focus();manOpen(!$('#man').classList.contains('on'))};
+$('#manX').onclick=()=>manOpen(false);
+$('#manPop').onclick=()=>{const w=window.open('','capGuide','width=560,height=800');if(!w)return toast('Pop-up blocked: allow pop-ups for this page');
+man=w;w.document.open();w.document.write('<!doctype html><html lang="en"><head><meta charset="utf-8"><title>CaptainsMate guide</title><style>'+MVARS+MCSS+'</style></head><body>'+$('#mant').innerHTML+'</body></html>');w.document.close();
+if(th!=='auto')w.document.documentElement.dataset.theme=th;manOpen(false)};
+$('#chgm').addEventListener('change',e=>{if(e.target.checked&&!confirm('Enable charging? Only do this with rechargeable NiMH batteries installed. Charging alkaline batteries can make them leak or burst.')){e.target.checked=false;e.stopImmediatePropagation();sp(cfg,'battery_charge',false)}},true);
+$('#bProbe').onclick=async()=>{if(!port)return toast('Connect the pedal first');try{q=[];await send('@BATT');const l=await expect('@BATT');$('#probeR').textContent=l.slice(6)}catch(x){toast('Probe failed: '+x.message)}};
+$('#bLogCopy').onclick=async()=>{const t=$('#logT');t.value=logBuf.join('\n');t.select();try{await navigator.clipboard.writeText(t.value);toast('Log copied')}catch(e){document.execCommand('copy');toast('Log copied')}};
+$('#bLogClr').onclick=()=>{logBuf=[];$('#logT').value=''};
+$('#bBootLog').onclick=async()=>{if(!port)return toast('Connect the pedal first');try{await send('@LOG');await wait2(600)}catch(x){lg('LOG failed: '+x.message)}};
+const wait2=ms=>new Promise(r=>setTimeout(r,ms));
+$('#bInfo').onclick=async()=>{if(!port)return toast('Connect the pedal first');try{q=[];await send('@INFO');await expect('@INFO','info')}catch(x){lg('INFO failed: '+x.message)}};
+const BOOTPY="# CaptainsMate boot v1: hides the USB drive unless dev_mode is on or switch 1 is held.\n# boot.py: hide the USB drive (so the pedal can save its own config) unless\n# dev_mode is on in config.json, or switch 1 is held while powering up.\nimport board\nimport digitalio\nimport storage\nimport json\n\ndev = False\ntry:\n    with open(\"/config.json\") as f:\n        dev = bool(json.load(f).get(\"dev_mode\"))\nexcept Exception:\n    dev = True  # no/broken config: keep the drive visible so it can be fixed\ntry:\n    sw = digitalio.DigitalInOut(board.GP1)\n    sw.switch_to_input(pull=digitalio.Pull.UP)\n    if not sw.value:\n        dev = True\n    sw.deinit()\nexcept Exception:\n    dev = True\nif not dev:\n    storage.disable_usb_drive()\n";
+$('#bBoot').onclick=async()=>{if(!port)return toast('Connect the pedal first');if(pushing)return;pushing=true;setChip('busy','Installing boot.py\u2026');
+try{const t=BOOTPY.replace(/\n/g,'`'),n=Math.ceil(t.length/48);q=[];lg('boot.py install: '+t.length+' bytes');await send('@BEGINB '+t.length);await expect('@OK','boot BEGIN');
+for(let i=0,c=1;i<t.length;i+=48,c++){await send('@D'+t.slice(i,i+48));await expect('@OK','boot chunk '+c+'/'+n)}
+await send('@END');const r=await expect('@APPLIED','saving boot.py',20000);lg('boot.py: '+r);setChip('ok','Connected');
+toast(/saved=1/.test(r)?'boot.py installed. Restart the pedal (Settings > Pedal > Restart pedal).':'Could not save: the drive is mounted. Boot the pedal without holding switch 1 and without dev mode, then try again.')}
+catch(x){setChip('err','Error',x.message);lg('boot.py install failed: '+x.message);toast('Install failed: '+x.message)}pushing=false};
+// ---- live serial link
+let port=null,writer=null,q=[],qw=null,pushing=false,pend=false,pt2=0;
+let logBuf=[];function lg(m){logBuf.push(new Date().toLocaleTimeString()+' '+m);if(logBuf.length>600)logBuf.shift();const t=document.getElementById('logT');if(t){t.value=logBuf.join('\n');t.scrollTop=t.scrollHeight}}
+let okN=0;
+lg('editor started, '+navigator.userAgent.slice(0,90));
+function onLine(l){if(l==='@OK'){okN++}else{if(okN){lg('< @OK x'+okN);okN=0}lg('< '+l)}if(qw){const f=qw;qw=null;f(l)}else q.push(l)}
+function waitLine(ms=4000){return new Promise((res,rej)=>{if(q.length)return res(q.shift());const t=setTimeout(()=>{qw=null;rej(new Error('pedal timeout'))},ms);qw=l=>{clearTimeout(t);res(l)}})}
+async function send(l){await writer.write(l+'\n')}
+async function expect(pre,ctx,ms){try{for(let i=0;i<50;i++){const l=await waitLine(ms||4000);if(l.startsWith(pre))return l;if(l.startsWith('@ERR'))throw new Error(l)}throw new Error('no '+pre)}catch(e){throw new Error(e.message+' ['+(ctx||pre)+']')}}
+function setChip(c,t,tip){const e=$('#chip');e.className='chip '+(c||'');e.textContent=t;e.title=tip||''}
+function setDot(){if(!port)setChip('','Not connected');else if(!pushing)setChip('ok','Connected')}
+async function readLoop(r){let buf='';try{for(;;){const{value,done}=await r.read();if(done)break;buf+=value;let i;while((i=buf.indexOf('\n'))>=0){const l=buf.slice(0,i).replace(/\r/g,'');buf=buf.slice(i+1);if(l[0]==='@')onLine(l);else if(l.trim())lg('pedal: '+l)}}}catch(e){}port=null;writer=null;setDot();toast('Pedal disconnected')}
+$('#bConn').onclick=async()=>{if(!('serial' in navigator))return toast('Web Serial needs Chrome or Edge');
+try{if(port)return toast('Already connected');const p=await navigator.serial.requestPort();await p.open({baudRate:115200});
+const dec=new TextDecoderStream();p.readable.pipeTo(dec.writable);const enc=new TextEncoderStream();enc.readable.pipeTo(p.writable);
+writer=enc.writable.getWriter();port=p;q=[];readLoop(dec.readable.getReader());setDot();
+await send('');await send('@PING');const pg0=await expect('@PONG');lg('connected: '+pg0);toast('Pedal connected');try{await send('@INFO');const inf=await expect('@INFO','info',2500);lg(inf);if(/boot=(other|none)/.test(inf))toast('The pedal has an old boot.py, so dev mode may not mount the drive. Settings > Pedal > Install boot.py fixes it.')}catch(e){}if(!hist.length||confirm('Replace your current edits with the config on the pedal?'))await receive()}
+catch(x){port=null;setDot();toast(x.name==='NotFoundError'?'Cancelled':'Connect failed: '+x.message+' (close other serial consoles; pedal needs code.py v0.3)')}};
+async function push(){if(!port)return toast('Connect the pedal first');if(pushing){pend=true;return}pushing=true;setChip('busy','Sending\u2026');
+try{const t=JSON.stringify(cfg).replace(/[\u007f-\uffff]/g,c=>'\\u'+c.charCodeAt(0).toString(16).padStart(4,'0'));q=[];const n=Math.ceil(t.length/48);lg('push start: '+t.length+' bytes, '+n+' chunks');await send('@BEGIN '+t.length);await expect('@OK','waiting for BEGIN ack');
+for(let i=0,c=1;i<t.length;i+=48,c++){await send('@D'+t.slice(i,i+48));await expect('@OK','chunk '+c+'/'+n)}
+await send('@END');lg('> @END (sent '+n+' chunks)');const r=await expect('@APPLIED','pedal applying/saving config',20000);lg('push done: '+r);const sv=/saved=1/.test(r);setChip('ok',sv?'Synced':'Live, unsaved',sv?'':'Drive is mounted, so the pedal could not save. Boot without holding switch 1.');toast(sv?'Sent and saved on pedal':'Applied live (not saved: drive is mounted; boot without holding switch 1 to save)')}
+catch(x){setChip('err','Error',x.message);lg('PUSH FAILED: '+x.message);toast('Send failed: '+x.message);try{q=[];await send('@PING');await expect('@PONG','ping after failure',2500);lg('pedal still answers ping: it is alive, so a step was slow or a message was lost')}catch(e2){lg('pedal does NOT answer ping: firmware may be stalled or crashed (check pedal screen / console)')}}pushing=false;if(pend){pend=false;push()}}
+$('#bPush').onclick=push;
+const receive=async()=>{if(!port)return toast('Connect the pedal first');try{q=[];await send('@GET');await expect('@CBEGIN');let t='';for(;;){const l=await waitLine();if(l==='@CEND')break;if(l.startsWith('@C'))t+=l.slice(2)}load(JSON.parse(t));setChip('ok','Synced');toast('Received config from pedal')}catch(x){toast('Receive failed: '+x.message)}};
+$('#bPull').onclick=receive;
+function schedulePush(){if(!port)return;if(!$('#live').checked){setChip('busy','Not sent');return}setChip('busy','Pending\u2026');clearTimeout(pt2);pt2=setTimeout(push,500)}
+document.addEventListener('change',e=>{if(e.target.dataset&&e.target.dataset.p)schedulePush()});
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(el&&/^(addPage|dupPage|delPage|addState|addMsg|delMsg|delState|pasteKey)$/.test(el.dataset.act))schedulePush()});
+const doCopy=(i=sel)=>{clip=JSON.parse(JSON.stringify(cfg.pages[pg].buttons[i]));toast('Copied key '+(i+1)+' ('+(clip.label||'')+'). Click a paste icon on any key.')};
+const doPaste=(i=sel)=>{if(clip)cfg.pages[pg].buttons[i]=JSON.parse(JSON.stringify(clip))};
+const snap=()=>{const t=JSON.stringify(cfg);if(hist[hist.length-1]!==t){hist.push(t);if(hist.length>100)hist.shift();redo=[]}};
+document.addEventListener('change',e=>{if(e.target.dataset&&e.target.dataset.p)snap()},true);
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(el&&/^(addPage|dupPage|delPage|addState|addMsg|delMsg|delState|pasteKey)$/.test(el.dataset.act))snap()},true);
+const jump=(from,to)=>{if(!from.length)return;to.push(JSON.stringify(cfg));cfg=JSON.parse(from.pop());if(pg>=cfg.pages.length)pg=cfg.pages.length-1;render();schedulePush()};
+$('#bUndo').onclick=()=>jump(hist,redo);$('#bRedo').onclick=()=>jump(redo,hist);
+document.addEventListener('keydown',e=>{if(!(e.ctrlKey||e.metaKey)||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;const k=e.key.toLowerCase();if(k==='c'&&!String(getSelection())){doCopy();render()}else if(k==='v'&&clip){e.preventDefault();snap();doPaste();render();schedulePush()}else if(k==='z'){e.preventDefault();e.shiftKey?jump(redo,hist):jump(hist,redo)}else if(k==='y'){e.preventDefault();jump(redo,hist)}});
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset&&/encoder\.action$/.test(t.dataset.p||'')&&t.value==='page'&&cfg.pages.length>1&&confirm('Make the encoder change pages on ALL pages? (Recommended: otherwise you can get stuck on a page where the encoder is off.)')){cfg.pages.forEach(q=>{q.encoder=q.encoder||{};q.encoder.action='page';q.encoder.enabled=true});render();schedulePush()}});
+document.addEventListener('change',e=>{if(e.target.id==='pgSel'){pg=+e.target.value;sel=0;render()}});
+document.addEventListener('toggle',e=>{if(e.target.id==='exd'){exOpen=e.target.open;try{localStorage.setItem('exOpen',exOpen?'1':'0')}catch(x){}}},true);
+const _r=render;render=function(){_r();applyTips();$('#bUndo').disabled=!hist.length;$('#bRedo').disabled=!redo.length};render();
+</script></body></html>
