@@ -4,7 +4,7 @@
 
 ![The CaptainsMate editor showing a looper page, a counter key, and the pedal screen preview](docs/screenshot-stage.png)
 
-**[Try the test emulator in your browser](https://peanutismint.github.io/captainsmate/)**, no pedal or install needed. Build pages, press the keys on screen and watch the pedal's screen preview react. If you do have a pedal, the same page can connect to it over USB (Chrome or Edge).
+**[Try the test emulator in your browser](https://peanutismint.github.io/CaptainsMate/editor/captainsmate.html)**, no pedal or install needed. Build pages, press the keys on screen and watch the pedal's screen preview react. If you do have a pedal, the same page can connect to it over USB (Chrome or Edge).
 
 The MIDI Captain 10 STD is a great little foot controller, but changing what a footswitch does usually means digging through a config file, ejecting the USB drive and rebooting the pedal. CaptainsMate is my attempt to make that painless: a point-and-click editor that runs in your browser, plus a small custom firmware that takes changes live over USB.
 
