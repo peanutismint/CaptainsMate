@@ -2,19 +2,7 @@
 
 **Edit your MIDI Captain from your browser, press Send, and keep playing.**
 
-<table>
-  <tr>
-    <td width="50%"><img src="docs/screenshot-stage.png" alt="Stage page with drive, delay, reverb, FX loop and tap tempo keys"></td>
-    <td width="50%"><img src="docs/screenshot-looper.png" alt="Looper page with a scene counter and the pedal screen preview"></td>
-  </tr>
-  <tr>
-    <td align="center"><sub><b>Stage page:</b> toggles, a momentary reverb and tap tempo with the tuner on a long press</sub></td>
-    <td align="center"><sub><b>Looper page:</b> a scene counter that shows "Bridge" on the pedal's screen</sub></td>
-  </tr>
-  <tr>
-    <td colspan="2" align="center"><img src="docs/screenshot-phone.png" alt="CaptainsMate on a phone" width="260"><br><sub><b>On a phone:</b> the layout reflows to fit, no sideways scrolling</sub></td>
-  </tr>
-</table>
+![The CaptainsMate editor showing a looper page, a counter key, and the pedal screen preview](docs/screenshot-stage.png)
 
 **[Try the test emulator in your browser](https://peanutismint.github.io/captainsmate/)**, no pedal or install needed. Build pages, press the keys on screen and watch the pedal's screen preview react. If you do have a pedal, the same page can connect to it over USB (Chrome or Edge).
 
