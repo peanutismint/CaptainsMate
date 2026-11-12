@@ -1,0 +1,792 @@
+{
+  "active_page": 0,
+  "long_press_threshold_ms": 700,
+  "usb_drive_name": "MIDICAPTAIN",
+  "display": {
+    "expression_text_size": "medium",
+    "status_text_size": "medium",
+    "button_text_size": "medium"
+  },
+  "device": "std10",
+  "dev_mode": true,
+  "pages": [
+    {
+      "buttons": [
+        {
+          "color": "green",
+          "label": "P UP",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "up": [
+                {
+                  "type": "pc_inc"
+                }
+              ]
+            }
+          ],
+          "long": [
+            {
+              "color": "green",
+              "down": [
+                {
+                  "type": "pc",
+                  "program": 0
+                }
+              ]
+            }
+          ],
+          "show": {
+            "caption": "Preset",
+            "zero": -1,
+            "src": "pc"
+          }
+        },
+        {
+          "cc_min": 52,
+          "color": "blue",
+          "mode": "keytimes",
+          "initial": 64,
+          "cc_step": 1,
+          "cc": 11,
+          "show": {
+            "caption": "Capo",
+            "signed": false,
+            "src": "cc",
+            "zero": 64
+          },
+          "short": [
+            {
+              "color": "blue",
+              "up": [
+                {
+                  "type": "cc_inc"
+                }
+              ]
+            }
+          ],
+          "long": [
+            {
+              "color": "blue",
+              "down": [
+                {
+                  "type": "cc",
+                  "cc": 11,
+                  "value": 64
+                }
+              ]
+            }
+          ],
+          "label": "CAPO UP",
+          "cc_max": 76,
+          "cc_wrap": true
+        },
+        {
+          "cc_min": 0,
+          "color": "yellow",
+          "mode": "keytimes",
+          "initial": 6,
+          "cc_step": 1,
+          "cc": 14,
+          "short": [
+            {
+              "color": "yellow",
+              "up": [
+                {
+                  "type": "cc_inc"
+                }
+              ]
+            }
+          ],
+          "long": [
+            {
+              "color": "yellow",
+              "down": [
+                {
+                  "type": "cc",
+                  "cc": 14,
+                  "value": 6
+                }
+              ]
+            }
+          ],
+          "label": "MODEL UP",
+          "cc_max": 10,
+          "cc_wrap": true,
+          "names": [
+            "BYPASS",
+            "MODERN HB",
+            "VINTAGE HB",
+            "SC BRIDGE",
+            "SC NECK",
+            "P-90",
+            "ACOUSTIC",
+            "RESONATOR",
+            "JAZZ",
+            "BASS",
+            "BARITONE"
+          ],
+          "show": {
+            "caption": "Model",
+            "src": "label"
+          }
+        },
+        {
+          "color": "magenta",
+          "label": "DOUBL",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "magenta",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 27,
+                  "value": 0
+                }
+              ],
+              "label": "NORMAL"
+            },
+            {
+              "color": "magenta",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 27,
+                  "value": 1
+                }
+              ],
+              "label": "OCT DN"
+            },
+            {
+              "color": "magenta",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 27,
+                  "value": 2
+                }
+              ],
+              "label": "OCT UP"
+            },
+            {
+              "color": "magenta",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 27,
+                  "value": 3
+                }
+              ],
+              "label": "4TH UP"
+            },
+            {
+              "color": "magenta",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 27,
+                  "value": 4
+                }
+              ],
+              "label": "5TH UP"
+            },
+            {
+              "color": "magenta",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 27,
+                  "value": 5
+                }
+              ],
+              "label": "7STR1"
+            },
+            {
+              "color": "magenta",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 27,
+                  "value": 6
+                }
+              ],
+              "label": "7STR2"
+            },
+            {
+              "color": "magenta",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 27,
+                  "value": 7
+                }
+              ],
+              "label": "12STR1"
+            },
+            {
+              "color": "magenta",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 27,
+                  "value": 8
+                }
+              ],
+              "label": "12STR2"
+            },
+            {
+              "color": "magenta",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 27,
+                  "value": 9
+                }
+              ],
+              "label": "CUSTOM"
+            }
+          ],
+          "long": [
+            {
+              "color": "magenta",
+              "down": [
+                {
+                  "type": "cc",
+                  "cc": 27,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "color": "white",
+          "type": "page_inc",
+          "label": "PG UP"
+        },
+        {
+          "color": "green",
+          "label": "P DN",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "up": [
+                {
+                  "type": "pc_dec"
+                }
+              ]
+            }
+          ],
+          "long": [
+            {
+              "color": "green",
+              "down": [
+                {
+                  "type": "pc",
+                  "program": 0
+                }
+              ]
+            }
+          ],
+          "show": {
+            "src": "pc",
+            "zero": -1,
+            "caption": "Preset"
+          }
+        },
+        {
+          "cc_min": 52,
+          "color": "blue",
+          "mode": "keytimes",
+          "initial": 64,
+          "cc_step": 1,
+          "cc": 11,
+          "show": {
+            "src": "cc",
+            "zero": 64,
+            "caption": "Capo"
+          },
+          "short": [
+            {
+              "color": "blue",
+              "up": [
+                {
+                  "type": "cc_dec"
+                }
+              ]
+            }
+          ],
+          "long": [
+            {
+              "color": "blue",
+              "down": [
+                {
+                  "type": "cc",
+                  "cc": 11,
+                  "value": 64
+                }
+              ]
+            }
+          ],
+          "label": "CAPO DN",
+          "cc_max": 76,
+          "cc_wrap": true
+        },
+        {
+          "cc_min": 0,
+          "color": "yellow",
+          "mode": "keytimes",
+          "initial": 6,
+          "cc_step": 1,
+          "cc": 14,
+          "short": [
+            {
+              "color": "yellow",
+              "up": [
+                {
+                  "type": "cc_dec"
+                }
+              ]
+            }
+          ],
+          "long": [
+            {
+              "color": "yellow",
+              "down": [
+                {
+                  "type": "cc",
+                  "cc": 14,
+                  "value": 6
+                }
+              ]
+            }
+          ],
+          "label": "MODEL DN",
+          "cc_max": 10,
+          "cc_wrap": true,
+          "names": [
+            "BYPASS",
+            "MODERN HB",
+            "VINTAGE HB",
+            "SC BRIDGE",
+            "SC NECK",
+            "P-90",
+            "ACOUSTIC",
+            "RESONATOR",
+            "JAZZ",
+            "BASS",
+            "BARITONE"
+          ],
+          "show": {
+            "caption": "Model",
+            "src": "label"
+          }
+        },
+        {
+          "color": "cyan",
+          "label": "TUNE",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 7,
+                  "value": 0
+                }
+              ],
+              "label": "STD"
+            },
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 7,
+                  "value": 1
+                }
+              ],
+              "label": "CUSTOM"
+            },
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 7,
+                  "value": 2
+                }
+              ],
+              "label": "BASS"
+            },
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 7,
+                  "value": 3
+                }
+              ],
+              "label": "DROP D"
+            },
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 7,
+                  "value": 4
+                }
+              ],
+              "label": "DBL DD"
+            },
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 7,
+                  "value": 5
+                }
+              ],
+              "label": "DADGAD"
+            },
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 7,
+                  "value": 6
+                }
+              ],
+              "label": "OPEN G"
+            },
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 7,
+                  "value": 7
+                }
+              ],
+              "label": "OPEN D"
+            },
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 7,
+                  "value": 8
+                }
+              ],
+              "label": "OPEN E"
+            },
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 7,
+                  "value": 9
+                }
+              ],
+              "label": "OPEN A"
+            },
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 7,
+                  "value": 10
+                }
+              ],
+              "label": "E MIN"
+            },
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 7,
+                  "value": 11
+                }
+              ],
+              "label": "D MIN"
+            },
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 7,
+                  "value": 12
+                }
+              ],
+              "label": "A MIN"
+            }
+          ],
+          "long": [
+            {
+              "color": "cyan",
+              "down": [
+                {
+                  "type": "cc",
+                  "cc": 7,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "color": "white",
+          "type": "page_dec",
+          "label": "PG DN"
+        }
+      ],
+      "encoder": {
+        "enabled": true,
+        "max": 127,
+        "min": 0,
+        "label": "ENC",
+        "steps": null,
+        "cc": 11,
+        "initial": 64,
+        "push": {
+          "enabled": false,
+          "cc": 14,
+          "mode": "momentary",
+          "label": "PUSH"
+        },
+        "action": "page"
+      },
+      "name": "AT-200",
+      "expression": {
+        "exp2": {
+          "enabled": false,
+          "max": 127,
+          "threshold": 2,
+          "label": "EXP2",
+          "polarity": "normal",
+          "cc": 13,
+          "min": 0
+        },
+        "exp1": {
+          "enabled": false,
+          "max": 127,
+          "threshold": 2,
+          "label": "EXP1",
+          "polarity": "normal",
+          "cc": 12,
+          "min": 0
+        }
+      }
+    },
+    {
+      "buttons": [
+        {
+          "color": "white",
+          "label": "KEY 1",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "white",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 20,
+                  "value": 127
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "label": "KEY 2",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "white",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 21,
+                  "value": 127
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "label": "KEY 3",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "white",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 22,
+                  "value": 127
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "label": "KEY 4",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "white",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 23,
+                  "value": 127
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "type": "page_inc",
+          "label": "PG UP"
+        },
+        {
+          "color": "white",
+          "label": "PANTS!",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "white",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 25,
+                  "value": 127
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "label": "Sockes. ",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "magenta",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 26,
+                  "value": 127
+                }
+              ],
+              "label": "Blurg"
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "label": "KEY 8",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "white",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 27,
+                  "value": 127
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "label": "KEY 9",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "white",
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 28,
+                  "value": 127
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "type": "page_dec",
+          "label": "PG DN"
+        }
+      ],
+      "encoder": {
+        "enabled": true,
+        "max": 127,
+        "min": 0,
+        "label": "ENC",
+        "steps": null,
+        "cc": 11,
+        "initial": 64,
+        "push": {
+          "enabled": false,
+          "cc": 14,
+          "mode": "momentary",
+          "label": "PUSH"
+        },
+        "action": "page"
+      },
+      "expression": {
+        "exp2": {
+          "enabled": false,
+          "max": 127,
+          "threshold": 2,
+          "label": "EXP2",
+          "polarity": "normal",
+          "cc": 13,
+          "min": 0
+        },
+        "exp1": {
+          "enabled": false,
+          "max": 127,
+          "threshold": 2,
+          "label": "EXP1",
+          "polarity": "normal",
+          "cc": 12,
+          "min": 0
+        }
+      }
+    }
+  ],
+  "battery_type": "alkaline",
+  "battery_style": "icon"
+}

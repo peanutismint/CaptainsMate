@@ -388,6 +388,49 @@ def pin_of(n):
         return getattr(microcontroller.pin, "GPIO" + n[2:])
 
 
+# ---------------------------------------------------------------- screen brightness
+# Backlight is PWM on GP8 (found in the stock FW5.16 code). Only touched if the config asks for it.
+bl = None
+bl_cur = [-1.0]
+bl_act = [0.0]
+bl_clk = [0.0]
+
+
+def bl_setup():
+    global bl
+    want = cfg.get("screen_brightness") is not None or cfg.get("screen_idle_brightness") is not None
+    if bl is None and want:
+        try:
+            import pwmio
+            bl = pwmio.PWMOut(pin_of(cfg.get("backlight_pin") or "GP8"), frequency=2000, duty_cycle=65535)
+        except Exception as e:
+            log("backlight pwm failed: " + str(e))
+            return
+    bl_cur[0] = -1.0
+    bl_act[0] = time.monotonic()
+
+
+def bl_poll(now):
+    if bl is None:
+        return
+    full = cfg.get("screen_brightness")
+    full = 100 if full is None else full
+    idle = cfg.get("screen_idle_brightness")
+    t = full
+    if idle is not None and idle < full and (now - bl_act[0]) >= (cfg.get("screen_idle_seconds") or 10):
+        t = idle
+    cur = bl_cur[0]
+    if cur < 0 or t > cur:
+        cur = t
+    elif t < cur:
+        cur = max(t, cur - 100.0 * (now - bl_clk[0]))
+    bl_clk[0] = now
+    if cur != bl_cur[0]:
+        bl_cur[0] = cur
+        v = cur / 100.0
+        bl.duty_cycle = int(65535 * v * v)
+
+
 def batt_setup():
     global batt_in, batt_err, batt_v
     if batt_in is not None:
@@ -556,6 +599,7 @@ def poll_enc(now):
     if d == 0:
         return
     enc_last = pos
+    bl_act[0] = now
     e = PAGES[page].get("encoder") or {}
     if not e.get("enabled"):
         return
@@ -590,6 +634,59 @@ def run_msg(m, b, direction):
         return run_msg2(m, b, direction)
     finally:
         cur_ch = MIDI_CH
+
+
+fire_depth = [0]
+
+
+def fire_keys(m):
+    # Emulates tapping (or long-pressing) other keys, so one key can drive several.
+    if fire_depth[0] >= 3:
+        log("press: too many nested presses, stopped")
+        return "LOOP"
+    fire_depth[0] += 1
+    out = None
+    try:
+        pg = int(m.get("page") or (page + 1)) - 1
+        if pg < 0 or pg >= len(PAGES):
+            return None
+        which = "long" if m.get("press") == "long" else "short"
+        store = long_idx if which == "long" else step_idx
+        bl = PAGES[pg].get("buttons") or []
+        for tok in str(m.get("keys", "")).replace(" ", "").split(","):
+            if not tok:
+                continue
+            i = int(tok) - 1
+            if i < 0 or i >= len(bl):
+                continue
+            b = bl[i]
+            lst = b.get(which) or []
+            if is_page_btn(b) or not lst:
+                continue
+            s = lst[store.get((pg, i), 0) % len(lst)]
+            r1 = run_list(s.get("down"), b, "down")
+            r2 = run_list(s.get("up"), b, "up")
+            if which == "short" and len(lst) > 1 and pg == page:
+                vals[("s", i)] = s.get("label") or str(store.get((pg, i), 0))
+            if s.get("color") and pg == page:
+                led_col[i] = rgb(s["color"])
+                led_lit[i] = s.get("dim") is False or bool(s.get("lit"))
+                radio_off(i, b)
+            store[(pg, i)] = store.get((pg, i), 0) + 1
+            out = r2 or r1 or out
+    finally:
+        fire_depth[0] -= 1
+    return out or "PRESS " + str(m.get("keys", ""))
+
+
+def radio_off(i, b):
+    # Keys sharing the same "radio" group name act like radio buttons: lighting one dims the rest.
+    g = b.get("radio")
+    if g:
+        bl = btns()
+        for j in range(len(bl)):
+            if j != i and bl[j].get("radio") == g:
+                led_lit[j] = False
 
 
 def run_msg2(m, b, direction):
@@ -640,6 +737,8 @@ def run_msg2(m, b, direction):
             except Exception as e:
                 log("sysex error: " + str(e))
         return "SYSEX %d" % len(b2)
+    if t == "press":
+        return fire_keys(m)
     if t == "note":
         if direction == "down":
             tx(NoteOn(m.get("note", 60), m.get("velocity", 127)))
@@ -730,7 +829,8 @@ def on_up(i, now):
             vals[("s", i)] = s.get("label") or str(step_idx.get((page, i), 0))
         if s.get("color"):
             led_col[i] = rgb(s["color"])
-            led_lit[i] = bool(s.get("lit"))
+            led_lit[i] = s.get("dim") is False or bool(s.get("lit"))
+            radio_off(i, b)
         step_idx[(page, i)] = step_idx.get((page, i), 0) + 1
         if r:
             show_popup(b, s.get("label") or b.get("label"), r)
@@ -838,6 +938,7 @@ def apply_cfg(new, text):
         page = 0
     set_charge()
     batt_setup()
+    bl_setup()
     batt_t = -10.0
     load_page()
     popup("CONFIG", "applied")
@@ -939,6 +1040,7 @@ else:
     popup("READY", "page %d/%d" % (page + 1, len(PAGES)))
 log("running v0.3, serial link=%s, free=%d" % (HAS_SER, gc.mem_free()))
 
+bl_setup()
 gc_t = [0]
 while True:
     try:
@@ -954,6 +1056,7 @@ while True:
                 k.t_edge = now
             elif raw != k.down and (now - k.t_edge) > 0.02:
                 k.down = raw
+                bl_act[0] = now
                 if raw:
                     k.t_down = now
                     on_down(i, now)
@@ -970,6 +1073,10 @@ while True:
             poll_enc(now)
         except Exception as e:
             log("enc error: " + str(e))
+        try:
+            bl_poll(now)
+        except Exception as e:
+            log("bl error: " + str(e))
         try:
             batt_poll(now)
         except Exception as e:

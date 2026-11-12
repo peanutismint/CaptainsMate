@@ -1,0 +1,1126 @@
+{
+  "active_page": 0,
+  "dev_mode": false,
+  "device": "std10",
+  "long_press_threshold_ms": 600,
+  "midi_channel": 1,
+  "battery_display": true,
+  "battery_style": "icon",
+  "battery_type": "alkaline",
+  "pages": [
+    {
+      "name": "Patches",
+      "buttons": [
+        {
+          "color": "green",
+          "label": "PATCH 1",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "label": "PATCH 1",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 01 00 00 00 01 7E F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "green",
+          "label": "PATCH 2",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "label": "PATCH 2",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 01 00 00 00 02 7D F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "green",
+          "label": "PATCH 3",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "label": "PATCH 3",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 01 00 00 00 03 7C F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "green",
+          "label": "PATCH 4",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "label": "PATCH 4",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 01 00 00 00 04 7B F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "label": "PG UP",
+          "type": "page_inc"
+        },
+        {
+          "color": "green",
+          "label": "PATCH 5",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "label": "PATCH 5",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 01 00 00 00 05 7A F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "green",
+          "label": "PATCH 6",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "label": "PATCH 6",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 01 00 00 00 06 79 F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "red",
+          "label": "MUTE",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "red",
+              "label": "ON",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 22 00 5A F7"
+                }
+              ]
+            },
+            {
+              "color": "red",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 22 32 28 F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "label": "CONNECT",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "white",
+              "label": "READY",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 7F 00 00 01 01 7F F7"
+                },
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 7F 00 00 02 00 7F F7"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "caption": "Waza-Air"
+          }
+        },
+        {
+          "color": "white",
+          "label": "PG DN",
+          "type": "page_dec"
+        }
+      ],
+      "encoder": {
+        "enabled": true,
+        "action": "page"
+      },
+      "expression": {
+        "exp1": {
+          "enabled": false,
+          "label": "EXP1",
+          "cc": 12,
+          "min": 0,
+          "max": 127
+        },
+        "exp2": {
+          "enabled": false,
+          "label": "EXP2",
+          "cc": 13,
+          "min": 0,
+          "max": 127
+        }
+      }
+    },
+    {
+      "name": "Effects",
+      "buttons": [
+        {
+          "color": "orange",
+          "label": "BOOST",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "orange",
+              "label": "ON",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 00 30 01 6F F7"
+                }
+              ]
+            },
+            {
+              "color": "orange",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 00 30 00 70 F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "purple",
+          "label": "MOD",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "purple",
+              "label": "ON",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 01 40 01 5E F7"
+                }
+              ]
+            },
+            {
+              "color": "purple",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 01 40 00 5F F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "blue",
+          "label": "DELAY",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "blue",
+              "label": "ON",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 05 60 01 3A F7"
+                }
+              ]
+            },
+            {
+              "color": "blue",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 05 60 00 3B F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "magenta",
+          "label": "FX",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "magenta",
+              "label": "ON",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 03 4C 01 50 F7"
+                }
+              ]
+            },
+            {
+              "color": "magenta",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 03 4C 00 51 F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "label": "PG UP",
+          "type": "page_inc"
+        },
+        {
+          "color": "cyan",
+          "label": "REVERB",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "cyan",
+              "label": "ON",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 06 10 01 09 F7"
+                }
+              ]
+            },
+            {
+              "color": "cyan",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 06 10 00 0A F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "blue",
+          "label": "DELAY 2",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "blue",
+              "label": "ON",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 10 4E 01 41 F7"
+                }
+              ]
+            },
+            {
+              "color": "blue",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 10 4E 00 42 F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "yellow",
+          "label": "NOISE SUP",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "yellow",
+              "label": "ON",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 06 63 01 36 F7"
+                }
+              ]
+            },
+            {
+              "color": "yellow",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 06 63 00 37 F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "green",
+          "label": "EQ",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "label": "ON",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 01 30 01 6E F7"
+                }
+              ]
+            },
+            {
+              "color": "green",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 01 30 00 6F F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "label": "PG DN",
+          "type": "page_dec"
+        }
+      ],
+      "encoder": {
+        "enabled": true,
+        "action": "page"
+      },
+      "expression": {
+        "exp1": {
+          "enabled": false,
+          "label": "EXP1",
+          "cc": 12,
+          "min": 0,
+          "max": 127
+        },
+        "exp2": {
+          "enabled": false,
+          "label": "EXP2",
+          "cc": 13,
+          "min": 0,
+          "max": 127
+        }
+      }
+    },
+    {
+      "name": "Amp",
+      "buttons": [
+        {
+          "color": "red",
+          "label": "AMP TYPE",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "white",
+              "label": "FLAT",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 20 00 5C F7"
+                }
+              ]
+            },
+            {
+              "color": "green",
+              "label": "CLEAN",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 20 01 5B F7"
+                }
+              ]
+            },
+            {
+              "color": "yellow",
+              "label": "CRUNCH",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 20 02 5A F7"
+                }
+              ]
+            },
+            {
+              "color": "red",
+              "label": "LEAD",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 20 03 59 F7"
+                }
+              ]
+            },
+            {
+              "color": "orange",
+              "label": "BROWN",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 20 04 58 F7"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "caption": "AMP TYPE"
+          }
+        },
+        {
+          "color": "red",
+          "label": "GAIN",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "blue",
+              "label": "LOW",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 21 19 42 F7"
+                }
+              ]
+            },
+            {
+              "color": "green",
+              "label": "MID",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 21 32 29 F7"
+                }
+              ]
+            },
+            {
+              "color": "orange",
+              "label": "HIGH",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 21 4B 10 F7"
+                }
+              ]
+            },
+            {
+              "color": "red",
+              "label": "MAX",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 21 64 77 F7"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "caption": "GAIN"
+          }
+        },
+        {
+          "color": "green",
+          "label": "VOLUME",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "blue",
+              "label": "LOW",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 22 19 41 F7"
+                }
+              ]
+            },
+            {
+              "color": "green",
+              "label": "MID",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 22 32 28 F7"
+                }
+              ]
+            },
+            {
+              "color": "orange",
+              "label": "HIGH",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 22 4B 0F F7"
+                }
+              ]
+            },
+            {
+              "color": "red",
+              "label": "MAX",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 22 64 76 F7"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "caption": "VOLUME"
+          }
+        },
+        {
+          "color": "cyan",
+          "label": "3D MODE",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "white",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 06 56 00 44 F7"
+                }
+              ]
+            },
+            {
+              "color": "cyan",
+              "label": "SURROUND",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 06 56 01 43 F7"
+                }
+              ]
+            },
+            {
+              "color": "blue",
+              "label": "STATIC",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 06 56 02 42 F7"
+                }
+              ]
+            },
+            {
+              "color": "purple",
+              "label": "STAGE",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 06 56 03 41 F7"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "caption": "3D MODE"
+          }
+        },
+        {
+          "color": "white",
+          "label": "PG UP",
+          "type": "page_inc"
+        },
+        {
+          "color": "orange",
+          "label": "FX BTN 1",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "orange",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 7F 01 01 00 01 7E F7"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "caption": "FX BTN 1"
+          }
+        },
+        {
+          "color": "blue",
+          "label": "FX BTN 2",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "blue",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 7F 01 01 01 01 7D F7"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "caption": "FX BTN 2"
+          }
+        },
+        {
+          "color": "cyan",
+          "label": "FX BTN 3",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 7F 01 01 02 01 7C F7"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "caption": "FX BTN 3"
+          }
+        },
+        {
+          "color": "blue",
+          "label": "3D ROOM",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "cyan",
+              "label": "STUDIO",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 06 55 00 45 F7"
+                }
+              ]
+            },
+            {
+              "color": "purple",
+              "label": "STAGE",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 60 00 06 55 01 44 F7"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "caption": "3D ROOM"
+          }
+        },
+        {
+          "color": "white",
+          "label": "PG DN",
+          "type": "page_dec"
+        }
+      ],
+      "encoder": {
+        "enabled": true,
+        "action": "page"
+      },
+      "expression": {
+        "exp1": {
+          "enabled": false,
+          "label": "EXP1",
+          "cc": 12,
+          "min": 0,
+          "max": 127
+        },
+        "exp2": {
+          "enabled": false,
+          "label": "EXP2",
+          "cc": 13,
+          "min": 0,
+          "max": 127
+        }
+      }
+    },
+    {
+      "name": "Tone",
+      "buttons": [
+        {
+          "color": "blue",
+          "label": "BASS",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "blue",
+              "label": "LOW",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 23 19 40 F7"
+                }
+              ]
+            },
+            {
+              "color": "green",
+              "label": "MID",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 23 32 27 F7"
+                }
+              ]
+            },
+            {
+              "color": "orange",
+              "label": "HIGH",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 23 4B 0E F7"
+                }
+              ]
+            },
+            {
+              "color": "red",
+              "label": "MAX",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 23 64 75 F7"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "caption": "BASS"
+          }
+        },
+        {
+          "color": "green",
+          "label": "MIDDLE",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "blue",
+              "label": "LOW",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 24 19 3F F7"
+                }
+              ]
+            },
+            {
+              "color": "green",
+              "label": "MID",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 24 32 26 F7"
+                }
+              ]
+            },
+            {
+              "color": "orange",
+              "label": "HIGH",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 24 4B 0D F7"
+                }
+              ]
+            },
+            {
+              "color": "red",
+              "label": "MAX",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 24 64 74 F7"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "caption": "MIDDLE"
+          }
+        },
+        {
+          "color": "cyan",
+          "label": "TREBLE",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "blue",
+              "label": "LOW",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 25 19 3E F7"
+                }
+              ]
+            },
+            {
+              "color": "green",
+              "label": "MID",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 25 32 25 F7"
+                }
+              ]
+            },
+            {
+              "color": "orange",
+              "label": "HIGH",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 25 4B 0C F7"
+                }
+              ]
+            },
+            {
+              "color": "red",
+              "label": "MAX",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 25 64 73 F7"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "caption": "TREBLE"
+          }
+        },
+        {
+          "color": "purple",
+          "label": "PRESENCE",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "blue",
+              "label": "LOW",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 26 19 3D F7"
+                }
+              ]
+            },
+            {
+              "color": "green",
+              "label": "MID",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 26 32 24 F7"
+                }
+              ]
+            },
+            {
+              "color": "orange",
+              "label": "HIGH",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 26 4B 0B F7"
+                }
+              ]
+            },
+            {
+              "color": "red",
+              "label": "MAX",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 26 64 72 F7"
+                }
+              ]
+            }
+          ],
+          "long": [],
+          "show": {
+            "caption": "PRESENCE"
+          }
+        },
+        {
+          "color": "white",
+          "label": "PG UP",
+          "type": "page_inc"
+        },
+        {
+          "color": "green",
+          "label": "GLOBAL EQ",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "label": "ON",
+              "dim": false,
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 32 01 49 F7"
+                }
+              ]
+            },
+            {
+              "color": "green",
+              "label": "OFF",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 32 00 4A F7"
+                }
+              ]
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "off",
+          "label": "-",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "off",
+              "up": []
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "off",
+          "label": "-",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "off",
+              "up": []
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "off",
+          "label": "-",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "off",
+              "up": []
+            }
+          ],
+          "long": []
+        },
+        {
+          "color": "white",
+          "label": "PG DN",
+          "type": "page_dec"
+        }
+      ],
+      "encoder": {
+        "enabled": true,
+        "action": "page"
+      },
+      "expression": {
+        "exp1": {
+          "enabled": false,
+          "label": "EXP1",
+          "cc": 12,
+          "min": 0,
+          "max": 127
+        },
+        "exp2": {
+          "enabled": false,
+          "label": "EXP2",
+          "cc": 13,
+          "min": 0,
+          "max": 127
+        }
+      }
+    }
+  ]
+}

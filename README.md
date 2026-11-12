@@ -2,7 +2,19 @@
 
 **Edit your MIDI Captain from your browser, press Send, and keep playing.**
 
-![The CaptainsMate editor showing a looper page, a counter key, and the pedal screen preview](docs/screenshot.png)
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshot-stage.png" alt="Stage page with drive, delay, reverb, FX loop and tap tempo keys"></td>
+    <td width="50%"><img src="docs/screenshot-looper.png" alt="Looper page with a scene counter and the pedal screen preview"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub><b>Stage page:</b> toggles, a momentary reverb and tap tempo with the tuner on a long press</sub></td>
+    <td align="center"><sub><b>Looper page:</b> a scene counter that shows "Bridge" on the pedal's screen</sub></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><img src="docs/screenshot-phone.png" alt="CaptainsMate on a phone" width="260"><br><sub><b>On a phone:</b> the layout reflows to fit, no sideways scrolling</sub></td>
+  </tr>
+</table>
 
 **[Try the test emulator in your browser](https://peanutismint.github.io/captainsmate/)**, no pedal or install needed. Build pages, press the keys on screen and watch the pedal's screen preview react. If you do have a pedal, the same page can connect to it over USB (Chrome or Edge).
 
@@ -29,7 +41,7 @@ It's built for people who just want their pedal to do the right thing on stage, 
 3. Click **Connect pedal** and pick the pedal's serial port. The editor reads what's on it.
 4. Change something, click **Send**, and step on the key.
 
-Want to see what's possible first? Open `examples/example-config.json` in the editor. It's a three-page setup like a seasoned pedalboard player might build: stage pedals (drive, delay, momentary reverb, FX loop, tap tempo with the tuner on a long press, presets), a looper and scenes page, and an extras page with drum notes, sustain, song select, SysEx master volume and a MIDI panic key. Change the CC numbers to match your own gear.
+Want to see what's possible first? Open `examples/example-config.json` in the editor. It's a three-page setup like a seasoned pedalboard player might build: stage pedals (drive, delay, momentary reverb, FX loop, tap tempo with the tuner on a long press, presets), a looper and scenes page, and an extras page with drum notes, sustain, song select, SysEx master volume and a MIDI panic key. Change the CC numbers to match your own gear. There's also `examples/waza-air-config.json`, a gear-specific example that controls Boss Waza-Air headphones with SysEx (patches, effect on/off, amp knobs), handy as a model for any device that uses SysEx.
 
 ## How keys work
 
@@ -41,6 +53,7 @@ Each key has a **type**. Each type can respond to a **tap** and to a **long pres
 |---|---|---|
 | **Momentary** | Sends one value while your foot is down and another when you lift | A reverb swell only while you hold it, a solo boost, a freeze or whammy effect, a sustain pedal |
 | **Toggle** | Each tap flips ON and OFF, and the LED changes color | Drive, delay, the FX loop, a compressor, anything you set and forget |
+| **Radio (exclusive)** | A pick-one group: pressing a key lights it and dims the others in the same group | Preset or patch banks (8 keys that each recall a patch, only the current one lit), amp or scene selectors |
 | **Counter (up / down)** | Steps a value up or down, can wrap around, and can show names on screen | Scene or snapshot select (Verse, Chorus, Solo), amp channel, bank select, volume in steps |
 | **Sequence** | Each tap goes to the next state, and each state sends its own messages and shows its own LED color | Clean, Crunch, Lead channel cycling, stepping through delay subdivisions, walking through the parts of a song |
 | **Page up / down** | Jumps to the next or previous page of 10 keys | Separate pages for stage, looper and setlist, because ten keys is never enough |
@@ -58,6 +71,7 @@ Each key has a **type**. Each type can respond to a **tap** and to a **long pres
 - **Program Change (PC)** and **preset up/down:** recall presets or songs.
 - **Notes:** trigger drum pads, samplers and synths, with velocity.
 - **SysEx:** raw hex messages for device-specific commands that a CC can't reach, like master volume or turning on one particular effect block.
+- **Press (macro):** a message that taps, or long-presses, other keys for you. One footswitch can send a CC and also press keys 3 and 4, each moving to its next state as if you'd stepped on it. Handy for scenes that flip several things at once.
 - **MIDI channel:** pick a global channel, or override it on any single message so one pedal can drive several devices.
 
 ### The rest of the toolbox
@@ -65,7 +79,8 @@ Each key has a **type**. Each type can respond to a **tap** and to a **long pres
 - **Pop-up display:** shows a big number or name on the pedal's screen. A zero point can be subtracted, so a counter centered on 64 can read as 0.
 - **Encoder wheel:** scroll through pages, or send a CC as you turn it.
 - **Expression inputs (EXP1 and EXP2):** send a CC that follows a pedal's position, like wah or volume. They start switched off, so you won't get stray signals.
-- **LED feedback:** unlit keys glow dimly in their own color, so you can see at a glance what each key will do. Toggles light up brightly while they're ON and go back to dim when OFF (tick **lit** on any state to get this on other key types). The idle brightness is adjustable in settings.
+- **LED feedback:** unlit keys glow dimly in their own color, so you can see at a glance what each key will do. Toggles light up brightly while they're ON and go back to dim when OFF (untick **dim** on any state to keep that key bright after it fires). The idle brightness is adjustable in settings.
+- **Screen brightness:** set the pedal screen anywhere from 0 to 100%. For dark stages you can also have it fade down after a few seconds of no activity and snap back to full the moment you press a key or turn the wheel. (This drives the screen's backlight on GP8, taken from the stock firmware, so please report if yours behaves differently.)
 - **Battery:** shows the level as voltage, percent or an icon, and can optionally charge rechargeable NiMH batteries (experimental, leave it off with alkaline batteries).
 
 ## Installing on the pedal
