@@ -19,6 +19,7 @@ It's built for people who just want their pedal to do the right thing on stage, 
 - **Give every key a personality.** Momentary, toggle, counter, sequence and page keys, each with its own LED colors.
 - **Get a second function for free.** Every key can do one thing on a tap and another on a long press.
 - **See what's happening from across the stage.** A big pop-up on the pedal's screen shows the preset number, the counter value or a name like "Chorus" when you press a key.
+- **Merge and share pages.** **Import pages** (or just drop a config file onto the editor) lets you tick the pages you want from another config and choose where they go. **Export** saves a single page as a small file to share. A size chip at the top shows how big the config is, and how much memory the pedal has left once connected.
 - **Copy, paste, duplicate and undo.** Build one good key or page, then clone it.
 - **Light and dark themes,** hover tips on every field, and a built-in MIDI cheat sheet if you're new to all this.
 
