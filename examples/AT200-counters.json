@@ -86,7 +86,7 @@
           "cc_min": 0,
           "color": "yellow",
           "mode": "keytimes",
-          "initial": 6,
+          "initial": 0,
           "cc_step": 1,
           "cc": 14,
           "short": [
@@ -106,7 +106,7 @@
                 {
                   "type": "cc",
                   "cc": 14,
-                  "value": 6
+                  "value": 0
                 }
               ]
             }
@@ -115,17 +115,17 @@
           "cc_max": 10,
           "cc_wrap": true,
           "names": [
-            "BYPASS",
             "MODERN HB",
             "VINTAGE HB",
-            "SC BRIDGE",
-            "SC NECK",
-            "P-90",
+            "MINI HB",
+            "P90",
+            "CUSTOM HSH",
+            "NASHVILLE SC",
+            "CALIFORNIA SC",
+            "LIPSTICK",
             "ACOUSTIC",
-            "RESONATOR",
-            "JAZZ",
             "BASS",
-            "BARITONE"
+            "JAPANESE HSH"
           ],
           "show": {
             "caption": "Model",
@@ -136,116 +136,32 @@
           "color": "magenta",
           "label": "DOUBL",
           "mode": "keytimes",
+          "cc": 27,
+          "cc_min": 0,
+          "cc_max": 9,
+          "cc_step": 1,
+          "cc_wrap": true,
+          "initial": 0,
+          "names": [
+            "NORMAL",
+            "OCT DN",
+            "OCT UP",
+            "4TH UP",
+            "5TH UP",
+            "7STR1",
+            "7STR2",
+            "12STR1",
+            "12STR2",
+            "CUSTOM"
+          ],
           "short": [
             {
               "color": "magenta",
               "up": [
                 {
-                  "type": "cc",
-                  "cc": 27,
-                  "value": 0
+                  "type": "cc_inc"
                 }
-              ],
-              "label": "NORMAL"
-            },
-            {
-              "color": "magenta",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 27,
-                  "value": 1
-                }
-              ],
-              "label": "OCT DN"
-            },
-            {
-              "color": "magenta",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 27,
-                  "value": 2
-                }
-              ],
-              "label": "OCT UP"
-            },
-            {
-              "color": "magenta",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 27,
-                  "value": 3
-                }
-              ],
-              "label": "4TH UP"
-            },
-            {
-              "color": "magenta",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 27,
-                  "value": 4
-                }
-              ],
-              "label": "5TH UP"
-            },
-            {
-              "color": "magenta",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 27,
-                  "value": 5
-                }
-              ],
-              "label": "7STR1"
-            },
-            {
-              "color": "magenta",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 27,
-                  "value": 6
-                }
-              ],
-              "label": "7STR2"
-            },
-            {
-              "color": "magenta",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 27,
-                  "value": 7
-                }
-              ],
-              "label": "12STR1"
-            },
-            {
-              "color": "magenta",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 27,
-                  "value": 8
-                }
-              ],
-              "label": "12STR2"
-            },
-            {
-              "color": "magenta",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 27,
-                  "value": 9
-                }
-              ],
-              "label": "CUSTOM"
+              ]
             }
           ],
           "long": [
@@ -259,7 +175,10 @@
                 }
               ]
             }
-          ]
+          ],
+          "show": {
+            "caption": "DOUBL"
+          }
         },
         {
           "color": "white",
@@ -339,7 +258,7 @@
           "cc_min": 0,
           "color": "yellow",
           "mode": "keytimes",
-          "initial": 6,
+          "initial": 0,
           "cc_step": 1,
           "cc": 14,
           "short": [
@@ -359,7 +278,7 @@
                 {
                   "type": "cc",
                   "cc": 14,
-                  "value": 6
+                  "value": 0
                 }
               ]
             }
@@ -368,17 +287,17 @@
           "cc_max": 10,
           "cc_wrap": true,
           "names": [
-            "BYPASS",
             "MODERN HB",
             "VINTAGE HB",
-            "SC BRIDGE",
-            "SC NECK",
-            "P-90",
+            "MINI HB",
+            "P90",
+            "CUSTOM HSH",
+            "NASHVILLE SC",
+            "CALIFORNIA SC",
+            "LIPSTICK",
             "ACOUSTIC",
-            "RESONATOR",
-            "JAZZ",
             "BASS",
-            "BARITONE"
+            "JAPANESE HSH"
           ],
           "show": {
             "caption": "Model",
@@ -389,149 +308,35 @@
           "color": "cyan",
           "label": "TUNE",
           "mode": "keytimes",
+          "cc": 7,
+          "cc_min": 0,
+          "cc_max": 12,
+          "cc_step": 1,
+          "cc_wrap": true,
+          "initial": 0,
+          "names": [
+            "STD",
+            "CUSTOM",
+            "BASS",
+            "DROP D",
+            "DBL DD",
+            "DADGAD",
+            "OPEN G",
+            "OPEN D",
+            "OPEN E",
+            "OPEN A",
+            "E MIN",
+            "D MIN",
+            "A MIN"
+          ],
           "short": [
             {
               "color": "cyan",
               "up": [
                 {
-                  "type": "cc",
-                  "cc": 7,
-                  "value": 0
+                  "type": "cc_inc"
                 }
-              ],
-              "label": "STD"
-            },
-            {
-              "color": "cyan",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 7,
-                  "value": 1
-                }
-              ],
-              "label": "CUSTOM"
-            },
-            {
-              "color": "cyan",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 7,
-                  "value": 2
-                }
-              ],
-              "label": "BASS"
-            },
-            {
-              "color": "cyan",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 7,
-                  "value": 3
-                }
-              ],
-              "label": "DROP D"
-            },
-            {
-              "color": "cyan",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 7,
-                  "value": 4
-                }
-              ],
-              "label": "DBL DD"
-            },
-            {
-              "color": "cyan",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 7,
-                  "value": 5
-                }
-              ],
-              "label": "DADGAD"
-            },
-            {
-              "color": "cyan",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 7,
-                  "value": 6
-                }
-              ],
-              "label": "OPEN G"
-            },
-            {
-              "color": "cyan",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 7,
-                  "value": 7
-                }
-              ],
-              "label": "OPEN D"
-            },
-            {
-              "color": "cyan",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 7,
-                  "value": 8
-                }
-              ],
-              "label": "OPEN E"
-            },
-            {
-              "color": "cyan",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 7,
-                  "value": 9
-                }
-              ],
-              "label": "OPEN A"
-            },
-            {
-              "color": "cyan",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 7,
-                  "value": 10
-                }
-              ],
-              "label": "E MIN"
-            },
-            {
-              "color": "cyan",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 7,
-                  "value": 11
-                }
-              ],
-              "label": "D MIN"
-            },
-            {
-              "color": "cyan",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 7,
-                  "value": 12
-                }
-              ],
-              "label": "A MIN"
+              ]
             }
           ],
           "long": [
@@ -545,7 +350,10 @@
                 }
               ]
             }
-          ]
+          ],
+          "show": {
+            "caption": "TUNE"
+          }
         },
         {
           "color": "white",

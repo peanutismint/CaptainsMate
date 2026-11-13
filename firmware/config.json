@@ -27,7 +27,7 @@
                   "value": 127
                 }
               ],
-              "lit": true
+              "dim": false
             },
             {
               "color": "red",
@@ -58,7 +58,7 @@
                   "value": 127
                 }
               ],
-              "lit": true
+              "dim": false
             },
             {
               "color": "orange",
@@ -114,7 +114,7 @@
                   "value": 127
                 }
               ],
-              "lit": true
+              "dim": false
             },
             {
               "color": "magenta",
@@ -179,7 +179,7 @@
                   "value": 127
                 }
               ],
-              "lit": true
+              "dim": false
             },
             {
               "color": "yellow",
@@ -293,7 +293,7 @@
                   "value": 127
                 }
               ],
-              "lit": true
+              "dim": false
             },
             {
               "color": "red",
@@ -324,7 +324,7 @@
                   "value": 127
                 }
               ],
-              "lit": true
+              "dim": false
             },
             {
               "color": "green",
@@ -380,7 +380,7 @@
                   "value": 127
                 }
               ],
-              "lit": true
+              "dim": false
             },
             {
               "color": "blue",

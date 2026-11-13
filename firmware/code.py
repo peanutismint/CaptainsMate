@@ -722,7 +722,8 @@ def run_msg2(m, b, direction):
     if t == "sysex":
         if not m.get("data"):
             return None
-        b2 = bytes(int(x, 16) for x in m["data"].split())
+        d = m["data"].replace(" ", "")
+        b2 = bytes(int(d[i:i + 2], 16) for i in range(0, len(d) - 1, 2))
         if not b2 or b2[0] != 0xF0:
             b2 = b"\xf0" + b2
         if b2[-1] != 0xF7:
