@@ -18,7 +18,7 @@ h3{margin:0 0 10px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
 .row{display:flex;gap:8px;align-items:center;margin-bottom:7px}.row label{width:64px;color:var(--mu)}.row input,.row select{flex:1}
 .grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:12px}
 .key{background:var(--p2);border:1px solid var(--ln);border-radius:10px;padding:8px;cursor:pointer;min-height:100px;padding-bottom:28px;position:relative;user-select:none}
-.key.on{outline:2px solid var(--ac)}.led{height:6px;border-radius:3px;margin-bottom:8px}.key b{display:block;font-size:14px}.key small{color:var(--mu)}
+.key.on{outline:2px solid var(--ac)}.led{height:10px;border-radius:5px;margin-bottom:8px;transition:opacity .15s,box-shadow .15s}.key b{display:block;font-size:14px}.key small{color:var(--mu)}
 .top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:start}.scr{width:240px;height:240px;background:#000;border:6px solid #2b2f38;border-radius:8px;display:grid;grid-template-rows:40px 1fr 40px;font-family:Consolas,monospace;flex:none}
 .scr .h{display:grid;grid-template-columns:1fr auto 1fr}.scr .h .bt{color:#8a909c;font-size:10px;padding:2px 6px}.scr .f{display:grid;grid-template-columns:repeat(4,1fr)}.scr .c{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6px}
 .scr .h div,.scr .f div{border:1px solid #222;display:flex;align-items:center;justify-content:center;font-size:11px;padding:2px;text-align:center}
@@ -158,7 +158,7 @@ const COL={red:'#ff3b30',green:'#34c759',blue:'#3b82ff',yellow:'#ffd60a',magenta
 const MF={cc:['cc','value'],pc:['program'],note:['note','velocity'],pc_inc:[],pc_dec:[],cc_inc:[],cc_dec:[],sysex:['data'],press:['keys','press','page']};
 const MD={cc:{type:'cc',cc:20,value:127},pc:{type:'pc',program:0},note:{type:'note',note:60,velocity:127},pc_inc:{type:'pc_inc'},pc_dec:{type:'pc_dec'},cc_inc:{type:'cc_inc'},cc_dec:{type:'cc_dec'},sysex:{type:'sysex',data:'F0 7E 7F 06 01 F7'},press:{type:'press',keys:'2',press:'short'}};
 const HS={press:['short','long']};
-let hist=[],redo=[],clip=null;let cfg,pg=0,sel=0,dirH=null,sim={pc:0,cc:{},st:{}},pop=null,pt;
+let hist=[],redo=[],clip=null;let cfg,pg=0,sel=0,dirH=null,sim={pc:0,cc:{},st:{},rad:{}},pop=null,pt;
 const $=s=>document.querySelector(s),col=c=>COL[c]||c||'#888',esc=s=>String(s??'').replace(/"/g,'&quot;').replace(/</g,'&lt;');
 const gp=(o,p)=>p===''?o:p.split('.').reduce((a,k)=>a?.[k],o);
 function sp(o,p,v){const k=p.split('.'),l=k.pop();let c=o;for(const x of k){if(c[x]==null||typeof c[x]!=='object')c[x]={};c=c[x]}c[l]=v}
@@ -229,10 +229,14 @@ return`<div class="scr"><div class="h"><div>PAGE ${pg+1}/${cfg.pages.length}</di
 let exOpen=false;try{exOpen=localStorage.getItem('exOpen')==='1'}catch(e){}
 const exsum=p=>{const x=p.expression||{},e=p.encoder||{};const f=(o,n)=>n+' '+(o&&o.enabled?'CC'+o.cc:'off');return f(x.exp1,'EXP1')+' \u00b7 '+f(x.exp2,'EXP2')+' \u00b7 '+'Encoder '+(e.enabled?(e.action==='page'?'pages':'CC'+e.cc):'off')};
 function pagebar(){const n=cfg.pages.length;return`<div class="pbar"><select id="pgSel">${cfg.pages.map((q,i)=>`<option value="${i}" ${i===pg?'selected':''}>Page ${i+1}${q.name?' \u00b7 '+esc(q.name):''}</option>`).join('')}</select>${inp(`pages.${pg}.name`,cfg.pages[pg].name,'text').replace('<input ','<input placeholder="Page name (optional)" ')}<button data-act="addPage">+ Add</button><button data-act="dupPage">Duplicate</button><button data-act="expPage">Export</button><button data-act="delPage" data-i="${pg}" ${n<2?'disabled':''}>Delete</button></div>${n>1&&!cfg.pages[pg].buttons.some(isPage)&&!(cfg.pages[pg].encoder&&cfg.pages[pg].encoder.enabled&&cfg.pages[pg].encoder.action==='page')?'<div class="warn">No page key on this page: once you switch to it you can\'t get back without restarting the pedal. Set a key\'s Action to page_inc or page_dec, or set the encoder to change pages.</div>':''}`}
+function ledState(b,i,pgi){const k=pgi+':'+i,list=b.short||[],n=sim.st[k];if(isPage(b)||n===undefined||!list.length)return{c:b.color,lit:false};
+const s=list[(n-1+list.length)%list.length];let lit=s.dim===false;if(b.radio&&sim.rad[pgi+':'+b.radio]!==i)lit=false;return{c:s.color||b.color,lit}}
+function ledHtml(b,i){const L=ledState(b,i,pg),idle=cfg.led_idle==null||cfg.led_idle===''?12:+cfg.led_idle,c=col(L.c);
+const op=L.lit?1:(idle<=0?.08:Math.max(.18,idle/100));return`<div class="led" title="${L.lit?'Lit':'Dim (idle)'}" style="background:${c};opacity:${op};${L.lit?`box-shadow:0 0 8px ${c}`:''}"></div>`}
 function mid(){const p=cfg.pages[pg];
-const grid=p.buttons.map((b,i)=>`<div class="key ${i===sel?'on':''}" data-act="key" data-i="${i}"><div class="kb"><button type="button" class="ic" data-act="copyKey" data-i="${i}"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button><button type="button" class="ic" data-act="pasteKey" data-i="${i}" ${clip?'':'disabled'}><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></button></div><div class="led" style="background:${col(b.color)}"></div><b>${esc(b.label)}</b><small>${isPage(b)?b.type:(b.short||[]).length+' short / '+(b.long||[]).length+' long'}</small></div>`).join('');
+const grid=p.buttons.map((b,i)=>`<div class="key ${i===sel?'on':''}" data-act="key" data-i="${i}"><div class="kb"><button type="button" class="ic" data-act="copyKey" data-i="${i}"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button><button type="button" class="ic" data-act="pasteKey" data-i="${i}" ${clip?'':'disabled'}><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></button></div>${ledHtml(b,i)}<b>${esc(b.label)}</b><small>${isPage(b)?b.type:(b.short||[]).length+' short / '+(b.long||[]).length+' long'}</small></div>`).join('');
 const e=p.encoder,x=p.expression;
-return`<div class="top"><div style="min-width:0">${pagebar()}<div class="grid">${grid}</div><div class="hint">Click a key to edit and simulate a tap. Shift-click simulates a long press.</div>
+return`<div class="top"><div style="min-width:0">${pagebar()}<div class="grid">${grid}</div><div class="hint">Click a key to edit and simulate a tap. Shift-click simulates a long press. The key's LED bar previews the pedal: dim until a state with Dim unticked fires, then it shows that state's color; Radio keys switch each other off.</div>
 <details id="exd" ${exOpen?'open':''}><summary>Expression &amp; encoder<span>${exsum(p)}</span></summary><div class="ex">${exr(`pages.${pg}.expression.exp1`,x.exp1,'EXP1')}${exr(`pages.${pg}.expression.exp2`,x.exp2,'EXP2')}<div><h3>Encoder</h3><div class="m">on${chk(`pages.${pg}.encoder.enabled`,e.enabled)}does${sel_(`pages.${pg}.encoder.action`,e.action||'cc',['cc','page'])}cc${inp(`pages.${pg}.encoder.cc`,e.cc,'number')}init${inp(`pages.${pg}.encoder.initial`,e.initial,'number')}reverse${chk(`pages.${pg}.encoder.reverse`,e.reverse)}</div></div></div></details></div>
 <div><h3>Screen preview</h3><div id="scr">${screen()}</div><div class="hint">Pop-ups appear here when you simulate a press.</div></div></div>`}
 const DROP0={mode:'keytimes'};
@@ -249,13 +253,17 @@ if(m.type==='pc'){sim.pc=m.program;return'PC '+sim.pc}
 if(m.type==='pc_inc'||m.type==='pc_dec'){sim.pc=(sim.pc+(m.type==='pc_inc'?1:-1)+128)%128;return'PC '+sim.pc}
 if(/^cc_(inc|dec)$/.test(m.type)){let v=(simval(b,k)??lo)+(m.type==='cc_inc'?1:-1)*(b.cc_step??1);if(v>hi)v=b.cc_wrap?lo:hi;if(v<lo)v=b.cc_wrap?hi:lo;sim.cc[ck(b,k)]=v;return'CC '+b.cc+' = '+v}
 if(m.type==='cc'){if(m.cc===b.cc)sim.cc[ck(b,k)]=m.value;return'CC '+m.cc+' = '+m.value}
-if(m.type==='note')return'NOTE '+m.note;if(m.type==='press')return'PRESS '+(m.keys||'');if(m.type==='sysex')return'SYSEX '+hexBytes(m.data).length+' bytes'}
+if(m.type==='note')return'NOTE '+m.note;if(m.type==='press'){fireSim(m);return'PRESS '+(m.keys||'')};if(m.type==='sysex')return'SYSEX '+hexBytes(m.data).length+' bytes'}
+let fireDepth=0;
+function fireSim(m){if(fireDepth>=3)return;const pgi=(+m.press_page||+m.page||pg+1)-1;if(!cfg.pages[pgi])return;const lg=m.press==='long';fireDepth++;
+try{String(m.keys||'').replace(/\s/g,'').split(',').forEach(t=>{const i=parseInt(t,10)-1,b=cfg.pages[pgi].buttons[i];if(!b||isPage(b))return;const list=lg?b.long:b.short;if(!list||!list.length)return;const k=pgi+':'+i;
+const idx=lg?0:(sim.st[k]??0),s=list[idx%list.length];for(const x of[...(s.down||[]),...(s.up||[])])run(b,x,k);if(!lg){sim.st[k]=(idx+1)%list.length;if(s.color&&b.radio)sim.rad[pgi+':'+b.radio]=i}})}finally{fireDepth--}}
 function press(i,long){const b=cfg.pages[pg].buttons[i];
 if(isPage(b)){popup(b.label,'PAGE '+(((pg+(b.type==='page_inc'?1:-1)+cfg.pages.length)%cfg.pages.length)+1));return}
 const k=pg+':'+i,list=long?b.long:b.short;if(!list||!list.length)return;
 const idx=long?0:(sim.st[k]??0),s=list[idx%list.length];let sub='';
 for(const m of[...(s.down||[]),...(s.up||[])])sub=run(b,m,k)||sub;
-if(!long)sim.st[k]=(idx+1)%list.length;showPop(b,s.label||b.label,sub,k)}
+if(!long){sim.st[k]=(idx+1)%list.length;if(s.color&&b.radio)sim.rad[pg+':'+b.radio]=i}showPop(b,s.label||b.label,sub,k)}
 document.addEventListener('change',e=>{const el=e.target,p=el.dataset.p,t=el.dataset.t;if(!p)return;let v=el.value;
 if(t==='number')v=v===''?null:+v;else if(t==='bool')v=el.checked;else if(t==='hex'){const bs=v.replace(/[^0-9a-fA-F\s,]/g,'').split(/[\s,]+/).filter(Boolean);if(bs.some(x=>x.length>2))toast('Use hex bytes of 2 digits, e.g. F0 7E 7F');v=bs.map(x=>x.toUpperCase().padStart(2,'0')).join(' ')}
 else if(t==='list'){v=v.split(',').map(x=>x.trim());if(!v.some(Boolean))v=undefined}
@@ -278,7 +286,7 @@ else if(a==='delMsg'||a==='delState'){const k=p.split('.'),ix=k.pop();gp(cfg,k.j
 render()});
 $('#bOpen').onclick=()=>$('#f').click();
 $('#f').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{load(JSON.parse(await f.text()));toast('Loaded '+f.name)}catch(x){toast('Invalid JSON')}};
-function load(j){if(!Array.isArray(j.pages))throw 0;hist=[];redo=[];cfg=j;pg=0;sel=0;sim={pc:0,cc:{},st:{}};render()}
+function load(j){if(!Array.isArray(j.pages))throw 0;hist=[];redo=[];cfg=j;pg=0;sel=0;sim={pc:0,cc:{},st:{},rad:{}};render()}
 $('#bSave').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(cfg,null,2)],{type:'application/json'}));a.download='config.json';a.click()};
 $('#bDev').onclick=async()=>{try{dirH=await showDirectoryPicker({mode:'readwrite'});try{const fh=await dirH.getFileHandle('config.json');load(JSON.parse(await(await fh.getFile()).text()));toast('Loaded config.json from device')}catch{toast('Folder opened, no config.json yet (Save to device will create it)')}render()}catch(x){toast(x.name==='AbortError'?'Cancelled':'Needs Chrome or Edge: '+x.message)}};
 $('#bDevSave').onclick=async()=>{if(!dirH)return toast('Open the device folder first (hold switch 1 while plugging in)');try{const fh=await dirH.getFileHandle('config.json',{create:true}),w=await fh.createWritable();await w.write(JSON.stringify(cfg,null,2));await w.close();toast('Saved. Eject the drive, then power-cycle the pedal.')}catch(x){toast('Save failed: '+x.message)}};
