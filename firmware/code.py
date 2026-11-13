@@ -669,8 +669,8 @@ def fire_keys(m):
             if which == "short" and len(lst) > 1 and pg == page:
                 vals[("s", i)] = s.get("label") or str(store.get((pg, i), 0))
             if s.get("color") and pg == page:
-                led_col[i] = rgb(s["color"])
                 led_lit[i] = s.get("dim") is False or bool(s.get("lit"))
+                led_col[i] = rgb(s["color"] if (led_lit[i] or len(lst) > 1) else b.get("color"))
                 radio_off(i, b)
             store[(pg, i)] = store.get((pg, i), 0) + 1
             out = r2 or r1 or out
@@ -687,6 +687,8 @@ def radio_off(i, b):
         for j in range(len(bl)):
             if j != i and bl[j].get("radio") == g:
                 led_lit[j] = False
+                if len(bl[j].get("short") or []) < 2:
+                    led_col[j] = rgb(bl[j].get("color"))
 
 
 def run_msg2(m, b, direction):
@@ -829,8 +831,8 @@ def on_up(i, now):
         if len(b.get("short") or []) > 1:
             vals[("s", i)] = s.get("label") or str(step_idx.get((page, i), 0))
         if s.get("color"):
-            led_col[i] = rgb(s["color"])
             led_lit[i] = s.get("dim") is False or bool(s.get("lit"))
+            led_col[i] = rgb(s["color"] if (led_lit[i] or len(b.get("short") or []) > 1) else b.get("color"))
             radio_off(i, b)
         step_idx[(page, i)] = step_idx.get((page, i), 0) + 1
         if r:
