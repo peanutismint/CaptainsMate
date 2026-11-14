@@ -447,7 +447,7 @@ def wireless_apply():
 
 # ---------------------------------------------------------------- battery
 # Charge enable = GP6 (found in the stock FW5.16 code: gpio_put(6, BATTERY_CHARGE)).
-# Level sense pin is NOT confirmed: default GP29 (VSYS/3 on Pico-style boards), use @BATT probe.
+# Level sense is GP29 with a divider of 3 (confirmed on the 10 STD).
 chg_pin = None
 try:
     chg_pin = DigitalInOut(board.GP6)
@@ -609,7 +609,7 @@ def batt_setup():
     batt_key = None
     if cfg.get("battery_display", True):
         try:
-            batt_in = AnalogIn(board.GP29)  # confirmed on the 10 STD: GP29 reads the cells, divider 3
+            batt_in = AnalogIn(pin_of("GP29"))  # GP29 reads the cells (divider 3). This board build has no board.GP29, so pin_of falls back to microcontroller.pin.GPIO29
         except Exception as e:
             batt_err = str(e)[:40]
             log("battery pin: " + str(e))
