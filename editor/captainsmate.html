@@ -65,7 +65,7 @@ html,body{max-width:100%;overflow-x:hidden}main>*{min-width:0}
 .row{flex-wrap:wrap}.row label{width:100%}.row input,.row select{min-width:0}
 .scr{max-width:100%}.top{grid-template-columns:minmax(0,1fr)}#toast{max-width:92vw;text-align:center}
 #manb,#man{max-width:100vw}.sep{display:none}}
-#setm:not(.showadv) .adv{display:none!important}.advrow{margin-top:14px;font-size:12px}
+#setm .tp:not(.showadv) .adv{display:none!important}button.pri.conn{background:#3b7a5a;border-color:#3b7a5a;color:#eaf6ef}.advrow{margin-top:14px;font-size:12px}
 .row label.sw{width:48px;flex:none}.sw{position:relative;display:inline-block;width:48px;height:26px}.sw input{opacity:0;width:0;height:0;position:absolute}
 .sl{position:absolute;inset:0;background:var(--ln);border-radius:26px;transition:background .2s;cursor:pointer}
 .sl:before{content:"";position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .2s;font-size:12px;line-height:20px;text-align:center;color:#d97706}
@@ -363,11 +363,10 @@ const ap=()=>{th==='auto'?document.documentElement.removeAttribute('data-theme')
 $('#bTheme').onclick=()=>{th={auto:'light',light:'dark',dark:'auto'}[th];try{localStorage.setItem('theme',th)}catch(e){}ap();toast('Theme: '+TN[th]);try{if(man&&!man.closed)man.document.documentElement.dataset.theme=th==='auto'?'':th}catch(e){}};
 ap();
 $('#bSet').onclick=()=>{$('#logT').value=logBuf.join('\n');document.querySelectorAll('#setm [data-p]').forEach(el=>{let v=gp(cfg,el.dataset.p);if(el.dataset.p==='wireless_db'&&v==null)v=6;if(el.dataset.p==='charge_need_usb'&&v==null)v=true;if(el.dataset.p==='battery_display'&&v==null)v=true;if(el.dataset.p==='battery_style'&&!v)v='voltage';if(el.dataset.p==='battery_type'&&!v)v='nimh';if(el.type==='checkbox')el.checked=!!v;else el.value=v??''});$('#setm').classList.add('on')};
-try{if(localStorage.getItem('showAdv')==='1'){$('#setm').classList.add('showadv');document.querySelectorAll('.advchk').forEach(c=>c.checked=true)}}catch(e){}
-document.querySelectorAll('.advchk').forEach(c=>c.onchange=()=>{const on=c.checked;$('#setm').classList.toggle('showadv',on);document.querySelectorAll('.advchk').forEach(x=>x.checked=on);try{localStorage.setItem('showAdv',on?'1':'0')}catch(e){}});
+document.querySelectorAll('#setm .tp').forEach(t=>{const c=t.querySelector('.advchk');if(!c)return;const k='showAdv_'+t.dataset.tp;try{if(localStorage.getItem(k)==='1'){t.classList.add('showadv');c.checked=true}}catch(e){}
+c.onchange=()=>{t.classList.toggle('showadv',c.checked);try{localStorage.setItem(k,c.checked?'1':'0')}catch(e){}}});
 document.querySelectorAll('#setm [data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('#setm [data-tab]').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('#setm [data-tp]').forEach(x=>x.classList.toggle('on',x.dataset.tp===b.dataset.tab))});
 $('#bSetX').onclick=()=>$('#setm').classList.remove('on');
-$('#setm').onclick=e=>{if(e.target.id==='setm')$('#setm').classList.remove('on')};
 $('#bReboot').onclick=async()=>{if(!port)return toast('Connect the pedal first');await send('@REBOOT');toast('Restarting pedal. Reconnect in a few seconds.')};
 
 document.addEventListener('click',e=>{const o=e.target.closest('[data-cpo]'),c=e.target.closest('[data-cps]');
@@ -407,7 +406,7 @@ function waitLine(ms=4000){return new Promise((res,rej)=>{if(q.length)return res
 async function send(l){await writer.write(l+'\n')}
 async function expect(pre,ctx,ms){try{for(let i=0;i<50;i++){const l=await waitLine(ms||4000);if(l.startsWith(pre))return l;if(l.startsWith('@ERR'))throw new Error(l)}throw new Error('no '+pre)}catch(e){throw new Error(e.message+' ['+(ctx||pre)+']')}}
 function setChip(c,t,tip){const e=$('#chip');e.className='chip '+(c||'');e.textContent=t;e.title=tip||''}
-function setDot(){if(!port)setChip('','Not connected');else if(!pushing)setChip('ok','Connected')}
+function setDot(){const b=$('#bConn');b.textContent=port?'Connected':'Connect pedal';b.classList.toggle('conn',!!port);if(!port)setChip('','Not connected');else if(!pushing)setChip('ok','Connected')}
 async function readLoop(r){pedalFree=null;let buf='';try{for(;;){const{value,done}=await r.read();if(done)break;buf+=value;let i;while((i=buf.indexOf('\n'))>=0){const l=buf.slice(0,i).replace(/\r/g,'');buf=buf.slice(i+1);if(l[0]==='@')onLine(l);else if(l.trim())lg('pedal: '+l)}}}catch(e){}port=null;writer=null;pedalFree=null;updateSz();setDot();toast('Pedal disconnected')}
 $('#bConn').onclick=async()=>{if(!('serial' in navigator))return toast('Web Serial needs Chrome or Edge');
 try{if(port)return toast('Already connected');const p=await navigator.serial.requestPort();await p.open({baudRate:115200});
