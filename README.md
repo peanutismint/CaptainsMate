@@ -87,7 +87,7 @@ CaptainsMate's firmware (`firmware/code.py`) runs on **CircuitPython 7.3.1** on 
 **Before you change anything**
 1. Power the pedal on while holding switch 1 and copy everything from its USB drive (it shows up as MIDICAPTAIN) to a safe folder. That's your backup.
 2. Look at what's there. If you see a `code.py`, a `lib` folder and a CircuitPython `boot_out.txt`, your pedal already runs CircuitPython and just needs our three files. If not, your stock firmware may be compiled rather than CircuitPython-based, and you'd need to flash CircuitPython first. That's the advanced, riskier route, so make sure you have your backup and your original firmware file.
-3. Copy `code.py`, `boot.py` and `config.json` from the `firmware` folder to the drive, then restart the pedal.
+3. Copy `code.py`, `boot.py` and `config.json` from the `firmware` folder to the drive, then restart the pedal. `CONFIG-GUIDE.txt` in the same folder explains every setting in `config.json` in plain language. The pedal doesn't need it, but it's handy to keep on the drive if you ever edit the config by hand.
 
 After that first install you rarely need the drive again, because the editor sends updates over USB.
 
