@@ -474,6 +474,7 @@ chg_on = [False]
 chg_saved = [0.0]
 chg_loaded = [False]
 CHG_FILE = "/chg_state.txt"
+chg_pause = [0.0]  # charging is held off until this time, so the cells can be read without charge current
 # The on-time is saved about every 5 minutes (when the drive is writable) so power cycling cannot
 # restart the cutoff. It is cleared when charging is switched off in the config.
 
@@ -522,7 +523,7 @@ def charge_poll(now):
         want = cfg.get("battery_type") != "alkaline" and not chg_done[0]
         if want and cfg.get("charge_need_usb", True) and not supervisor.runtime.usb_connected:
             want = False
-        if want:
+        if want and now >= chg_pause[0]:
             chg_s[0] += dt
             if chg_s[0] - chg_saved[0] >= 300:
                 chg_save(chg_s[0])
@@ -537,8 +538,9 @@ def charge_poll(now):
     if want != chg_on[0]:
         chg_on[0] = want
         log("charging " + ("ON" if want else "OFF"))
-    if chg_pin is not None and chg_pin.value != want:
-        chg_pin.value = want
+    pin = want and now >= chg_pause[0]  # charging is briefly paused for each rest reading of the cells
+    if chg_pin is not None and chg_pin.value != pin:
+        chg_pin.value = pin
 
 
 def set_charge():
@@ -652,52 +654,98 @@ brect(105, 14, 30, 12, 0x15181E)
 for _i in range(5):
     bat_seg.append(brect(106 + 6 * _i, 16, 5, 8, 0x15181E))
 bat_grp.hidden = True
+
+# Charging bolt, shown (blinking) beside the battery reading while charging is on.
+BOLT = ("....###", "...###.", "..###..", ".###...", "#######", "...###.", "..###..", ".###...", ".##....", "##.....")
+_bm = displayio.Bitmap(7, len(BOLT), 2)
+for _y, _r in enumerate(BOLT):
+    for _x, _c in enumerate(_r):
+        if _c == "#":
+            _bm[_x, _y] = 1
+_bp = displayio.Palette(2)
+_bp[0] = 0x15181E
+_bp[1] = 0xFFCC00
+bolt = displayio.TileGrid(_bm, pixel_shader=_bp, x=144, y=15)
+bolt.hidden = True
+root.append(bolt)
+_bm = _bp = None
+
 batt_pc = 0
 batt_key = None
-batt_hold = [None]  # last percent measured while running on batteries
+UNLOADED = 0.3  # cells read about 0.3 V higher with nothing drawing from them (2.8 V vs 2.5 V measured)
+rest_next = [0.0]  # next rest reading while charging
+rest_at = [0.0]    # when the current rest reading is taken (end of the pause)
+
+
+def batt_read():
+    raw = 0
+    for _ in range(8):
+        raw += batt_in.value
+    return (raw // 8) * 3.3 / 65535 * 3.0
+
+
+def bolt_show(on, x):
+    global dirty
+    if bolt.x != x:
+        bolt.x = x
+        dirty = True
+    if bolt.hidden == on:
+        bolt.hidden = not on
+        dirty = True
 
 
 def batt_poll(now):
     global batt_t, batt_in, batt_err, batt_v, batt_pc, batt_key, dirty
     if not cfg.get("battery_display", True):
         st(hdr_m, " ")
+        bolt_show(False, bolt.x)
         if not bat_grp.hidden:
             bat_grp.hidden = True
             dirty = True
         return
     if batt_in is None:
         st(hdr_m, "BAT ?")
+        bolt_show(False, bolt.x)
         if not bat_grp.hidden:
             bat_grp.hidden = True
             dirty = True
         return
-    if now - batt_t >= 2.0:
-        batt_t = now
-        try:
-            raw = 0
-            for _ in range(8):
-                raw += batt_in.value
-            v = (raw // 8) * 3.3 / 65535 * 3.0
-            if batt_v is None or abs(v - batt_v) >= 0.08:
-                batt_v = v
-            batt_pc = batt_pct(batt_v)
-            # On USB the pedal stops loading the cells (and charging pushes the voltage up), so the reading
-            # says "full" whatever the cells hold. Keep the last on-battery percent instead.
-            if supervisor.runtime.usb_connected:
-                if batt_hold[0] is not None:
-                    batt_pc = batt_hold[0]
-                else:
-                    batt_pc = batt_pct(batt_v - 0.2)
-            else:
-                batt_hold[0] = batt_pc
-        except Exception as e:
-            batt_err = str(e)[:40]
-            log("battery read failed, display off: " + str(e))
-            batt_in = None
-            return
-    if batt_v is None:
-        return
     chg = chg_on[0]
+    usb = supervisor.runtime.usb_connected
+    try:
+        if chg:
+            # The charge current pushes the voltage up, so read the cells only during a short pause:
+            # every 60 s charging stops for 3 s and the reading is taken at the end of the pause.
+            if rest_at[0] == 0 and now >= rest_next[0]:
+                chg_pause[0] = now + 3.0
+                rest_at[0] = now + 2.8
+                charge_poll(now)
+            elif rest_at[0] and now >= rest_at[0]:
+                rest_at[0] = 0
+                rest_next[0] = now + 60.0
+                batt_v = batt_read()
+                batt_pc = batt_pct(batt_v - UNLOADED)
+        else:
+            rest_at[0] = 0
+            rest_next[0] = 0
+            if now - batt_t >= 2.0:
+                batt_t = now
+                v = batt_read()
+                if batt_v is None or abs(v - batt_v) >= 0.08:
+                    batt_v = v
+                # On USB nothing is drawn from the cells, so they read higher than when they run the pedal.
+                batt_pc = batt_pct(batt_v - (UNLOADED if usb else 0))
+    except Exception as e:
+        batt_err = str(e)[:40]
+        log("battery read failed, display off: " + str(e))
+        batt_in = None
+        return
+    if batt_v is None:
+        if chg:
+            st(hdr_m, "...")
+            bolt_show(int(now * 2) % 2 == 0, 130)
+        return
+    blink = int(now) % 2
     style = cfg.get("battery_style", "voltage")
     if style == "icon":
         st(hdr_m, " ")
@@ -710,7 +758,6 @@ def batt_poll(now):
             # Charging: whole segments stay solid, the next segment blinks (so you see the level and that it
             # is charging); when full, the outline blinks green instead.
             fl = min(5, batt_pc // 20)
-            blink = int(now) % 2
             lit = fl + (1 if (blink and fl < 5) else 0)
             if fl >= 5 and blink:
                 bcol = 0x34C759
@@ -724,6 +771,7 @@ def batt_poll(now):
                 bat_seg[i][0] = col if i < lit else 0x15181E
                 bat_seg[i][1] = bat_seg[i][0]
             dirty = True
+        bolt_show(chg, 144)
     else:
         if not bat_grp.hidden:
             bat_grp.hidden = True
@@ -732,7 +780,10 @@ def batt_poll(now):
             t = "%d%%" % batt_pc
         else:
             t = "%.1fV" % batt_v
-        st(hdr_m, t + ("+" if chg else ""))
+        st(hdr_m, t)
+        # Bolt sits just right of the text, and blinks while charging.
+        w = hdr_m.bounding_box[2] if hdr_m.bounding_box else 30
+        bolt_show(chg and blink == 0, 120 + w // 2 + 4)
 
 
 def batt_probe():
