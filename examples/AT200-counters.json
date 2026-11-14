@@ -377,7 +377,7 @@
         },
         "action": "page"
       },
-      "name": "AT-200",
+      "name": "Tone",
       "expression": {
         "exp2": {
           "enabled": false,
@@ -400,161 +400,209 @@
       }
     },
     {
+      "name": "Presets",
       "buttons": [
         {
-          "color": "white",
-          "label": "KEY 1",
+          "color": "green",
+          "label": "PRE 1",
           "mode": "keytimes",
           "short": [
             {
-              "color": "white",
+              "color": "green",
               "up": [
                 {
-                  "type": "cc",
-                  "cc": 20,
-                  "value": 127
+                  "type": "pc",
+                  "program": 0
                 }
-              ]
+              ],
+              "dim": false
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "A",
+          "show": {
+            "src": "pc",
+            "zero": -1,
+            "caption": "Preset"
+          }
         },
         {
-          "color": "white",
-          "label": "KEY 2",
+          "color": "cyan",
+          "label": "PRE 2",
           "mode": "keytimes",
           "short": [
             {
-              "color": "white",
+              "color": "cyan",
               "up": [
                 {
-                  "type": "cc",
-                  "cc": 21,
-                  "value": 127
+                  "type": "pc",
+                  "program": 1
                 }
-              ]
+              ],
+              "dim": false
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "A",
+          "show": {
+            "src": "pc",
+            "zero": -1,
+            "caption": "Preset"
+          }
         },
         {
-          "color": "white",
-          "label": "KEY 3",
+          "color": "blue",
+          "label": "PRE 3",
           "mode": "keytimes",
           "short": [
             {
-              "color": "white",
+              "color": "blue",
               "up": [
                 {
-                  "type": "cc",
-                  "cc": 22,
-                  "value": 127
+                  "type": "pc",
+                  "program": 2
                 }
-              ]
+              ],
+              "dim": false
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "A",
+          "show": {
+            "src": "pc",
+            "zero": -1,
+            "caption": "Preset"
+          }
         },
         {
-          "color": "white",
-          "label": "KEY 4",
+          "color": "purple",
+          "label": "PRE 4",
           "mode": "keytimes",
           "short": [
             {
-              "color": "white",
+              "color": "purple",
               "up": [
                 {
-                  "type": "cc",
-                  "cc": 23,
-                  "value": 127
+                  "type": "pc",
+                  "program": 3
                 }
-              ]
+              ],
+              "dim": false
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "A",
+          "show": {
+            "src": "pc",
+            "zero": -1,
+            "caption": "Preset"
+          }
         },
         {
           "color": "white",
-          "type": "page_inc",
-          "label": "PG UP"
+          "label": "PG UP",
+          "type": "page_inc"
         },
         {
-          "color": "white",
-          "label": "PANTS!",
-          "mode": "keytimes",
-          "short": [
-            {
-              "color": "white",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 25,
-                  "value": 127
-                }
-              ]
-            }
-          ],
-          "long": []
-        },
-        {
-          "color": "white",
-          "label": "Sockes. ",
+          "color": "magenta",
+          "label": "PRE 5",
           "mode": "keytimes",
           "short": [
             {
               "color": "magenta",
               "up": [
                 {
-                  "type": "cc",
-                  "cc": 26,
-                  "value": 127
+                  "type": "pc",
+                  "program": 4
                 }
               ],
-              "label": "Blurg"
+              "dim": false
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "A",
+          "show": {
+            "src": "pc",
+            "zero": -1,
+            "caption": "Preset"
+          }
         },
         {
-          "color": "white",
-          "label": "KEY 8",
+          "color": "orange",
+          "label": "PRE 6",
           "mode": "keytimes",
           "short": [
             {
-              "color": "white",
+              "color": "orange",
               "up": [
                 {
-                  "type": "cc",
-                  "cc": 27,
-                  "value": 127
+                  "type": "pc",
+                  "program": 5
                 }
-              ]
+              ],
+              "dim": false
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "A",
+          "show": {
+            "src": "pc",
+            "zero": -1,
+            "caption": "Preset"
+          }
         },
         {
-          "color": "white",
-          "label": "KEY 9",
+          "color": "yellow",
+          "label": "PRE 7",
           "mode": "keytimes",
           "short": [
             {
-              "color": "white",
+              "color": "yellow",
               "up": [
                 {
-                  "type": "cc",
-                  "cc": 28,
-                  "value": 127
+                  "type": "pc",
+                  "program": 6
                 }
-              ]
+              ],
+              "dim": false
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "A",
+          "show": {
+            "src": "pc",
+            "zero": -1,
+            "caption": "Preset"
+          }
+        },
+        {
+          "color": "red",
+          "label": "PRE 8",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "red",
+              "up": [
+                {
+                  "type": "pc",
+                  "program": 7
+                }
+              ],
+              "dim": false
+            }
+          ],
+          "long": [],
+          "radio": "A",
+          "show": {
+            "src": "pc",
+            "zero": -1,
+            "caption": "Preset"
+          }
         },
         {
           "color": "white",
-          "type": "page_dec",
-          "label": "PG DN"
+          "label": "PG DN",
+          "type": "page_dec"
         }
       ],
       "encoder": {

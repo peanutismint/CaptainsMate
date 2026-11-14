@@ -28,7 +28,8 @@
               ]
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "P"
         },
         {
           "color": "green",
@@ -47,7 +48,8 @@
               ]
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "P"
         },
         {
           "color": "green",
@@ -66,7 +68,8 @@
               ]
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "P"
         },
         {
           "color": "green",
@@ -85,7 +88,8 @@
               ]
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "P"
         },
         {
           "color": "white",
@@ -109,7 +113,8 @@
               ]
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "P"
         },
         {
           "color": "green",
@@ -128,7 +133,8 @@
               ]
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "P"
         },
         {
           "color": "red",
@@ -1060,40 +1066,100 @@
           "long": []
         },
         {
-          "color": "off",
-          "label": "-",
+          "color": "white",
+          "label": "EQ FLAT",
           "mode": "keytimes",
           "short": [
             {
-              "color": "off",
-              "up": []
+              "color": "white",
+              "label": "EQ FLAT",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 23 32 27 F7"
+                },
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 24 32 26 F7"
+                },
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 25 32 25 F7"
+                },
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 26 32 24 F7"
+                }
+              ],
+              "dim": false
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "E"
         },
         {
-          "color": "off",
-          "label": "-",
+          "color": "orange",
+          "label": "EQ WARM",
           "mode": "keytimes",
           "short": [
             {
-              "color": "off",
-              "up": []
+              "color": "orange",
+              "label": "EQ WARM",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 23 4B 0E F7"
+                },
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 24 32 26 F7"
+                },
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 25 19 3E F7"
+                },
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 26 19 3D F7"
+                }
+              ],
+              "dim": false
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "E"
         },
         {
-          "color": "off",
-          "label": "-",
+          "color": "cyan",
+          "label": "EQ BRIGHT",
           "mode": "keytimes",
           "short": [
             {
-              "color": "off",
-              "up": []
+              "color": "cyan",
+              "label": "EQ BRIGHT",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 23 19 40 F7"
+                },
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 24 32 26 F7"
+                },
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 25 4B 0C F7"
+                },
+                {
+                  "type": "sysex",
+                  "data": "F0 41 00 00 00 00 6A 12 00 00 04 26 4B 0B F7"
+                }
+              ],
+              "dim": false
             }
           ],
-          "long": []
+          "long": [],
+          "radio": "E"
         },
         {
           "color": "white",
