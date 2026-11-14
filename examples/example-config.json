@@ -54,7 +54,7 @@
               "up": [
                 {
                   "type": "cc",
-                  "cc": 28,
+                  "cc": 21,
                   "value": 127
                 }
               ],
@@ -66,7 +66,7 @@
               "up": [
                 {
                   "type": "cc",
-                  "cc": 28,
+                  "cc": 21,
                   "value": 0
                 }
               ]
@@ -165,46 +165,45 @@
           ]
         },
         {
-          "color": "yellow",
-          "label": "BOOST",
+          "color": "blue",
+          "label": "MASTER",
           "mode": "keytimes",
           "short": [
             {
-              "color": "yellow",
-              "label": "ON",
+              "color": "blue",
+              "label": "FULL",
               "up": [
                 {
-                  "type": "cc",
-                  "cc": 31,
-                  "value": 127
+                  "type": "sysex",
+                  "data": "F0 7F 7F 04 01 00 7F F7"
                 }
-              ],
-              "dim": false
+              ]
+            },
+            {
+              "color": "cyan",
+              "label": "75%",
+              "up": [
+                {
+                  "type": "sysex",
+                  "data": "F0 7F 7F 04 01 00 60 F7"
+                }
+              ]
             },
             {
               "color": "yellow",
-              "label": "OFF",
+              "label": "50%",
               "up": [
                 {
-                  "type": "cc",
-                  "cc": 31,
-                  "value": 0
+                  "type": "sysex",
+                  "data": "F0 7F 7F 04 01 00 40 F7"
                 }
               ]
             }
           ],
-          "long": [
-            {
-              "color": "off",
-              "down": [
-                {
-                  "type": "cc",
-                  "cc": 31,
-                  "value": 0
-                }
-              ]
-            }
-          ]
+          "long": [],
+          "show": {
+            "caption": "Master vol"
+          }
         },
         {
           "color": "green",
@@ -241,12 +240,208 @@
               ]
             }
           ],
-          "long": [],
+          "long": [
+            {
+              "color": "green",
+              "down": [
+                {
+                  "type": "pc",
+                  "program": 0
+                }
+              ]
+            }
+          ],
           "show": {
             "src": "pc",
             "zero": -1,
             "caption": "Preset"
           }
+        },
+        {
+          "color": "white",
+          "label": "PG DN",
+          "type": "page_dec"
+        }
+      ],
+      "encoder": {
+        "enabled": true,
+        "action": "page"
+      },
+      "expression": {
+        "exp1": {
+          "enabled": true,
+          "label": "WAH",
+          "cc": 1,
+          "min": 0,
+          "max": 127
+        },
+        "exp2": {
+          "enabled": true,
+          "label": "VOL",
+          "cc": 7,
+          "min": 0,
+          "max": 127
+        }
+      }
+    },
+    {
+      "name": "Patches",
+      "buttons": [
+        {
+          "color": "green",
+          "label": "CLEAN",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "green",
+              "up": [
+                {
+                  "type": "pc",
+                  "program": 0
+                }
+              ],
+              "dim": false
+            }
+          ],
+          "long": [],
+          "radio": "A"
+        },
+        {
+          "color": "cyan",
+          "label": "CHORUS",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "cyan",
+              "up": [
+                {
+                  "type": "pc",
+                  "program": 1
+                }
+              ],
+              "dim": false
+            }
+          ],
+          "long": [],
+          "radio": "A"
+        },
+        {
+          "color": "blue",
+          "label": "AMBIENT",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "blue",
+              "up": [
+                {
+                  "type": "pc",
+                  "program": 2
+                }
+              ],
+              "dim": false
+            }
+          ],
+          "long": [],
+          "radio": "A"
+        },
+        {
+          "color": "purple",
+          "label": "CRUNCH",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "purple",
+              "up": [
+                {
+                  "type": "pc",
+                  "program": 3
+                }
+              ],
+              "dim": false
+            }
+          ],
+          "long": [],
+          "radio": "A"
+        },
+        {
+          "color": "white",
+          "label": "PG UP",
+          "type": "page_inc"
+        },
+        {
+          "color": "magenta",
+          "label": "LEAD",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "magenta",
+              "up": [
+                {
+                  "type": "pc",
+                  "program": 4
+                }
+              ],
+              "dim": false
+            }
+          ],
+          "long": [],
+          "radio": "A"
+        },
+        {
+          "color": "orange",
+          "label": "FUZZ",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "orange",
+              "up": [
+                {
+                  "type": "pc",
+                  "program": 5
+                }
+              ],
+              "dim": false
+            }
+          ],
+          "long": [],
+          "radio": "A"
+        },
+        {
+          "color": "yellow",
+          "label": "SOLO",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "yellow",
+              "up": [
+                {
+                  "type": "pc",
+                  "program": 6
+                }
+              ],
+              "dim": false
+            }
+          ],
+          "long": [],
+          "radio": "A"
+        },
+        {
+          "color": "white",
+          "label": "HOME",
+          "mode": "keytimes",
+          "short": [
+            {
+              "color": "white",
+              "up": [
+                {
+                  "type": "press",
+                  "keys": "1",
+                  "press": "short"
+                }
+              ]
+            }
+          ],
+          "long": []
         },
         {
           "color": "white",
@@ -289,7 +484,7 @@
               "up": [
                 {
                   "type": "cc",
-                  "cc": 60,
+                  "cc": 50,
                   "value": 127
                 }
               ],
@@ -301,7 +496,7 @@
               "up": [
                 {
                   "type": "cc",
-                  "cc": 60,
+                  "cc": 50,
                   "value": 0
                 }
               ]
@@ -320,7 +515,7 @@
               "up": [
                 {
                   "type": "cc",
-                  "cc": 61,
+                  "cc": 51,
                   "value": 127
                 }
               ],
@@ -332,7 +527,7 @@
               "up": [
                 {
                   "type": "cc",
-                  "cc": 61,
+                  "cc": 51,
                   "value": 0
                 }
               ]
@@ -350,20 +545,38 @@
               "down": [
                 {
                   "type": "cc",
-                  "cc": 62,
+                  "cc": 52,
                   "value": 127
                 }
               ],
               "up": [
                 {
                   "type": "cc",
-                  "cc": 62,
+                  "cc": 52,
                   "value": 0
                 }
               ]
             }
           ],
-          "long": []
+          "long": [
+            {
+              "color": "purple",
+              "down": [
+                {
+                  "type": "cc",
+                  "cc": 53,
+                  "value": 127
+                }
+              ],
+              "up": [
+                {
+                  "type": "cc",
+                  "cc": 53,
+                  "value": 0
+                }
+              ]
+            }
+          ]
         },
         {
           "color": "blue",
@@ -376,7 +589,7 @@
               "up": [
                 {
                   "type": "cc",
-                  "cc": 66,
+                  "cc": 54,
                   "value": 127
                 }
               ],
@@ -388,7 +601,7 @@
               "up": [
                 {
                   "type": "cc",
-                  "cc": 66,
+                  "cc": 54,
                   "value": 0
                 }
               ]
@@ -418,10 +631,15 @@
           "long": [],
           "cc": 40,
           "cc_min": 0,
-          "cc_max": 3,
+          "cc_max": 7,
           "cc_step": 1,
           "cc_wrap": true,
-          "initial": 0
+          "initial": 0,
+          "show": {
+            "src": "cc",
+            "zero": -1,
+            "caption": "Scene"
+          }
         },
         {
           "color": "cyan",
@@ -451,19 +669,15 @@
           ],
           "cc": 40,
           "cc_min": 0,
-          "cc_max": 3,
+          "cc_max": 7,
           "cc_step": 1,
           "cc_wrap": true,
           "initial": 0,
           "show": {
+            "src": "cc",
+            "zero": -1,
             "caption": "Scene"
-          },
-          "names": [
-            "Verse",
-            "Chorus",
-            "Bridge",
-            "Solo"
-          ]
+          }
         },
         {
           "color": "magenta",
@@ -476,7 +690,7 @@
               "up": [
                 {
                   "type": "cc",
-                  "cc": 23,
+                  "cc": 60,
                   "value": 0
                 }
               ]
@@ -487,7 +701,7 @@
               "up": [
                 {
                   "type": "cc",
-                  "cc": 23,
+                  "cc": 60,
                   "value": 1
                 }
               ]
@@ -498,7 +712,7 @@
               "up": [
                 {
                   "type": "cc",
-                  "cc": 23,
+                  "cc": 60,
                   "value": 2
                 }
               ]
@@ -509,74 +723,6 @@
             "caption": "Amp"
           }
         },
-        {
-          "color": "purple",
-          "label": "BANK",
-          "mode": "keytimes",
-          "short": [
-            {
-              "color": "purple",
-              "up": [
-                {
-                  "type": "cc_inc"
-                }
-              ]
-            }
-          ],
-          "long": [
-            {
-              "color": "purple",
-              "down": [
-                {
-                  "type": "cc",
-                  "cc": 32,
-                  "value": 0
-                }
-              ]
-            }
-          ],
-          "cc": 32,
-          "cc_min": 0,
-          "cc_max": 7,
-          "cc_step": 1,
-          "cc_wrap": true,
-          "initial": 0,
-          "show": {
-            "src": "cc",
-            "zero": -1,
-            "caption": "Bank"
-          }
-        },
-        {
-          "color": "white",
-          "label": "PG DN",
-          "type": "page_dec"
-        }
-      ],
-      "encoder": {
-        "enabled": true,
-        "action": "page"
-      },
-      "expression": {
-        "exp1": {
-          "enabled": true,
-          "label": "WAH",
-          "cc": 1,
-          "min": 0,
-          "max": 127
-        },
-        "exp2": {
-          "enabled": true,
-          "label": "VOL",
-          "cc": 7,
-          "min": 0,
-          "max": 127
-        }
-      }
-    },
-    {
-      "name": "Extras",
-      "buttons": [
         {
           "color": "red",
           "label": "KICK",
@@ -598,195 +744,6 @@
                   "note": 36,
                   "velocity": 0,
                   "channel": 10
-                }
-              ]
-            }
-          ],
-          "long": []
-        },
-        {
-          "color": "orange",
-          "label": "SNARE",
-          "mode": "keytimes",
-          "short": [
-            {
-              "color": "orange",
-              "down": [
-                {
-                  "type": "note",
-                  "note": 38,
-                  "velocity": 110,
-                  "channel": 10
-                }
-              ],
-              "up": [
-                {
-                  "type": "note",
-                  "note": 38,
-                  "velocity": 0,
-                  "channel": 10
-                }
-              ]
-            }
-          ],
-          "long": []
-        },
-        {
-          "color": "yellow",
-          "label": "HI-HAT",
-          "mode": "keytimes",
-          "short": [
-            {
-              "color": "yellow",
-              "down": [
-                {
-                  "type": "note",
-                  "note": 42,
-                  "velocity": 110,
-                  "channel": 10
-                }
-              ],
-              "up": [
-                {
-                  "type": "note",
-                  "note": 42,
-                  "velocity": 0,
-                  "channel": 10
-                }
-              ]
-            }
-          ],
-          "long": []
-        },
-        {
-          "color": "cyan",
-          "label": "SUSTAIN",
-          "mode": "keytimes",
-          "short": [
-            {
-              "color": "cyan",
-              "down": [
-                {
-                  "type": "cc",
-                  "cc": 64,
-                  "value": 127,
-                  "channel": 2
-                }
-              ],
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 64,
-                  "value": 0,
-                  "channel": 2
-                }
-              ]
-            }
-          ],
-          "long": []
-        },
-        {
-          "color": "white",
-          "label": "PG UP",
-          "type": "page_inc"
-        },
-        {
-          "color": "green",
-          "label": "SONG -",
-          "mode": "keytimes",
-          "short": [
-            {
-              "color": "green",
-              "up": [
-                {
-                  "type": "pc_dec",
-                  "channel": 2
-                }
-              ]
-            }
-          ],
-          "long": [],
-          "show": {
-            "src": "pc",
-            "zero": -1,
-            "caption": "Song"
-          }
-        },
-        {
-          "color": "green",
-          "label": "SONG +",
-          "mode": "keytimes",
-          "short": [
-            {
-              "color": "green",
-              "up": [
-                {
-                  "type": "pc_inc",
-                  "channel": 2
-                }
-              ]
-            }
-          ],
-          "long": [],
-          "show": {
-            "src": "pc",
-            "zero": -1,
-            "caption": "Song"
-          }
-        },
-        {
-          "color": "blue",
-          "label": "MASTER",
-          "mode": "keytimes",
-          "short": [
-            {
-              "color": "blue",
-              "label": "FULL",
-              "up": [
-                {
-                  "type": "sysex",
-                  "data": "F0 7F 7F 04 01 00 7F F7"
-                }
-              ]
-            },
-            {
-              "color": "cyan",
-              "label": "75%",
-              "up": [
-                {
-                  "type": "sysex",
-                  "data": "F0 7F 7F 04 01 00 60 F7"
-                }
-              ]
-            },
-            {
-              "color": "yellow",
-              "label": "50%",
-              "up": [
-                {
-                  "type": "sysex",
-                  "data": "F0 7F 7F 04 01 00 40 F7"
-                }
-              ]
-            }
-          ],
-          "long": [],
-          "show": {
-            "caption": "Master vol"
-          }
-        },
-        {
-          "color": "white",
-          "label": "PANIC",
-          "mode": "keytimes",
-          "short": [
-            {
-              "color": "white",
-              "up": [
-                {
-                  "type": "cc",
-                  "cc": 123,
-                  "value": 0
                 }
               ]
             }
