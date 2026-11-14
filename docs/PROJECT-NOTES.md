@@ -1,6 +1,6 @@
 # CaptainsMate project notes
 
-Shared context for anyone (or any Claude chat) working on CaptainsMate. Last updated 2026-11-14.
+Shared context for anyone (or any Claude chat) working on CaptainsMate. Last updated 2026-11-14 (late).
 
 ## What it is
 
@@ -42,8 +42,8 @@ Verified on the pedal unless marked otherwise.
 | Expression | GP27, GP28 | in firmware |
 | Display | SPI GP14, GP15, DC GP12, CS GP13 | working |
 | Backlight | PWM on GP8 | from the stock firmware, not yet confirmed on hardware |
-| Charge enable | GP6, high means charging on | from the stock firmware, charging test still to finish |
-| Battery sense | GP29, divider 3 | confirmed: reads the cells with or without USB |
+| Charge enable | GP6, high means charging on | working: voltage rises while on, controlled test still to finish |
+| Battery sense | GP29, divider 3 | confirmed: reads the cells with or without USB. The CircuitPython build is plain `raspberry_pi_pico`, which has no `board.GP29`, so open it with `pin_of("GP29")` (falls back to `microcontroller.pin.GPIO29`) |
 | GP26 | supply rail | reads about 4.6 V when USB is plugged in |
 | Wireless radio (blue and gold Pro only) | GP4 and GP5 plus an 18-byte config packet | decoded from stock, untested, black STD has no radio |
 
@@ -52,10 +52,18 @@ Source of the stock facts: disassembly of the stock FW5.16 image. The stock firm
 ## Battery and charging
 
 - The battery sense is hard-coded to GP29 with divider 3, so there is nothing to configure. Measured: cells about 2.8 V total at rest (multimeter), display 2.5 V on battery and 2.8 V on USB.
-- Percent is a rough estimate (NiMH voltage is flat). While USB is connected the percent holds the last value measured on battery, because USB removes the load and charging raises the voltage.
+- Percent is a rough estimate (NiMH voltage is flat). Readings with nothing drawing from the cells (on USB) are about 0.3 V higher than when the cells run the pedal, so 0.3 V is taken off first. While charging, the charge current pushes the voltage up, so every 60 s charging pauses for 3 s and the reading is taken at the end of the pause.
 - Charging is off by default. GP6 only goes high when charging is on in the config and the battery type is not alkaline and USB is connected (unless `charge_need_usb` is false) and the on-time is under `charge_max_hours` (default 8, at most 12). The on-time is saved about every 5 minutes so reboots do not restart the clock, but only when Dev mode is off. It resets when charging is switched off.
-- Battery icon while charging: whole segments solid, the next segment blinks, and the outline blinks green when full.
+- While charging a yellow bolt shows beside the reading (blinking in percent and voltage styles). The icon keeps whole segments solid, blinks the next one, and blinks the outline green when full.
 - Status: GP6 high and cool cells seen once, but the first test was not clean because the timer restarted on reboots. A controlled test (1 hour limit, no reboots, measure each cell before and after) is still to do.
+
+## boot.py (v4, working on hardware 2026-11-14)
+
+- Shows the drive when `dev_mode` is true, the config cannot be read, or key 1 (GP1) is held at power-up. Otherwise it hides the drive and remounts `/` writable, so the pedal can save. Hiding alone is not enough: without `storage.remount("/", readonly=False)` code.py still gets "Read-only filesystem".
+- GP1 reads low for a moment after the pull-up is enabled, so boot.py waits 0.15 s and needs 5 low reads in a row to count key 1 as held. Hold key 1 until the screen comes on to get the drive.
+- It prints its reasoning to `boot_out.txt`, for example `CaptainsMate boot: config ok, dev_mode=False; switch 1 not held (reads 11111); drive hidden; writable`.
+- boot.py only runs on a real restart (Restart pedal in the editor, or the power switch). With batteries fitted, unplugging USB does not restart the pedal.
+- Repeated large config pushes fragment RAM (allocation of about 16 KB fails with 30 KB or more free). Restart before pushing again.
 
 ## Waza-Air (Boss headphones)
 
@@ -70,7 +78,7 @@ Known CCs: capo CC11 (range 52 to 76, centre 64), model CC14 (11 names), doubler
 
 ## Not verified on hardware
 
-Sysex through the private `_outport`, the GP8 backlight, MIDI through, the wireless packet, the `chg_state.txt` timer file, dev-mode boot.py install.
+Sysex through the private `_outport`, the GP8 backlight, MIDI through, the wireless packet, the `chg_state.txt` timer file, the charging rest readings and bolt (written 2026-11-14, not yet seen on the pedal).
 
 ## Backlog
 
