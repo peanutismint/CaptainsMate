@@ -367,6 +367,8 @@ document.querySelectorAll('#setm .tp').forEach(t=>{const c=t.querySelector('.adv
 c.onchange=()=>{t.classList.toggle('showadv',c.checked);try{localStorage.setItem(k,c.checked?'1':'0')}catch(e){}}});
 document.querySelectorAll('#setm [data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('#setm [data-tab]').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('#setm [data-tp]').forEach(x=>x.classList.toggle('on',x.dataset.tp===b.dataset.tab))});
 $('#bSetX').onclick=()=>$('#setm').classList.remove('on');
+let setDown=null;$('#setm').onmousedown=e=>{setDown=e.target};
+$('#setm').onclick=e=>{if(e.target.id==='setm'&&setDown===e.target)$('#setm').classList.remove('on');setDown=null};
 $('#bReboot').onclick=async()=>{if(!port)return toast('Connect the pedal first');await send('@REBOOT');toast('Restarting pedal. Reconnect in a few seconds.')};
 
 document.addEventListener('click',e=>{const o=e.target.closest('[data-cpo]'),c=e.target.closest('[data-cps]');
