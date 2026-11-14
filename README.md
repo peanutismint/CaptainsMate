@@ -21,6 +21,8 @@ It's built for people who just want their pedal to do the right thing on stage, 
 - **See what's happening from across the stage.** A big pop-up on the pedal's screen shows the preset number, the counter value or a name like "Chorus" when you press a key.
 - **Merge and share pages.** **Import pages** (or just drop a config file onto the editor) lets you tick the pages you want from another config and choose where they go. **Export** saves a single page as a small file to share. A size chip at the top shows how big the config is, and how much memory the pedal has left once connected.
 - **Copy, paste, duplicate and undo.** Build one good key or page, then clone it.
+- **Templates and drag to reorder.** Pick a ready-made key (toggle, momentary, tap tempo, radio patch, counter, drum pad and more) from the Template menu, drag keys to swap them, and move whole pages left or right.
+- **Test without guessing.** Every message has a play button that sends just that message, either from the pedal or straight to a MIDI port on your computer (handy for SysEx gear like the Waza-Air). Turn on the pedal monitor in Settings, Test & log, to see every message the pedal sends.
 - **Light and dark themes,** hover tips on every field, and a built-in MIDI cheat sheet if you're new to all this.
 
 ## Quick start
@@ -71,6 +73,8 @@ Each key has a **type**. Each type can respond to a **tap** and to a **long pres
 - **LED feedback:** unlit keys glow dimly in their own color, so you can see at a glance what each key will do. Toggles light up brightly while they're ON and go back to dim when OFF (untick **dim** on any state to keep that key bright after it fires). The idle brightness is adjustable in settings.
 - **Screen brightness:** set the pedal screen anywhere from 0 to 100%. For dark stages you can also have it fade down after a few seconds of no activity and snap back to full the moment you press a key or turn the wheel. (This drives the screen's backlight on GP8, taken from the stock firmware, so please report if yours behaves differently.)
 - **Battery:** shows the level as voltage, percent or an icon, and can optionally charge rechargeable NiMH batteries (experimental, leave it off with alkaline batteries).
+- **MIDI through:** an optional switch that passes anything arriving on the DIN input out of the DIN output and USB, so the pedal can sit in the middle of a chain (untested on hardware).
+- **Wireless (blue and gold Pro models only):** an experimental Wireless tab with on/off, wireless ID and radio power for pairing with a PaintAudio MIDI Mate. It follows what the stock firmware does but is untested, and the black STD has no radio, so leave it off there.
 
 ## Installing on the pedal
 

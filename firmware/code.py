@@ -107,6 +107,7 @@ neo.show()
 exp_in = [AnalogIn(board.GP27), AnalogIn(board.GP28)]
 
 outs = []
+_u = None
 try:
     outs.append(MIDI(midi_out=usb_midi.ports[1], out_channel=MIDI_CH))
 except Exception as e:
@@ -351,6 +352,17 @@ def chan(c):
         return MIDI_CH
 
 
+mon = [False]
+
+
+def mon_tx(raw):
+    if mon[0]:
+        try:
+            print("@TX " + " ".join("%02X" % x for x in raw))
+        except Exception:
+            pass
+
+
 def tx(msg):
     for o in outs:
         try:
@@ -358,6 +370,79 @@ def tx(msg):
             o.send(msg)
         except Exception as e:
             log("tx error: " + str(e))
+    if mon[0]:
+        try:
+            r = msg.__bytes__()
+            r = bytes([(r[0] & 0xF0) | cur_ch]) + bytes(r[1:]) if r[0] < 0xF0 else r
+            mon_tx(r)
+        except Exception:
+            pass
+
+
+# MIDI through: bytes arriving on DIN in go to DIN out and USB out, USB in goes to DIN out.
+THRU = bool(cfg.get("midi_through"))
+
+
+def thru_poll():
+    try:
+        if _u is not None and _u.in_waiting:
+            d = _u.read(min(_u.in_waiting, 64))
+            if d:
+                _u.write(d)
+                try:
+                    usb_midi.ports[1].write(d)
+                except Exception:
+                    pass
+        n = usb_midi.ports[0].read(64)
+        if n and _u is not None:
+            _u.write(n)
+    except Exception as e:
+        log("thru error: " + str(e))
+
+
+# 2.4G wireless (blue/gold Pro models only, pairs with a MIDI Mate). Reverse-engineered from the stock
+# FW5.16 image and NOT tested on hardware: the radio module shares the DIN UART and is configured by
+# holding GP5 and GP4 low, sending an 18-byte packet at 9600 baud, then returning to 31250 baud.
+# Only touched when "wireless" is true in the config, so black STD units are never affected.
+wl_done = [None]
+wl_pins = []  # kept open so the pins hold their level
+
+
+def wireless_apply():
+    if not cfg.get("wireless"):
+        wl_done[0] = None
+        return
+    wid = max(1, min(100, int(cfg.get("wireless_id") or 8)))
+    wdb = max(0, min(7, int(cfg.get("wireless_db") if cfg.get("wireless_db") is not None else 6)))
+    if wl_done[0] == (wid, wdb) or _u is None:
+        return
+    try:
+        if not wl_pins:
+            for pn in (board.GP5, board.GP4):
+                d = DigitalInOut(pn)
+                d.direction = Direction.OUTPUT
+                wl_pins.append(d)
+        p5, p4 = wl_pins
+        pk = bytearray([0xAA, 0x5A, wid, 0x44, 0x11, 0x33, 0x00, wdb, 0x00, 0x05, 0x00, 0x64, 0x00, 0x00, 0x00, 0x12, 0x00, 0])
+        pk[17] = sum(pk[:17]) & 0xFF
+        _u.baudrate = 9600
+        time.sleep(0.01)
+        p5.value = False
+        p4.value = False
+        time.sleep(0.03)
+        _u.write(bytes(pk))
+        time.sleep(0.1)
+        p5.value = True
+        p4.value = False
+        _u.baudrate = 31250
+        wl_done[0] = (wid, wdb)
+        log("wireless set: id=%d power=%d" % (wid, wdb))
+    except Exception as e:
+        log("wireless error: " + str(e))
+        try:
+            _u.baudrate = 31250
+        except Exception:
+            pass
 
 
 # ---------------------------------------------------------------- battery
@@ -730,6 +815,7 @@ def run_msg2(m, b, direction):
             b2 = b"\xf0" + b2
         if b2[-1] != 0xF7:
             b2 = b2 + b"\xf7"
+        mon_tx(b2)
         for o in outs:
             try:
                 p = getattr(o, "_outport", None) or o._midi_out
@@ -919,10 +1005,11 @@ def save_cfg(text, final="/config.json", tmp="/config.tmp"):
 
 
 def apply_cfg(new, text):
-    global cfg, PAGES, HOLD, MIDI_CH, page, CFG_ERR, batt_t
+    global cfg, PAGES, HOLD, MIDI_CH, page, CFG_ERR, batt_t, THRU
     if not new.get("pages"):
         raise ValueError("no pages")
     cfg = new
+    THRU = bool(new.get("midi_through"))
     PAGES = new["pages"]
     HOLD = new.get("long_press_threshold_ms", 700) / 1000.0
     MIDI_CH = int(new.get("midi_channel") or 1) - 1
@@ -942,6 +1029,7 @@ def apply_cfg(new, text):
     set_charge()
     batt_setup()
     bl_setup()
+    wireless_apply()
     batt_t = -10.0
     load_page()
     popup("CONFIG", "applied")
@@ -953,6 +1041,15 @@ def handle_line(l):
     global rx_buf, rx_pos, rx_boot
     if l == "@PING":
         print("@PONG 0.3 free=%d" % gc.mem_free())
+    elif l.startswith("@MON"):
+        mon[0] = l.strip().endswith("1")
+        print("@OK")
+    elif l.startswith("@TX "):
+        try:
+            r = run_msg(json.loads(l[4:]), {}, "up")
+            print("@TXOK " + str(r))
+        except Exception as e:
+            print("@ERR tx: " + str(e))
     elif l.startswith("@BEGIN"):
         rx_buf = None
         gc.collect()
@@ -1044,6 +1141,7 @@ else:
 log("running v0.3, serial link=%s, free=%d" % (HAS_SER, gc.mem_free()))
 
 bl_setup()
+wireless_apply()
 gc_t = [0]
 while True:
     try:
@@ -1068,6 +1166,8 @@ while True:
             check_long(i, now)
         if HAS_SER:
             serial_poll()
+        if THRU:
+            thru_poll()
         try:
             poll_exp(now)
         except Exception as e:
