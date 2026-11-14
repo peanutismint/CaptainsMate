@@ -4,6 +4,10 @@
   "device": "std10",
   "long_press_threshold_ms": 600,
   "midi_channel": 1,
+  "sysex_preamble": [
+    "F0 41 00 00 00 00 6A 12 7F 00 00 01 01 7F F7",
+    "F0 41 00 00 00 00 6A 12 7F 00 00 02 00 7F F7"
+  ],
   "battery_display": true,
   "battery_style": "icon",
   "battery_type": "alkaline",
