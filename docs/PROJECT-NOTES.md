@@ -78,7 +78,7 @@ Known CCs: capo CC11 (range 52 to 76, centre 64), model CC14 (11 names), doubler
 
 ## Not verified on hardware
 
-Sysex through the private `_outport`, the GP8 backlight, MIDI through, the wireless packet, the `chg_state.txt` timer file, the charging rest readings and bolt (written 2026-11-14, not yet seen on the pedal).
+Sysex through the private `_outport`, the GP8 backlight, MIDI through, the wireless packet, the `chg_state.txt` timer file. The charging rest readings and bolt work on the pedal (87% shown while charging, 2026-11-14).
 
 ## Backlog
 
