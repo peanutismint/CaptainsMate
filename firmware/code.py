@@ -608,7 +608,7 @@ def brect(x, y, w, h, color):
     return pal
 
 
-brect(103, 12, 34, 16, 0x8A909C)
+bat_border = brect(103, 12, 34, 16, 0x8A909C)
 brect(137, 17, 3, 6, 0x8A909C)
 brect(105, 14, 30, 12, 0x15181E)
 for _i in range(5):
@@ -659,12 +659,21 @@ def batt_poll(now):
             bat_grp.hidden = False
             dirty = True
         lit = (batt_pc + 19) // 20
-        if chg and int(now) % 2:
-            lit = 5
+        bcol = 0x8A909C
+        if chg:
+            # Charging: whole segments stay solid, the next segment blinks (so you see the level and that it
+            # is charging); when full, the outline blinks green instead.
+            fl = min(5, batt_pc // 20)
+            blink = int(now) % 2
+            lit = fl + (1 if (blink and fl < 5) else 0)
+            if fl >= 5 and blink:
+                bcol = 0x34C759
         col = 0x34C759 if batt_pc >= 25 else 0xFF3B30
-        key = (lit, col)
+        key = (lit, col, bcol)
         if key != batt_key:
             batt_key = key
+            bat_border[0] = bcol
+            bat_border[1] = bcol
             for i in range(5):
                 bat_seg[i][0] = col if i < lit else 0x15181E
                 bat_seg[i][1] = bat_seg[i][0]
