@@ -461,9 +461,50 @@ batt_v = None
 batt_t = -10.0
 
 
+# Charging is OFF unless the config turns it on, and even then it only runs while:
+#  - the battery type is not alkaline,
+#  - USB is connected (set "charge_need_usb": false to allow a power-only charger; the pin that would
+#    sense USB power directly is a key on this pedal, so USB data presence is the best we can check),
+#  - the on-time is under the cutoff ("charge_max_hours", default 8, never more than 12).
+# The timer counts only time the pin is actually on, and restarts when charging is switched off or the pedal reboots.
+chg_s = [0.0]
+chg_clk = [0.0]
+chg_done = [False]
+chg_on = [False]
+
+
+def charge_poll(now):
+    global popup_until
+    dt = now - chg_clk[0]
+    chg_clk[0] = now
+    if dt < 0 or dt > 5:
+        dt = 0
+    if not cfg.get("battery_charge", False):
+        chg_s[0] = 0.0
+        chg_done[0] = False
+        want = False
+    else:
+        want = cfg.get("battery_type") != "alkaline" and not chg_done[0]
+        if want and cfg.get("charge_need_usb", True) and not supervisor.runtime.usb_connected:
+            want = False
+        if want:
+            chg_s[0] += dt
+            hrs = min(12.0, float(cfg.get("charge_max_hours") or 8))
+            if chg_s[0] >= hrs * 3600:
+                chg_done[0] = True
+                want = False
+                log("charge cutoff after %.1f h" % hrs)
+                popup("CHARGE DONE", "cutoff reached")
+                popup_until = now + 8
+    if want != chg_on[0]:
+        chg_on[0] = want
+        log("charging " + ("ON" if want else "OFF"))
+    if chg_pin is not None and chg_pin.value != want:
+        chg_pin.value = want
+
+
 def set_charge():
-    if chg_pin is not None:
-        chg_pin.value = bool(cfg.get("battery_charge", False))
+    charge_poll(time.monotonic())
 
 
 def pin_of(n):
@@ -610,7 +651,7 @@ def batt_poll(now):
             return
     if batt_v is None:
         return
-    chg = cfg.get("battery_charge", False)
+    chg = chg_on[0]
     style = cfg.get("battery_style", "voltage")
     if style == "icon":
         st(hdr_m, " ")
@@ -1100,7 +1141,7 @@ def handle_line(l):
         for t in LOGS:
             print("@LOG " + t)
     elif l == "@INFO":
-        print("@INFO v0.3 free=%d page=%d/%d batt_in=%s batt_err=%s chg=%s boot=%s" % (gc.mem_free(), page + 1, len(PAGES), batt_in is not None, batt_err, bool(cfg.get("battery_charge", False)), boot_kind()))
+        print("@INFO v0.3 free=%d page=%d/%d batt_in=%s batt_err=%s chg=%s chg_on=%s chg_done=%s chg_s=%d boot=%s" % (gc.mem_free(), page + 1, len(PAGES), batt_in is not None, batt_err, bool(cfg.get("battery_charge", False)), chg_on[0], chg_done[0], int(chg_s[0]), boot_kind()))
     elif l == "@BATT":
         batt_probe()
     elif l == "@REBOOT":
@@ -1168,6 +1209,7 @@ while True:
             serial_poll()
         if THRU:
             thru_poll()
+        charge_poll(now)
         try:
             poll_exp(now)
         except Exception as e:
