@@ -1,0 +1,290 @@
+CaptainsMate config.json guide
+==============================
+
+config.json holds everything the pedal does: global settings, then a list
+of pages, each with 10 keys, the encoder wheel and two expression inputs.
+
+The easy way to change it is the CaptainsMate editor (Chrome or Edge):
+  https://peanutismint.github.io/CaptainsMate/editor/captainsmate.html
+Settings sent from the editor are saved by the pedal itself. The pedal
+rewrites config.json as one long line when it saves, so do not be
+surprised if the file looks different from how you left it.
+
+
+EDITING BY HAND
+---------------
+1. Show the pedal's USB drive: hold key 1, then restart the pedal (power
+   switch, or "Restart pedal" in the editor), and keep holding key 1
+   until the screen comes on. Or turn on "dev_mode" (below).
+2. Open config.json in Notepad (or any plain text editor).
+3. JSON rules worth knowing:
+   - Text goes in double quotes: "label": "DRIVE"
+   - Numbers and true / false / null have no quotes, and are lower case.
+   - Items in a list or block are separated by commas, but there is no
+     comma after the last one.
+   - JSON has no comments, which is why these notes live in this file.
+4. Save, eject the drive, and restart the pedal.
+
+If the file has a mistake, the pedal cannot read it. It then keeps the
+USB drive showing so you can fix it, and boot_out.txt on the drive will
+say "config read failed" with the reason.
+
+Tip: if a long one-line file is hard to read, paste it into any online
+"JSON formatter", fix it there, and paste it back.
+
+
+GLOBAL SETTINGS (top of the file)
+---------------------------------
+"midi_channel": 1
+    MIDI channel for everything, 1 to 16. Any single message can
+    override it with its own "channel".
+
+"long_press_threshold_ms": 700
+    How long (in milliseconds) a key must be held to count as a long
+    press. 1000 is one second.
+
+"active_page": 0
+    Page shown at power-up. 0 is the first page, 1 the second, and so on.
+
+"led_idle": 12
+    Brightness of the key LEDs when not lit, as a percent (0 to 100).
+    0 turns idle LEDs off.
+
+"dev_mode": false
+    true keeps the USB drive showing at every power-up, for people
+    changing code.py often. While the drive shows, the pedal cannot save
+    anything: settings sent from the editor work until the next restart
+    only, and the charge timer is not kept. Leave it false normally.
+
+"midi_through": false
+    true passes MIDI arriving at the MIDI IN socket on to MIDI OUT and
+    USB, and MIDI arriving over USB on to MIDI OUT.
+    (Not yet tested on the pedal.)
+
+"sysex_preamble": ["F0 41 ... F7", "F0 41 ... F7"]
+    SysEx messages sent once, just before the first SysEx after power-up.
+    Some gear (Boss Waza-Air, for example) needs a "hello" first. Leave
+    it out if your gear does not need one.
+
+Screen backlight (optional; leave these out to keep the screen at full
+brightness. Not yet confirmed on the pedal):
+"screen_brightness": 100        Normal brightness, percent.
+"screen_idle_brightness": 30    Brightness after a while with no use.
+"screen_idle_seconds": 10       How long before it dims.
+
+
+BATTERY AND CHARGING
+--------------------
+"battery_display": true
+    Show the battery level at the top of the screen.
+
+"battery_style": "percent"
+    "voltage" (like 2.6V), "percent" (like 85%) or "icon" (a battery with
+    5 blocks). Percent and icon are rough estimates, because rechargeable
+    cells hold nearly the same voltage from half full to nearly full.
+
+"battery_type": "nimh"
+    "nimh" for rechargeable AAs, "alkaline" for ordinary AAs.
+
+"battery_charge": false
+    true lets the pedal charge rechargeable NiMH cells from USB.
+    NEVER turn this on with alkaline batteries: they can leak or burst.
+    While charging, a yellow lightning bolt shows next to the battery
+    reading. Once a minute charging pauses for 3 seconds so the cells
+    can be measured properly.
+
+"charge_max_hours": 8
+    Safety cutoff for one charge, in hours (12 at most). The pedal
+    counts only time actually spent charging and remembers it through
+    restarts. Switching "battery_charge" off and on starts a new charge.
+    When the limit is reached the screen shows CHARGE DONE.
+
+"charge_need_usb": true
+    true charges only while a computer is connected. false also allows
+    wall chargers and power banks; keep an eye on the cells if you do.
+
+
+WIRELESS (blue and gold "Pro" pedals only; the black STD has no radio.
+Not yet tested)
+------------------------------------------------------------------------
+"wireless": false       true turns the 2.4 GHz radio settings on.
+"wireless_id": 8        Pairing ID, 1 to 100. Must match the receiver.
+"wireless_db": 6        Transmit power, 0 (lowest) to 7 (highest).
+
+
+LEFT IN FOR THE STOCK EDITOR (CaptainsMate ignores these)
+---------------------------------------------------------
+"device", "usb_drive_name", "display", and on keys "mode". Older
+configs may also have "battery_pin" and "battery_ratio"; they do
+nothing now and the editor removes them.
+
+Advanced, only if you know you need them: "spi_mhz" (screen speed,
+default 24) and "backlight_pin" (default "GP8").
+
+
+PAGES
+-----
+"pages": [ {page 1}, {page 2}, ... ]
+
+Each page looks like:
+{
+  "name": "Stage",          Shown when you change to this page.
+  "buttons": [ 10 keys ],   In key order, key 1 first.
+  "encoder": { ... },       The wheel (see ENCODER).
+  "expression": { ... }     The two pedal inputs (see EXPRESSION).
+}
+
+You can have as many pages as memory allows. A very large config can run
+the pedal out of memory; the editor shows the size as you work.
+
+
+KEYS
+----
+Page keys: a key with "type": "page_inc" goes to the next page,
+"page_dec" to the previous one. Keys 5 and 10 are usually page keys.
+{ "type": "page_inc", "label": "PG UP", "color": "white" }
+
+Every other key:
+{
+  "label": "DELAY",       Name shown on the screen (keep it short).
+  "color": "blue",        LED colour (see COLOURS). Dim when idle.
+  "short": [ states ],    What a tap does (see STATES).
+  "long":  [ states ],    What a long press does. [] for nothing.
+  "radio": "A",           Optional. Keys on a page with the same radio
+                          name act like radio buttons: lighting one
+                          turns the others off. Good for preset banks.
+  "show": { ... }         Optional pop-up text (see POP-UPS).
+}
+
+Counter keys step a value up or down each tap (capo, model, scene...):
+  "cc": 11          The CC number the counter sends.
+  "cc_min": 52      Lowest value.
+  "cc_max": 76      Highest value.
+  "cc_step": 1      How much each tap changes it.
+  "cc_wrap": true   true jumps from the top back to the bottom (and the
+                    other way). false stops at the ends.
+  "initial": 64     Value at power-up.
+  "names": ["STD", "DROP D", ...]
+                    Optional words shown instead of numbers: the first
+                    name for cc_min, the next for cc_min + cc_step, and
+                    so on. Two keys with the same "cc" (an UP key and a
+                    DN key) share one counter, and the names only need
+                    to be on one of them.
+The key's tap then uses a "cc_inc" or "cc_dec" message (see MESSAGES).
+
+
+STATES
+------
+"short" and "long" are lists of states. With one state, every tap does
+the same thing. With several, each tap moves to the next state and wraps
+round, so two states make a toggle (ON / OFF) and three make a 3-way
+switch.
+
+{
+  "label": "ON",       Optional text for this state.
+  "color": "green",    Optional LED colour for this state.
+  "dim": false,        false keeps the LED lit after the tap (shows the
+                       state is on). Leave it out to go back to dim.
+  "down": [ messages ],  Sent when the key goes down.
+  "up":   [ messages ]   Sent when the key comes back up.
+}
+
+Timing: if the key has no "long" states, "down" messages go out the
+instant you press. If it does have long states, the pedal has to wait
+to see if it is a tap or a hold, so a tap sends its "down" and "up"
+messages together when you let go.
+
+Momentary effects (on while held): put the "on" message in "down" and
+the "off" message in "up", and leave "long" empty.
+
+
+MESSAGES
+--------
+Every message can also have "channel": 1 to 16 to override the global
+MIDI channel for just that message.
+
+{ "type": "cc", "cc": 20, "value": 127 }
+    Control Change: switches and knobs on most gear. Values 0 to 127.
+
+{ "type": "pc", "program": 5 }
+    Program Change: recalls a preset. Note that many devices show
+    preset 1 for program 0.
+
+{ "type": "pc_inc" }   /   { "type": "pc_dec" }
+    Next / previous preset (wraps between 0 and 127).
+
+{ "type": "cc_inc" }   /   { "type": "cc_dec" }
+    Steps the key's counter up / down (see Counter keys).
+
+{ "type": "note", "note": 60, "velocity": 127 }
+    Note on when the key goes down, note off when it comes up.
+    60 is middle C.
+
+{ "type": "sysex", "data": "F0 41 00 00 F7" }
+    System Exclusive, written as hex bytes with spaces. F0 and F7 are
+    added if you leave them off.
+
+{ "type": "press", "keys": "1,3", "press": "long", "page": 2 }
+    A macro that acts as if other keys were tapped. "keys" is a list of
+    key numbers. "press": "long" uses their long press instead.
+    "page" (optional) uses keys on another page. A press can trigger
+    other presses, up to 3 deep.
+
+
+POP-UPS
+-------
+When a key fires, the middle of the screen shows what it did for a
+moment. "show" lets you choose:
+"show": { "src": "pc", "zero": -1, "caption": "Preset" }
+  "src"      "pc" shows the current preset number, "cc" the key's
+             counter value.
+  "zero"     Subtracted from the number before it is shown. -1 shows
+             program 0 as 1. For a capo centred on 64, use 64 so the
+             middle shows 0.
+  "signed"   true adds a + sign to positive numbers (capo +2).
+  "caption"  Small text under the number.
+
+The bottom row of the screen shows up to 4 counters or multi-state keys
+from the current page, with their latest values.
+
+
+ENCODER (the wheel)
+-------------------
+"encoder": { "enabled": true, "action": "page" }
+    Turning the wheel changes page.
+
+"encoder": { "enabled": true, "cc": 11, "min": 0, "max": 127,
+             "initial": 64, "steps": 1, "label": "VOL" }
+    Turning the wheel sends a CC. "steps" is how far each click moves
+    the value. Add "reverse": true to flip the direction, and
+    "channel" to use a different MIDI channel.
+
+
+EXPRESSION PEDALS
+-----------------
+"expression": {
+  "exp1": { "enabled": true, "cc": 12, "min": 0, "max": 127,
+            "threshold": 2, "polarity": "normal", "label": "WAH" },
+  "exp2": { "enabled": false, "cc": 13 }
+}
+  "min" / "max"   The range sent from heel to toe.
+  "threshold"     How much the value must change before a new message
+                  is sent. Raise it if the pedal "jitters".
+  "polarity"      "normal", or "reversed" if heel and toe are swapped.
+  "channel"       Optional MIDI channel for this pedal.
+
+
+COLOURS
+-------
+red, green, blue, yellow, orange, magenta, cyan, purple, white, off
+
+
+FILES ON THE DRIVE
+------------------
+code.py           The CaptainsMate firmware.
+boot.py           Decides at power-up whether the USB drive shows.
+config.json       Your settings (this guide).
+CONFIG-GUIDE.txt  This file. The pedal does not need it.
+boot_out.txt      Written by the pedal at each power-up. Its last line
+                  says why the drive is showing or hidden.
+chg_state.txt     The charge timer, kept while charging is on.

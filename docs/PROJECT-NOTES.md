@@ -10,6 +10,7 @@ A browser editor plus custom CircuitPython 7.3.1 firmware for the PaintAudio MID
 - Test emulator (the editor, no pedal needed): https://peanutismint.github.io/CaptainsMate/editor/captainsmate.html
 - `editor/captainsmate.html`: single-file editor. Web Serial (Chrome or Edge) talks to the pedal. It has an Examples picker, per-message test buttons, Web MIDI output and a pedal monitor.
 - `firmware/code.py`, `boot.py`, `config.json`: what runs on the pedal.
+- `firmware/CONFIG-GUIDE.txt`: plain-language notes on every config.json setting (JSON has no comments, and the pedal rewrites config.json as one line on save, so the notes live in their own file). Update it when a setting is added or changed.
 - `examples/`: `example-config.json` (generic 3-page starter), `AT200-counters.json`, `waza-air-config.json`.
 - `tools/embed_examples.py`: re-embeds `examples/` into the editor. Run it after editing any example.
 - Commits made by Claude carry a `Co-Authored-By` trailer. Pushing needs the Claude GitHub App installed on the repo.
