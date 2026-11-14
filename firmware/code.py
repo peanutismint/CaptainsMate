@@ -684,12 +684,14 @@ def batt_probe():
     out = "@BATT"
     for n in ("GP26", "GP29"):
         try:
-            a = AnalogIn(pin_of(n))
+            inuse = batt_in is not None and str(cfg.get("battery_pin", "GP29")) == n
+            a = batt_in if inuse else AnalogIn(pin_of(n))
             r = 0
             for _ in range(8):
                 r += a.value
-            a.deinit()
-            out += " %s=%.2fV" % (n, (r // 8) * 3.3 / 65535)
+            if not inuse:
+                a.deinit()
+            out += " %s=%.2fV%s" % (n, (r // 8) * 3.3 / 65535, "(sense pin)" if inuse else "")
         except Exception as e:
             out += " %s=err" % n
     out += " GP6=%d" % (1 if (chg_pin is not None and chg_pin.value) else 0)
