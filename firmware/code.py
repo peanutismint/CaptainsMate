@@ -616,6 +616,7 @@ for _i in range(5):
 bat_grp.hidden = True
 batt_pc = 0
 batt_key = None
+batt_hold = [None]  # last percent measured while running on batteries
 
 
 def batt_poll(now):
@@ -644,6 +645,15 @@ def batt_poll(now):
             if batt_v is None or abs(v - batt_v) >= 0.08:
                 batt_v = v
             batt_pc = batt_pct(batt_v)
+            # On USB the pedal stops loading the cells (and charging pushes the voltage up), so the reading
+            # says "full" whatever the cells hold. Keep the last on-battery percent instead.
+            if supervisor.runtime.usb_connected:
+                if batt_hold[0] is not None:
+                    batt_pc = batt_hold[0]
+                else:
+                    batt_pc = batt_pct(batt_v - 0.2)
+            else:
+                batt_hold[0] = batt_pc
         except Exception as e:
             batt_err = str(e)[:40]
             log("battery read failed, display off: " + str(e))
