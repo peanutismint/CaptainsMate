@@ -838,8 +838,34 @@ def radio_off(i, b):
                     led_col[j] = rgb(bl[j].get("color"))
 
 
+sx_pre_done = False
+
+
+def parse_sysex(s):
+    d = s.replace(" ", "")
+    b2 = bytes(int(d[i:i + 2], 16) for i in range(0, len(d) - 1, 2))
+    if not b2 or b2[0] != 0xF0:
+        b2 = b"\xf0" + b2
+    if b2[-1] != 0xF7:
+        b2 = b2 + b"\xf7"
+    return b2
+
+
+def send_sysex(b2):
+    mon_tx(b2)
+    for o in outs:
+        try:
+            p = getattr(o, "_outport", None) or o._midi_out
+            try:
+                p.write(b2, len(b2))
+            except TypeError:
+                p.write(b2)
+        except Exception as e:
+            log("sysex error: " + str(e))
+
+
 def run_msg2(m, b, direction):
-    global pc_val
+    global pc_val, sx_pre_done
     t = m.get("type")
     if t == "cc":
         v = m.get("value", 0)
@@ -871,22 +897,18 @@ def run_msg2(m, b, direction):
     if t == "sysex":
         if not m.get("data"):
             return None
-        d = m["data"].replace(" ", "")
-        b2 = bytes(int(d[i:i + 2], 16) for i in range(0, len(d) - 1, 2))
-        if not b2 or b2[0] != 0xF0:
-            b2 = b"\xf0" + b2
-        if b2[-1] != 0xF7:
-            b2 = b2 + b"\xf7"
-        mon_tx(b2)
-        for o in outs:
-            try:
-                p = getattr(o, "_outport", None) or o._midi_out
+        if not sx_pre_done:
+            # first SysEx since boot: send the optional "sysex_preamble" list from the
+            # config first (e.g. the Waza-Air session setup), then the real message
+            sx_pre_done = True
+            for s in cfg.get("sysex_preamble") or []:
                 try:
-                    p.write(b2, len(b2))
-                except TypeError:
-                    p.write(b2)
-            except Exception as e:
-                log("sysex error: " + str(e))
+                    send_sysex(parse_sysex(s))
+                    time.sleep(0.1)
+                except Exception as e:
+                    log("preamble error: " + str(e))
+        b2 = parse_sysex(m["data"])
+        send_sysex(b2)
         return "SYSEX %d" % len(b2)
     if t == "press":
         return fire_keys(m)
