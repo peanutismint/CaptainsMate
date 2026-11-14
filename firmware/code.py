@@ -471,6 +471,28 @@ chg_s = [0.0]
 chg_clk = [0.0]
 chg_done = [False]
 chg_on = [False]
+chg_saved = [0.0]
+chg_loaded = [False]
+CHG_FILE = "/chg_state.txt"
+# The on-time is saved about every 5 minutes (when the drive is writable) so power cycling cannot
+# restart the cutoff. It is cleared when charging is switched off in the config.
+
+
+def chg_save(v):
+    try:
+        with open(CHG_FILE, "w") as f:
+            f.write("%d" % int(v))
+        chg_saved[0] = v
+    except Exception:
+        pass
+
+
+def chg_clear():
+    chg_saved[0] = 0.0
+    try:
+        os.remove(CHG_FILE)
+    except Exception:
+        pass
 
 
 def charge_poll(now):
@@ -479,7 +501,20 @@ def charge_poll(now):
     chg_clk[0] = now
     if dt < 0 or dt > 5:
         dt = 0
+    if not chg_loaded[0]:
+        chg_loaded[0] = True
+        if cfg.get("battery_charge", False):
+            try:
+                with open(CHG_FILE) as f:
+                    chg_s[0] = float(f.read().strip() or 0)
+                    chg_saved[0] = chg_s[0]
+            except Exception:
+                pass
+        else:
+            chg_clear()
     if not cfg.get("battery_charge", False):
+        if chg_s[0] > 0 or chg_saved[0] > 0:
+            chg_clear()
         chg_s[0] = 0.0
         chg_done[0] = False
         want = False
@@ -489,10 +524,13 @@ def charge_poll(now):
             want = False
         if want:
             chg_s[0] += dt
+            if chg_s[0] - chg_saved[0] >= 300:
+                chg_save(chg_s[0])
             hrs = min(12.0, float(cfg.get("charge_max_hours") or 8))
             if chg_s[0] >= hrs * 3600:
                 chg_done[0] = True
                 want = False
+                chg_save(chg_s[0])
                 log("charge cutoff after %.1f h" % hrs)
                 popup("CHARGE DONE", "cutoff reached")
                 popup_until = now + 8
@@ -571,7 +609,7 @@ def batt_setup():
     batt_key = None
     if cfg.get("battery_display", True):
         try:
-            batt_in = AnalogIn(pin_of(str(cfg.get("battery_pin", "GP29"))))
+            batt_in = AnalogIn(board.GP29)  # confirmed on the 10 STD: GP29 reads the cells, divider 3
         except Exception as e:
             batt_err = str(e)[:40]
             log("battery pin: " + str(e))
@@ -639,9 +677,7 @@ def batt_poll(now):
             raw = 0
             for _ in range(8):
                 raw += batt_in.value
-            ratio = cfg.get("battery_ratio")
-            ratio = 3.0 if ratio is None else float(ratio)
-            v = (raw // 8) * 3.3 / 65535 * ratio
+            v = (raw // 8) * 3.3 / 65535 * 3.0
             if batt_v is None or abs(v - batt_v) >= 0.08:
                 batt_v = v
             batt_pc = batt_pct(batt_v)
@@ -703,7 +739,7 @@ def batt_probe():
     out = "@BATT"
     for n in ("GP26", "GP29"):
         try:
-            inuse = batt_in is not None and str(cfg.get("battery_pin", "GP29")) == n
+            inuse = batt_in is not None and n == "GP29"
             a = batt_in if inuse else AnalogIn(pin_of(n))
             r = 0
             for _ in range(8):
