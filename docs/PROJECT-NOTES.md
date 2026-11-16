@@ -1,6 +1,6 @@
 # CaptainsMate project notes
 
-Shared context for anyone (or any Claude chat) working on CaptainsMate. Last updated 2026-11-14 (late).
+Shared context for anyone working on CaptainsMate. Last updated 2026-11-14 (late).
 
 ## What it is
 
@@ -13,7 +13,6 @@ A browser editor plus custom CircuitPython 7.3.1 firmware for the PaintAudio MID
 - `firmware/CONFIG-GUIDE.txt`: plain-language notes on every config.json setting (JSON has no comments, and the pedal rewrites config.json as one line on save, so the notes live in their own file). Update it when a setting is added or changed.
 - `examples/`: `example-config.json` (generic 3-page starter), `AT200-counters.json`, `waza-air-config.json`.
 - `tools/embed_examples.py`: re-embeds `examples/` into the editor. Run it after editing any example.
-- Commits made by Claude carry a `Co-Authored-By` trailer. Pushing needs the Claude GitHub App installed on the repo.
 
 ## Working agreements
 
