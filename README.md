@@ -104,7 +104,7 @@ Bug reports, ideas and pull requests are all welcome. Example configs for specif
 
 ## Credits
 
-Pin map cross-checked against the PySwitch project. Built with help from Claude.
+Pin map cross-checked against the PySwitch project. 
 
 ## License
 
