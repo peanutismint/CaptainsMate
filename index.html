@@ -1,5 +1,615 @@
 <!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
-<title>CaptainsMate</title>
-<meta http-equiv="refresh" content="0; url=editor/captainsmate.html">
-<p>Opening CaptainsMate... <a href="editor/captainsmate.html">Click here if nothing happens.</a></p>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CaptainsMate, a browser editor and firmware for the MIDI Captain 10 STD</title>
+<meta name="description" content="CaptainsMate is a free, open source editor and custom firmware for the PaintAudio MIDI Captain 10 STD foot controller. Design your pages in the browser, press Send, and the pedal updates over USB.">
+<meta property="og:title" content="CaptainsMate">
+<meta property="og:description" content="Rewire every footswitch on your MIDI Captain 10 STD from a browser tab. Free and open source.">
+<meta property="og:image" content="https://peanutismint.github.io/CaptainsMate/site/img/og.png">
+<meta property="og:url" content="https://peanutismint.github.io/CaptainsMate/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#dcdfda">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231c1f24'/%3E%3Crect x='9' y='6' width='14' height='4' rx='2' fill='%23ff3b3b'/%3E%3Ccircle cx='16' cy='20' r='7' fill='%23c9cdd2'/%3E%3C/svg%3E">
+<link rel="preload" href="site/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:Archivo;src:url(site/fonts/archivo-var.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-display:swap}
+
+:root{
+  --alu:#dcdfda;      /* page: bare aluminium enclosure */
+  --alu-hi:#e9ebe7;   /* lighter band */
+  --rule:#b9bdb7;
+  --ink:#14171b;      /* silkscreen black */
+  --graphite:#4b5259; /* secondary text */
+  --body:#1c1f24;     /* the pedal itself, screenshot bezels */
+  --body-hi:#2a2e35;
+  --signal:#1859c9;   /* links and buttons, the editor's blue darkened for a light page */
+  --signal-dk:#0f469f;
+  --on-dark:#e6e8eb;
+  --on-dark-mu:#9aa1aa;
+  --led-red:#ff3b3b;--led-amber:#ffa31a;--led-yellow:#ffd60a;--led-green:#2bd46a;--led-cyan:#22d3ee;--led-blue:#3b82f6;--led-violet:#a855f7;--led-magenta:#ff2bd6;--led-white:#f2f4f7;
+  --wrap:1180px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--alu);color:var(--ink);font:400 18px/1.6 Archivo,system-ui,sans-serif;font-stretch:100%}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--signal);text-underline-offset:.18em;text-decoration-thickness:1px}
+a:hover{color:var(--signal-dk)}
+:focus-visible{outline:3px solid var(--signal);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+h1,h2,h3{font-stretch:125%;font-weight:800;line-height:1.08;letter-spacing:-.012em;margin:0}
+h1{font-size:clamp(40px,4.7vw,64px);letter-spacing:-.02em}
+h2{font-size:clamp(30px,3.6vw,44px)}
+h3{font-size:23px;line-height:1.2}
+p{margin:0 0 1em;max-width:62ch}
+.lede{font-size:21px;line-height:1.55;color:#2b3036}
+.mu{color:var(--graphite)}
+
+/* top bar */
+.bar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 0}
+.mark{font-stretch:125%;font-weight:800;letter-spacing:.14em;font-size:17px;color:var(--ink);text-decoration:none}
+.mark span{color:var(--signal)}
+.bar nav{display:flex;gap:26px;font-size:16px}
+.bar nav a{color:var(--ink);text-decoration:none}
+.bar nav a:hover{color:var(--signal)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;font:inherit;font-weight:650;font-size:17px;padding:14px 22px;border-radius:999px;text-decoration:none;border:2px solid var(--ink);color:var(--ink);background:transparent}
+.btn:hover{background:var(--ink);color:var(--alu)}
+.btn.pri{background:var(--signal);border-color:var(--signal);color:#fff}
+.btn.pri:hover{background:var(--signal-dk);border-color:var(--signal-dk);color:#fff}
+.btn svg{flex:none}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin:30px 0 18px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,560px);gap:56px;align-items:center;padding:36px 0 88px}
+.hero h1{margin-bottom:26px}
+.fine{font-size:15px;color:var(--graphite);max-width:52ch}
+
+/* the pedal drawing */
+.rig{display:grid;gap:14px}
+.pedal{background:linear-gradient(180deg,#2b2f36 0%,#1d2025 38%,#17191d 100%);border-radius:24px;padding:24px 22px 26px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),inset 0 -2px 0 rgba(0,0,0,.4),0 40px 70px -40px rgba(20,23,27,.7);position:relative;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.pedal::before,.pedal::after{content:"";position:absolute;top:12px;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#6b7178,#2a2d33)}
+.pedal::before{left:12px}.pedal::after{right:12px}
+.ptop{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-bottom:22px}
+.brandplate{font-stretch:125%;font-weight:750;font-size:11px;letter-spacing:.2em;color:#8d949c;line-height:1.5}
+.brandplate b{display:block;color:#c9ced4;font-size:13px}
+.screen{width:204px;aspect-ratio:1;background:#000;border:6px solid #30343c;border-radius:6px;display:grid;grid-template-rows:17% 1fr 21%;font:500 11px/1.25 ui-monospace,"Cascadia Mono",Consolas,Menlo,monospace;color:#e8eaed;overflow:hidden}
+.screen .h{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;text-align:center;border-bottom:1px solid #1f2329}
+.batt{width:20px;height:10px;border:1.5px solid #b9bec5;border-radius:2px;position:relative;margin:0 6px}
+.batt::before{content:"";position:absolute;inset:1.5px;right:4px;background:#3fdc7c}
+.batt::after{content:"";position:absolute;right:-4px;top:2px;width:2px;height:4px;background:#b9bec5}
+.screen .c{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;padding:4px;transition:background .12s}
+.screen .c.pop{background:#10233a}
+.screen .c b{font-size:28px;font-weight:700;letter-spacing:.01em;line-height:1}
+.screen .c span{color:#7cc4ff;font-size:12px}
+.screen .c.idle b{font-size:15px;color:#555c66;font-weight:500}
+.screen .f{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #1f2329}
+.screen .f div{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;line-height:1.25;text-align:center;border-left:1px solid #1f2329;overflow:hidden;white-space:nowrap}
+.screen .f div:first-child{border-left:0}
+.knob{justify-self:end;width:46px;height:46px;border-radius:50%;background:repeating-conic-gradient(#3a3f47 0 6deg,#2a2e35 6deg 12deg);box-shadow:0 0 0 4px #121418,inset 0 0 0 9px #22262c;position:relative}
+.knob::after{content:"";position:absolute;left:50%;top:9px;width:3px;height:9px;margin-left:-1.5px;border-radius:2px;background:#c9ced4}
+.sws{display:grid;grid-template-columns:repeat(5,1fr);row-gap:20px;column-gap:6px}
+.sw{appearance:none;background:none;border:0;padding:4px 0 0;margin:0;display:grid;justify-items:center;gap:9px;cursor:pointer;color:inherit;font:inherit;border-radius:12px}
+.sw .led{width:30px;height:6px;border-radius:3px;background:var(--c,#555);opacity:.2;transition:opacity .08s,box-shadow .08s}
+.sw.lit .led{opacity:1;box-shadow:0 0 6px var(--c),0 0 16px var(--c)}
+.sw.page .led{--c:#6d737b}
+.sw .cap{width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 36% 30%,#fbfcfc 0,#c8cdd2 30%,#8e959c 68%,#5b6168 100%);box-shadow:0 0 0 5px #0f1114,0 0 0 7px #3a3e45,0 6px 10px rgba(0,0,0,.55);transition:transform .06s}
+.sw.down .cap{transform:translateY(2px) scale(.955);box-shadow:0 0 0 5px #0f1114,0 0 0 7px #3a3e45,0 2px 4px rgba(0,0,0,.6)}
+.sw .lbl{font-stretch:112%;font-weight:650;font-size:11px;letter-spacing:.05em;color:#aeb4bb;white-space:nowrap}
+.sw:focus-visible{outline-color:#7cc4ff;outline-offset:2px}
+.righint{font-size:15px;color:var(--graphite);text-align:center;margin:0 auto}
+@media (hover:none){.righint .kb{display:none}}
+kbd{font:600 13px/1 Archivo,sans-serif;font-stretch:110%;border:1px solid var(--rule);border-bottom-width:2px;border-radius:4px;padding:2px 5px;background:var(--alu-hi)}
+
+/* dark workbench band */
+.bench{background:var(--body);color:var(--on-dark);padding:96px 0 104px}
+.bench h2{color:#fff;max-width:20ch;margin-bottom:22px}
+.bench p{color:#c5cad1}
+.bench .intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:end;margin-bottom:48px}
+.bench .shot{border-radius:12px;border:1px solid #333842;overflow:hidden;background:#0d0e11}
+.bench figcaption{font-size:15px;color:var(--on-dark-mu);margin-top:16px;max-width:80ch}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:64px;padding-top:40px;border-top:1px solid #343943}
+.trio h3{color:#fff;font-size:20px;margin-bottom:10px}
+.trio p{font-size:16.5px;color:#b9bfc7;margin:0}
+
+/* feature rows */
+.features{padding:110px 0 40px}
+.features > .wrap > h2{max-width:22ch;margin-bottom:18px}
+.features > .wrap > .lede{margin-bottom:40px}
+.row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;align-items:center;padding:56px 0;border-top:1px solid var(--rule)}
+.row.flip{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
+.row.flip .txt{order:2}
+.row h3{font-size:clamp(24px,2.4vw,30px);margin-bottom:16px}
+.row p{font-size:17.5px}
+.row ul{margin:4px 0 0;padding:0;list-style:none;font-size:16.5px;color:#2b3036}
+.row li{padding:7px 0 7px 22px;position:relative}
+.row li::before{content:"";position:absolute;left:0;top:15px;width:10px;height:4px;border-radius:2px;background:var(--li,var(--led-blue))}
+.bezel{background:var(--body);padding:12px;border-radius:16px}
+.bezel img{border-radius:8px}
+.bezel.narrow{max-width:460px;justify-self:center}
+.row.tall .bezel{max-height:560px;overflow:hidden}
+
+/* key types */
+.types{background:var(--alu-hi);padding:104px 0}
+.types h2{margin-bottom:16px}
+.types .lede{margin-bottom:48px}
+.tlist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:2px solid var(--ink)}
+.t{padding:28px 26px 30px 0;border-bottom:1px solid var(--rule)}
+.t:not(:nth-child(3n+1)){padding-left:26px;border-left:1px solid var(--rule)}
+.t h3{font-size:21px;margin-bottom:12px}
+.t p{font-size:16px;margin:0 0 10px;color:#2b3036}
+.t .use{font-size:15px;color:var(--graphite);margin:0}
+.demo{display:flex;align-items:flex-end;gap:14px;margin:4px 0 16px;min-height:38px}
+.demo figure{margin:0;display:grid;justify-items:center;gap:5px}
+.demo i{display:block;width:26px;height:6px;border-radius:3px;background:var(--c);opacity:.22}
+.demo i.on{opacity:1;box-shadow:0 0 8px var(--c)}
+.demo figcaption{font-size:12px;color:var(--graphite);font-stretch:110%}
+.demo .lcd{font:600 12px/1 ui-monospace,Consolas,Menlo,monospace;background:var(--body);color:#e8eaed;padding:6px 8px;border-radius:4px}
+
+/* toolbox */
+.tools{padding:104px 0}
+.tools h2{margin-bottom:44px;max-width:20ch}
+.tgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:64px}
+.tgrid dl{margin:0}
+.tgrid div{padding:20px 0;border-top:1px solid var(--rule)}
+.tgrid dt{font-stretch:118%;font-weight:750;font-size:18px;margin-bottom:6px}
+.tgrid dd{margin:0;font-size:16.5px;color:#2b3036;max-width:58ch}
+.tag{font-size:12.5px;font-weight:650;font-stretch:110%;border:1px solid #8a6a12;color:#6d5208;border-radius:999px;padding:1px 8px;margin-left:8px;vertical-align:2px;white-space:nowrap}
+
+/* anywhere */
+.anywhere{padding:0 0 110px}
+.anygrid{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:40px;align-items:end}
+.anywhere .bezel.phone{border-radius:30px;padding:10px}
+.anywhere .bezel.phone img{border-radius:22px}
+.anytxt{margin-top:36px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px}
+.anytxt h2{font-size:clamp(28px,3vw,38px)}
+
+/* install */
+.install{background:var(--body);color:var(--on-dark);padding:100px 0}
+.install h2{color:#fff;margin-bottom:16px}
+.install .lede{color:#c5cad1;margin-bottom:48px}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;counter-reset:s}
+.steps li{counter-increment:s;border-top:2px solid #3b4049;padding-top:20px}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 36% 30%,#fbfcfc 0,#c8cdd2 30%,#8e959c 68%,#5b6168 100%);color:var(--ink);font-weight:800;font-stretch:125%;margin-bottom:16px}
+.steps h3{color:#fff;font-size:19px;margin-bottom:8px}
+.steps p{font-size:16px;color:#b9bfc7;margin:0}
+.steps code{font:500 14px ui-monospace,Consolas,Menlo,monospace;color:#e6e8eb;background:#2a2e35;padding:1px 5px;border-radius:4px}
+.install .more{margin-top:44px;font-size:16px;color:#b9bfc7}
+.install a{color:#8cc2ff}
+.install a:hover{color:#b9daff}
+
+/* outro */
+.outro{padding:104px 0 60px;text-align:left}
+.outro h2{max-width:18ch;margin-bottom:20px}
+footer{border-top:1px solid var(--rule);padding:28px 0 48px;font-size:14.5px;color:var(--graphite)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between}
+footer p{margin:0;max-width:70ch}
+
+/* responsive */
+@media (max-width:1020px){
+  .hero{grid-template-columns:1fr;gap:48px;padding-top:20px}
+  .rig{max-width:560px;width:100%;justify-self:center}
+  .bench .intro,.anytxt{grid-template-columns:1fr;gap:16px}
+  .row,.row.flip{grid-template-columns:1fr;gap:28px}
+  .row.flip .txt{order:0}
+  .tlist{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .t:not(:nth-child(3n+1)){padding-left:0;border-left:0}
+  .t:nth-child(2n){padding-left:24px;border-left:1px solid var(--rule)}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .trio{grid-template-columns:1fr;gap:28px}
+}
+@media (max-width:640px){
+  body{font-size:17px}
+  .wrap{padding:0 18px}
+  .bar nav a:not(.gh){display:none}
+  .lede{font-size:19px}
+  .pedal{padding:20px 12px 20px;border-radius:18px}
+  .ptop{grid-template-columns:1fr auto 1fr;margin-bottom:18px}
+  .brandplate{font-size:9px}.brandplate b{font-size:10.5px}
+  .screen{width:150px;font-size:9px}
+  .screen .c b{font-size:20px}.screen .c span{font-size:10px}
+  .screen .f div{font-size:7.5px}
+  .knob{width:34px;height:34px;box-shadow:0 0 0 3px #121418,inset 0 0 0 7px #22262c}
+  .knob::after{top:6px;height:7px}
+  .sw .cap{width:42px;height:42px;box-shadow:0 0 0 4px #0f1114,0 0 0 5px #3a3e45,0 5px 8px rgba(0,0,0,.55)}
+  .sw .led{width:22px}
+  .sw .lbl{font-size:8.5px;letter-spacing:.02em}
+  .tlist{grid-template-columns:1fr}
+  .t,.t:nth-child(2n){padding-left:0;border-left:0}
+  .tgrid{grid-template-columns:1fr}
+  .anygrid{grid-template-columns:1fr}
+  .anywhere .bezel.phone{max-width:260px;justify-self:center}
+  .steps{grid-template-columns:1fr}
+  .bench,.types,.tools,.install{padding:72px 0}
+  .features{padding-top:80px}
+}
+@media (prefers-reduced-motion:reduce){.sw .led,.sw .cap,.screen .c{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="bar">
+    <a class="mark" href="./" aria-label="CaptainsMate home">CAPTAINS<span>MATE</span></a>
+    <nav aria-label="Main">
+      <a href="#features">Features</a>
+      <a href="#key-types">Key types</a>
+      <a href="#install">Install</a>
+      <a class="gh" href="https://github.com/peanutismint/CaptainsMate">GitHub</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>Every footswitch, rewired from a browser tab.</h1>
+      <p class="lede">CaptainsMate is a point-and-click editor and a small custom firmware for the PaintAudio MIDI Captain 10 STD. Lay out your pages, press Send, and the pedal changes on the spot. No config files to hand-edit, no ejecting the drive, no reboot.</p>
+      <div class="ctas">
+        <a class="btn pri" href="emulator/">Open the emulator</a>
+        <a class="btn" href="https://github.com/peanutismint/CaptainsMate"><svg width="20" height="20" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>View on GitHub</a>
+      </div>
+      <p class="fine">Free and open source under the MIT licence. The emulator runs in any modern browser with no pedal attached. Connecting a real pedal over USB needs Chrome or Edge on a computer.</p>
+    </div>
+
+    <div class="rig">
+      <div class="pedal" id="pedal" role="group" aria-label="Playable drawing of the pedal running the starter config">
+        <div class="ptop">
+          <div class="brandplate" aria-hidden="true"><b>MIDI CAPTAIN</b>10 STD</div>
+          <div class="screen" aria-live="polite">
+            <div class="h"><span id="sPage">PAGE 1/3</span><span class="batt" aria-label="Battery"></span><span id="sPc">PC 0</span></div>
+            <div class="c idle" id="sMid"><b id="sBig">READY</b><span id="sSub"></span></div>
+            <div class="f" id="sFoot"><div></div><div></div><div></div><div></div></div>
+          </div>
+          <div class="knob" aria-hidden="true"></div>
+        </div>
+        <div class="sws" id="sws"></div>
+      </div>
+      <p class="righint" id="hint">Step on it. Tap a switch, hold <b>TAP</b> for the tuner<span class="kb">, or use <kbd>1</kbd> to <kbd>0</kbd> on your keyboard</span>.</p>
+    </div>
+  </section>
+</div>
+
+<section class="bench" aria-labelledby="bench-h">
+  <div class="wrap">
+    <div class="intro">
+      <h2 id="bench-h">The whole pedal on one screen.</h2>
+      <p>Your pages sit on the left, the ten keys and a live preview of the pedal's screen in the middle, and everything about the selected key on the right. Click any key to simulate a tap, Shift-click for a long press, and watch the LEDs and the screen react exactly as they will under your foot.</p>
+    </div>
+    <figure style="margin:0">
+      <div class="shot"><img src="site/img/editor-stage.webp" width="2400" height="1050" alt="The CaptainsMate editor showing a stage page with drive, delay and FX loop lit, a master volume key selected, and the screen preview showing FULL."></div>
+      <figcaption>The starter config's stage page. Drive, delay and the FX loop are on, and the master volume key has just sent a SysEx message, so the screen pops up FULL.</figcaption>
+    </figure>
+    <div class="trio">
+      <div>
+        <h3>Press Send, keep playing</h3>
+        <p>The editor talks to the pedal over the same USB cable that powers it. Send pushes your changes and the pedal saves them itself. Receive pulls the pedal's setup back into the editor. Tick Live and every edit goes across as you make it.</p>
+      </div>
+      <div>
+        <h3>Nothing to install</h3>
+        <p>The editor is a single web page. Open it, connect, done. It also works as a test emulator with no pedal at all, so you can build a whole rig on the train and send it when you get home.</p>
+      </div>
+      <div>
+        <h3>Know how much room is left</h3>
+        <p>A size chip shows how big your config is, and once connected, how much memory the pedal has free. You find out a page is too big in the editor, not halfway through a gig.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features" aria-labelledby="feat-h">
+  <div class="wrap">
+    <h2 id="feat-h">Built for players, not MIDI programmers.</h2>
+    <p class="lede">The MIDI Captain is a great little foot controller. CaptainsMate makes it painless to tell it what to do, on stage, in the studio or at the practice space.</p>
+
+    <div class="row">
+      <div class="txt">
+        <h3>Build pages the way you play</h3>
+        <p>Ten keys is never enough, so make as many pages as you like and flip between them with page keys or the encoder wheel. Every key glows dimly in its own color, so you can read the pedal from across the stage.</p>
+        <ul>
+          <li style="--li:var(--led-violet)">Radio groups light one key at a time, perfect for a bank of patches.</li>
+          <li style="--li:var(--led-green)">Pick a ready-made key from the Template menu: toggle, momentary, tap tempo, counter, drum pad and more.</li>
+          <li style="--li:var(--led-amber)">Drag keys to swap them, move whole pages, copy, paste, duplicate and undo.</li>
+        </ul>
+      </div>
+      <div class="bezel"><img loading="lazy" src="site/img/radio-bank.webp" width="2016" height="440" alt="A patches page with eight radio keys, CRUNCH lit purple, and the screen preview showing CRUNCH, PC 3."></div>
+    </div>
+
+    <div class="row flip tall">
+      <div class="txt">
+        <h3>One switch, two jobs</h3>
+        <p>Every key can do one thing on a tap and something else on a long press. Tap for tap tempo, hold for the tuner. Tap for the next scene, hold to jump back to the first. Tap to undo, hold to clear the loop.</p>
+        <ul>
+          <li style="--li:var(--led-cyan)">Send on press for instant response, or on release to avoid double triggers.</li>
+          <li style="--li:var(--led-magenta)">Stack several messages on one key: change the amp channel, bypass a pedal and recall a preset in one stomp.</li>
+          <li style="--li:var(--led-yellow)">Press macros tap other keys for you, so one footswitch can flip a whole scene.</li>
+        </ul>
+      </div>
+      <div class="bezel narrow"><img loading="lazy" src="site/img/tap-and-hold.webp" width="740" height="1060" alt="The key inspector for a TAP key set to Momentary, sending CC 64 value 127 on press, with a long press section below."></div>
+    </div>
+
+    <div class="row">
+      <div class="txt">
+        <h3>Speaks CC, PC, notes and SysEx</h3>
+        <p>Control Change for the knobs and switches on most gear, Program Change and preset up and down for recalling sounds, notes with velocity for drum pads and samplers. When a CC can't reach something, type the SysEx bytes in hex and the pedal sends them as they are.</p>
+        <p>Set one MIDI channel for the whole pedal, or override it on any single message so one pedal can drive several devices.</p>
+      </div>
+      <div class="bezel"><img loading="lazy" src="site/img/sysex-waza.webp" width="2016" height="440" alt="An effects page for Boss Waza-Air headphones with boost, delay, reverb and EQ lit, and the screen preview showing ON, SYSEX 15 bytes."></div>
+    </div>
+
+    <div class="row flip">
+      <div class="txt">
+        <h3>Start from a real rig</h3>
+        <p>Open Examples and pick one to see what a full setup looks like. The starter is a three-page board: a stage page, a radio patch bank with a one-tap Home key, and a looper page with named scene counters and an amp-channel sequence.</p>
+        <p>There are gear-specific configs too. One drives the Peavey AT-200 with named capo, model, doubler and tuning counters. Another controls Boss Waza-Air headphones entirely over SysEx, and makes a good model for any SysEx device.</p>
+      </div>
+      <div class="bezel narrow"><img loading="lazy" src="site/img/examples.webp" width="1000" height="792" alt="The Examples picker listing the generic three-page starter, Peavey AT-200 and Boss Waza-Air headphones configs."></div>
+    </div>
+
+    <div class="row tall">
+      <div class="txt">
+        <h3>Test without guessing</h3>
+        <p>Every message has its own play button that sends just that message, either through the pedal or straight to a MIDI port on your computer. That makes it quick to find the one SysEx string your gear actually answers to.</p>
+        <p>Turn on the pedal monitor to see every message the pedal sends as you stomp, and use the log to ask the pedal what it's doing when something doesn't add up.</p>
+      </div>
+      <div class="bezel narrow"><img loading="lazy" src="site/img/settings-log.webp" width="1080" height="1332" alt="The Test and log settings tab with a choice of where to send test messages, a pedal monitor switch and a connection log."></div>
+    </div>
+
+    <div class="row flip">
+      <div class="txt">
+        <h3>Settings that respect the stage</h3>
+        <p>Global settings live in one tidy panel: the MIDI channel, how long a long press is, how bright idle LEDs glow, and how bright the screen is. For dark stages the screen can fade down after a few quiet seconds and snap back the moment you touch a key.</p>
+        <p>The battery can show as a voltage, a percentage or an icon. If you run rechargeable NiMH cells, the pedal can charge them over USB, with a time limit and regular pauses for an honest reading. Charging is off by default and still being tested.</p>
+      </div>
+      <div class="bezel narrow"><img loading="lazy" src="site/img/settings-battery.webp" width="1080" height="944" alt="The Battery settings tab, with options for showing the battery, a battery icon style, the battery type and a charge batteries switch."></div>
+    </div>
+  </div>
+</section>
+
+<section class="types" id="key-types" aria-labelledby="types-h">
+  <div class="wrap">
+    <h2 id="types-h">Six kinds of key.</h2>
+    <p class="lede">Give each footswitch a personality. Each type can respond to a tap and to a long press, which you can time to your own foot.</p>
+    <div class="tlist">
+      <div class="t">
+        <div class="demo" aria-hidden="true">
+          <figure><i class="on" style="--c:var(--led-cyan)"></i><figcaption>down</figcaption></figure>
+          <figure><i style="--c:var(--led-cyan)"></i><figcaption>up</figcaption></figure>
+        </div>
+        <h3>Momentary</h3>
+        <p>Sends one value while your foot is down and another when you lift.</p>
+        <p class="use">A reverb swell only while held, a solo boost, freeze or whammy, a sustain pedal.</p>
+      </div>
+      <div class="t">
+        <div class="demo" aria-hidden="true">
+          <figure><i class="on" style="--c:var(--led-red)"></i><figcaption>tap</figcaption></figure>
+          <figure><i style="--c:var(--led-red)"></i><figcaption>tap</figcaption></figure>
+          <figure><i class="on" style="--c:var(--led-red)"></i><figcaption>tap</figcaption></figure>
+        </div>
+        <h3>Toggle</h3>
+        <p>Each tap flips it on and off, and the LED changes to match.</p>
+        <p class="use">Drive, delay, the FX loop, a compressor, anything you set and forget.</p>
+      </div>
+      <div class="t">
+        <div class="demo" aria-hidden="true">
+          <i style="--c:var(--led-green)"></i><i style="--c:var(--led-cyan)"></i><i class="on" style="--c:var(--led-violet)"></i><i style="--c:var(--led-magenta)"></i>
+        </div>
+        <h3>Radio</h3>
+        <p>A pick-one group. Pressing a key lights it and dims the others in its group.</p>
+        <p class="use">Banks of presets or patches, amp or scene selectors.</p>
+      </div>
+      <div class="t">
+        <div class="demo" aria-hidden="true"><span class="lcd">VERSE</span><span class="lcd">CHORUS</span><span class="lcd">SOLO</span></div>
+        <h3>Counter</h3>
+        <p>Steps a value up or down, can wrap around, and can show a name for each value on the screen.</p>
+        <p class="use">Scenes and snapshots, bank select, volume in steps.</p>
+      </div>
+      <div class="t">
+        <div class="demo" aria-hidden="true">
+          <figure><i class="on" style="--c:var(--led-green)"></i><figcaption>clean</figcaption></figure>
+          <figure><i class="on" style="--c:var(--led-amber)"></i><figcaption>crunch</figcaption></figure>
+          <figure><i class="on" style="--c:var(--led-red)"></i><figcaption>lead</figcaption></figure>
+        </div>
+        <h3>Sequence</h3>
+        <p>Each tap moves to the next state, and every state sends its own messages and shows its own color.</p>
+        <p class="use">Channel cycling, delay subdivisions, walking through the parts of a song.</p>
+      </div>
+      <div class="t">
+        <div class="demo" aria-hidden="true"><span class="lcd">PAGE 1/3</span><span class="lcd">PAGE 2/3</span></div>
+        <h3>Page up and down</h3>
+        <p>Jumps to the next or previous page of ten keys.</p>
+        <p class="use">Separate pages for the stage, the looper and the setlist.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tools" aria-labelledby="tools-h">
+  <div class="wrap">
+    <h2 id="tools-h">Everything else the pedal can do.</h2>
+    <div class="tgrid">
+      <dl>
+        <div><dt>Big screen pop-ups</dt><dd>Press a key and the screen shows a big number or name, like the preset number, the current scene or "Chorus". A zero point can be subtracted, so a value centred on 64 reads as 0.</dd></div>
+        <div><dt>Encoder wheel</dt><dd>Scroll through pages, or send a CC as you turn it.</dd></div>
+        <div><dt>Two expression inputs</dt><dd>EXP1 and EXP2 send a CC that follows the pedal's position, for wah or volume. They start switched off, so you won't get stray signals.</dd></div>
+        <div><dt>LED feedback</dt><dd>Idle keys glow dimly in their own color. Toggles light up brightly while on. Set how bright idle keys are, or keep any key lit after it fires.</dd></div>
+        <div><dt>Help where you need it</dt><dd>Hover any field for a tip, or open the built-in guide and MIDI cheat sheet. The guide can pop out into its own window beside the editor.</dd></div>
+      </dl>
+      <dl>
+        <div><dt>Share pages, not whole files</dt><dd>Export saves a single page as a small file. Import pages, or drop a config onto the editor, to tick the pages you want from someone else's setup and choose where they go.</dd></div>
+        <div><dt>NiMH charging<span class="tag">Experimental</span></dt><dd>Charging pauses for a few seconds every minute so the reading isn't skewed, and stops on its own after a time limit. Use it only with rechargeable NiMH cells, never alkaline.</dd></div>
+        <div><dt>MIDI through<span class="tag">Untested</span></dt><dd>Pass anything arriving on the DIN input out of the DIN output and USB, so the pedal can sit in the middle of a chain.</dd></div>
+        <div><dt>Wireless on Pro models<span class="tag">Untested</span></dt><dd>On/off, wireless ID and radio power for pairing the blue and gold Pro units with a PaintAudio MIDI Mate. The black STD has no radio.</dd></div>
+        <div><dt>Dev mode</dt><dd>Normally the pedal hides its USB drive so it can save its own settings. Switch on Dev mode, or hold key 1 at power-up, to get the drive back.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="anywhere" aria-labelledby="any-h">
+  <div class="wrap">
+    <div class="anygrid">
+      <div class="bezel"><img loading="lazy" src="site/img/editor-light.webp" width="2000" height="875" alt="The editor in its light theme, showing the looper page with the record key lit red and a scene counter selected."></div>
+      <div class="bezel phone"><img loading="lazy" src="site/img/mobile.webp" width="780" height="1467" alt="The editor on a phone, with the stage page keys stacked in three columns."></div>
+    </div>
+    <div class="anytxt">
+      <h2 id="any-h">Light or dark, desk or sofa.</h2>
+      <p>The editor follows your system theme, or you can pick light or dark from the top bar. It reflows for small screens too, so you can sketch a page on your phone in the emulator and send it to the pedal from your computer later.</p>
+    </div>
+  </div>
+</section>
+
+<section class="install" id="install" aria-labelledby="install-h">
+  <div class="wrap">
+    <h2 id="install-h">Get it onto your pedal.</h2>
+    <p class="lede">CaptainsMate runs on CircuitPython 7.3.1. If your pedal already runs CircuitPython, setup takes a few minutes.</p>
+    <ol class="steps">
+      <li><h3>Back up the drive</h3><p>Hold switch 1 while powering on, and copy everything from the MIDICAPTAIN drive to a safe folder.</p></li>
+      <li><h3>Copy three files</h3><p>Put <code>code.py</code>, <code>boot.py</code> and <code>config.json</code> from the repo's <code>firmware</code> folder onto the drive, then restart the pedal.</p></li>
+      <li><h3>Connect</h3><p>Open the editor in Chrome or Edge, click Connect pedal and pick its serial port. The editor reads what's on it.</p></li>
+      <li><h3>Send and stomp</h3><p>Change something, click Send, and step on the key. You'll rarely need the USB drive again.</p></li>
+    </ol>
+    <p class="more">No <code>code.py</code> or <code>lib</code> folder on your drive? Your pedal may need CircuitPython flashed first, which is the riskier route. The <a href="https://github.com/peanutismint/CaptainsMate#installing-on-the-pedal">install guide on GitHub</a> covers it, along with where to get CircuitPython 7.3.1.</p>
+  </div>
+</section>
+
+<section class="outro" aria-labelledby="outro-h">
+  <div class="wrap">
+    <h2 id="outro-h">Try it before you touch the pedal.</h2>
+    <p class="lede">The emulator is the full editor. Load an example, press some keys and see if it fits the way you play.</p>
+    <div class="ctas">
+      <a class="btn pri" href="emulator/">Open the emulator</a>
+      <a class="btn" href="https://github.com/peanutismint/CaptainsMate">View on GitHub</a>
+      <a class="btn" href="https://github.com/peanutismint/CaptainsMate/issues">Report a bug or idea</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>CaptainsMate is an unofficial community project, not affiliated with or endorsed by PaintAudio or any other brand mentioned here. Use it at your own risk, and keep a backup of your original firmware.</p>
+    <p>MIT licence. <a href="https://github.com/peanutismint/CaptainsMate">Source on GitHub</a>.</p>
+  </div>
+</footer>
+
+<script>
+(()=>{
+const C={red:'#ff3b3b',amber:'#ffa31a',yellow:'#ffd60a',green:'#2bd46a',cyan:'#22d3ee',blue:'#3b82f6',violet:'#a855f7',magenta:'#ff2bd6',white:'#f2f4f7'};
+const PAGES=[
+ {keys:[
+  {l:'DRIVE',c:'red',t:'toggle',cc:20},
+  {l:'DELAY',c:'amber',t:'toggle',cc:21},
+  {l:'REVERB',c:'cyan',t:'momentary',cc:22},
+  {l:'FX LOOP',c:'magenta',t:'toggle',cc:23},
+  {l:'PG UP',t:'pgup'},
+  {l:'TAP',c:'white',t:'tap',cc:64,hold:['TUNER','CC 68 = 127']},
+  {l:'MASTER',c:'blue',t:'seq',states:[['FULL','blue'],['75%','cyan'],['50%','green']],sub:'SYSEX 8 bytes'},
+  {l:'PRE -',c:'green',t:'pcdec'},
+  {l:'PRE +',c:'green',t:'pcinc',hold:['PRESET 0','PC 0']},
+  {l:'PG DN',t:'pgdn'}],foot:[0,1,3,6]},
+ {keys:[
+  {l:'CLEAN',c:'green',t:'radio',pc:0},
+  {l:'CHORUS',c:'cyan',t:'radio',pc:1},
+  {l:'AMBIENT',c:'blue',t:'radio',pc:2},
+  {l:'CRUNCH',c:'violet',t:'radio',pc:3},
+  {l:'PG UP',t:'pgup'},
+  {l:'LEAD',c:'magenta',t:'radio',pc:4},
+  {l:'FUZZ',c:'amber',t:'radio',pc:5},
+  {l:'SOLO',c:'yellow',t:'radio',pc:6},
+  {l:'HOME',c:'white',t:'home'},
+  {l:'PG DN',t:'pgdn'}],foot:[]},
+ {keys:[
+  {l:'REC',c:'red',t:'toggle',cc:50},
+  {l:'PLAY',c:'green',t:'toggle',cc:51},
+  {l:'UNDO',c:'amber',t:'tap',cc:52,hold:['CLEAR','CC 53 = 127']},
+  {l:'x2 SPEED',c:'cyan',t:'toggle',cc:54},
+  {l:'PG UP',t:'pgup'},
+  {l:'SCENE -',c:'violet',t:'cdec'},
+  {l:'SCENE +',c:'violet',t:'cinc',hold:['INTRO','CC 40 = 0']},
+  {l:'AMP CH',c:'green',t:'seq',states:[['CLEAN','green'],['CRUNCH','amber'],['LEAD','red']],sub:'CC 60'},
+  {l:'KICK',c:'white',t:'note'},
+  {l:'PG DN',t:'pgdn'}],foot:[0,1,5,7]}
+];
+const SCENES=['INTRO','VERSE','CHORUS','BRIDGE','SOLO','OUTRO'];
+let pg=0,pc=0,scene=0,popT=0;
+const st=PAGES.map(p=>p.keys.map(()=>({on:false,i:-1})));
+const radio=[null,null,null];
+const $=s=>document.querySelector(s),sws=$('#sws');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function ledColor(k,s){if(k.t==='seq')return C[s.i<0?k.c:k.states[s.i][1]];return C[k.c]||'#6d737b'}
+function lit(k,s,i){if(k.t==='toggle')return s.on;if(k.t==='seq')return s.i>=0;if(k.t==='radio')return radio[pg]===i;return s.on}
+function draw(){
+  PAGES[pg].keys.forEach((k,i)=>{const b=sws.children[i],s=st[pg][i];
+    b.querySelector('.lbl').textContent=k.l;b.classList.toggle('page',k.t==='pgup'||k.t==='pgdn');
+    b.style.setProperty('--c',ledColor(k,s));b.classList.toggle('lit',!!lit(k,s,i));
+    b.setAttribute('aria-label',k.l+(k.t==='toggle'?(s.on?', on':', off'):''));});
+  $('#sPage').textContent='PAGE '+(pg+1)+'/'+PAGES.length;$('#sPc').textContent='PC '+pc;
+  const f=PAGES[pg].foot;
+  $('#sFoot').innerHTML=[0,1,2,3].map(n=>{const i=f[n];if(i==null)return'<div></div>';const k=PAGES[pg].keys[i],s=st[pg][i];
+    let v=k.t==='toggle'?(s.on?'ON':'-'):k.t==='seq'?(s.i<0?'-':k.states[s.i][0]):k.t==='cdec'||k.t==='cinc'?SCENES[scene]:'';
+    return`<div>${k.l}<br>${v}</div>`}).join('');
+}
+function pop(big,sub){const m=$('#sMid');m.classList.remove('idle');m.classList.add('pop');$('#sBig').textContent=big;$('#sSub').textContent=sub||'';
+  clearTimeout(popT);popT=setTimeout(()=>{m.classList.remove('pop');m.classList.add('idle');$('#sBig').textContent='READY';$('#sSub').textContent=''},1800)}
+function flash(i){const s=st[pg][i];s.on=true;draw();setTimeout(()=>{s.on=false;draw()},180)}
+
+function fire(i,long){const k=PAGES[pg].keys[i],s=st[pg][i];
+  if(long&&k.hold){
+    if(k.t==='cinc'){scene=0;pop('INTRO','CC 40 = 0')}
+    else if(k.t==='pcinc'){pc=0;pop('PRESET 0','PC 0')}
+    else pop(k.hold[0],k.hold[1]);
+    flash(i);return}
+  switch(k.t){
+    case'toggle':s.on=!s.on;pop(k.l,'CC '+k.cc+' = '+(s.on?127:0));break;
+    case'tap':pop(k.l,'CC '+k.cc+' = 127');flash(i);return;
+    case'seq':s.i=(s.i+1)%k.states.length;pop(k.states[s.i][0],k.sub==='CC 60'?'CC 60 = '+s.i*40:k.sub);break;
+    case'pcinc':pc=(pc+1)%128;pop('PRESET '+pc,'PC '+pc);flash(i);return;
+    case'pcdec':pc=(pc+127)%128;pop('PRESET '+pc,'PC '+pc);flash(i);return;
+    case'radio':radio[pg]=i;pc=k.pc;pop(k.l,'PC '+pc);break;
+    case'home':radio[pg]=0;pc=0;pop('CLEAN','PC 0');flash(i);return;
+    case'cinc':scene=Math.min(SCENES.length-1,scene+1);pop(SCENES[scene],'CC 40 = '+scene);flash(i);return;
+    case'cdec':scene=Math.max(0,scene-1);pop(SCENES[scene],'CC 40 = '+scene);flash(i);return;
+    case'note':pop('KICK','NOTE 36');flash(i);return;
+    case'pgup':pg=(pg+1)%PAGES.length;pop(['STAGE','PATCHES','LOOPER'][pg],'PAGE '+(pg+1));break;
+    case'pgdn':pg=(pg+PAGES.length-1)%PAGES.length;pop(['STAGE','PATCHES','LOOPER'][pg],'PAGE '+(pg+1));break;
+  }
+  draw()}
+
+// press handling: keys with a long-press action fire on release, the rest fire on press
+const held={};
+function down(i){if(held[i])return;const k=PAGES[pg].keys[i],b=sws.children[i];b.classList.add('down');
+  if(k.t==='momentary'){st[pg][i].on=true;pop(k.l,'CC '+k.cc+' = 127');draw();held[i]={};return}
+  if(k.hold){held[i]={t:setTimeout(()=>{held[i].done=true;fire(i,true)},500)};return}
+  held[i]={};fire(i,false)}
+function up(i){const h=held[i];if(!h)return;delete held[i];const k=PAGES[pg].keys[i],b=sws.children[i];b.classList.remove('down');
+  if(k.t==='momentary'){st[pg][i].on=false;pop(k.l,'CC '+k.cc+' = 0');draw();return}
+  if(k.hold){clearTimeout(h.t);if(!h.done)fire(i,false)}}
+
+for(let i=0;i<10;i++){const b=document.createElement('button');b.type='button';b.className='sw';
+  b.innerHTML='<span class="led"></span><span class="cap"></span><span class="lbl"></span>';
+  b.addEventListener('pointerdown',e=>{if(e.button)return;b.setPointerCapture(e.pointerId);down(i)});
+  b.addEventListener('pointerup',()=>up(i));b.addEventListener('pointercancel',()=>up(i));
+  b.addEventListener('keydown',e=>{if((e.key===' '||e.key==='Enter')&&!e.repeat){e.preventDefault();down(i)}});
+  b.addEventListener('keyup',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();up(i)}});
+  b.addEventListener('contextmenu',e=>e.preventDefault());
+  sws.appendChild(b)}
+const map={'1':0,'2':1,'3':2,'4':3,'5':4,'6':5,'7':6,'8':7,'9':8,'0':9};
+const typing=e=>/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||e.metaKey||e.ctrlKey||e.altKey;
+addEventListener('keydown',e=>{if(typing(e)||!(e.key in map)||e.repeat)return;down(map[e.key])});
+addEventListener('keyup',e=>{if(e.key in map)up(map[e.key])});
+addEventListener('blur',()=>Object.keys(held).forEach(i=>up(+i)));
+
+draw();
+// one boot moment: the LEDs sweep across like the pedal powering on
+if(!reduce){
+  const bs=[...sws.children];$('#sBig').textContent='CAPTAINSMATE';$('#sMid').classList.remove('idle');
+  bs.forEach((b,n)=>{setTimeout(()=>{b.style.setProperty('--c',C[['red','amber','yellow','green','cyan','blue','violet','magenta','white','green'][n]]);b.classList.add('lit')},250+n*70);
+    setTimeout(()=>{b.classList.remove('lit');if(n===9){draw();$('#sMid').classList.add('idle');$('#sBig').textContent='READY'}},950+n*40)});
+}
+})();
+</script>
+</body>
+</html>

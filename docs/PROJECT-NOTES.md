@@ -7,8 +7,8 @@ Shared context for anyone working on CaptainsMate. Last updated 2026-11-14 (late
 A browser editor plus custom CircuitPython 7.3.1 firmware for the PaintAudio MIDI Captain 10 STD foot controller (RP2040, 240x240 screen, 10 keys, encoder wheel, 2 expression inputs, USB MIDI and DIN MIDI).
 
 - Repo: https://github.com/peanutismint/CaptainsMate
-- Test emulator (the editor, no pedal needed): https://peanutismint.github.io/CaptainsMate/editor/captainsmate.html
-- `editor/captainsmate.html`: single-file editor. Web Serial (Chrome or Edge) talks to the pedal. It has an Examples picker, per-message test buttons, Web MIDI output and a pedal monitor.
+- Test emulator (the editor, no pedal needed): https://peanutismint.github.io/CaptainsMate/emulator/
+- `emulator/index.html`: single-file editor (the old `editor/captainsmate.html` path now redirects here). Web Serial (Chrome or Edge) talks to the pedal. It has an Examples picker, per-message test buttons, Web MIDI output and a pedal monitor.
 - `firmware/code.py`, `boot.py`, `config.json`: what runs on the pedal.
 - `firmware/CONFIG-GUIDE.txt`: plain-language notes on every config.json setting (JSON has no comments, and the pedal rewrites config.json as one line on save, so the notes live in their own file). Update it when a setting is added or changed.
 - `examples/`: `example-config.json` (generic 3-page starter), `AT200-counters.json`, `waza-air-config.json`.
