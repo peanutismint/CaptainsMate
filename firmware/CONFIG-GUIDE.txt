@@ -5,7 +5,7 @@ config.json holds everything the pedal does: global settings, then a list
 of pages, each with 10 keys, the encoder wheel and two expression inputs.
 
 The easy way to change it is the CaptainsMate editor (Chrome or Edge):
-  https://peanutismint.github.io/CaptainsMate/editor/captainsmate.html
+  https://peanutismint.github.io/CaptainsMate/emulator/
 Settings sent from the editor are saved by the pedal itself. The pedal
 rewrites config.json as one long line when it saves, so do not be
 surprised if the file looks different from how you left it.

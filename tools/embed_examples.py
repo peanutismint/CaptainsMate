@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Embed the files in examples/ into editor/captainsmate.html so the editor's
+"""Embed the files in examples/ into emulator/index.html so the editor's
 "Examples" button works from a single file (no server, no network).
 Run from the repo root after editing any example:  python3 tools/embed_examples.py
 """
@@ -15,7 +15,7 @@ EXAMPLES = [
 ]
 items = [{"title": t, "desc": d, "cfg": json.loads((root / "examples" / f).read_text())} for f, t, d in EXAMPLES]
 blob = "/*EXAMPLES_BEGIN*/const EXAMPLES=" + json.dumps(items, separators=(",", ":")) + ";/*EXAMPLES_END*/"
-ed = root / "editor" / "captainsmate.html"
+ed = root / "emulator" / "index.html"
 s = ed.read_text()
 a, b = s.index("/*EXAMPLES_BEGIN*/"), s.index("/*EXAMPLES_END*/") + len("/*EXAMPLES_END*/")
 ed.write_text(s[:a] + blob + s[b:])

@@ -1,10 +1,12 @@
 # CaptainsMate
 
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-FFDD00?style=flat&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/peanutismint)
+
 **Edit your MIDI Captain from your browser, press Send, and keep playing.**
 
 ![The CaptainsMate editor showing a looper page, a counter key, and the pedal screen preview](docs/screenshot-stage.png)
 
-**[Try the test emulator in your browser](https://peanutismint.github.io/CaptainsMate/editor/captainsmate.html)**, no pedal or install needed. Build pages, press the keys on screen and watch the pedal's screen preview react. If you do have a pedal, the same page can connect to it over USB (Chrome or Edge).
+**[See the project website](https://peanutismint.github.io/CaptainsMate/)** or **[try the test emulator in your browser](https://peanutismint.github.io/CaptainsMate/emulator/)**, no pedal or install needed. Build pages, press the keys on screen and watch the pedal's screen preview react. If you do have a pedal, the same page can connect to it over USB (Chrome or Edge).
 
 The MIDI Captain 10 STD is a great little foot controller, but changing what a footswitch does usually means digging through a config file, ejecting the USB drive and rebooting the pedal. CaptainsMate is my attempt to make that painless: a point-and-click editor that runs in your browser, plus a small custom firmware that takes changes live over USB.
 
@@ -28,7 +30,7 @@ It's built for people who just want their pedal to do the right thing on stage, 
 ## Quick start
 
 1. Get your pedal running CircuitPython (see [Installing on the pedal](#installing-on-the-pedal)), then copy `firmware/code.py`, `firmware/boot.py` and `firmware/config.json` to its USB drive.
-2. Open `editor/captainsmate.html` in Chrome or Edge. It's a single file, there's nothing to install.
+2. Open the editor at [peanutismint.github.io/CaptainsMate/emulator](https://peanutismint.github.io/CaptainsMate/emulator/) in Chrome or Edge, or open `emulator/index.html` from this repo. It's a single file, there's nothing to install.
 3. Click **Connect pedal** and pick the pedal's serial port. The editor reads what's on it.
 4. Change something, click **Send**, and step on the key.
 
