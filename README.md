@@ -1,5 +1,7 @@
 # CaptainsMate
 
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-FFDD00?style=flat&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/peanutismint)
+
 **Edit your MIDI Captain from your browser, press Send, and keep playing.**
 
 ![The CaptainsMate editor showing a looper page, a counter key, and the pedal screen preview](docs/screenshot-stage.png)
