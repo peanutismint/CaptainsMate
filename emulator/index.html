@@ -77,9 +77,18 @@ html,body{max-width:100%;overflow-x:hidden}main>*{min-width:0}
 #impm>div{background:var(--p);border:1px solid var(--ln);border-radius:10px;width:min(500px,94vw);max-height:90vh;overflow:auto;padding:18px 22px}
 .il{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--ln)}.il small{color:var(--mu);display:block;overflow-wrap:anywhere}.il b{display:block}
 #impm .r{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}body.dz:after{content:"Drop a config file to import its pages";position:fixed;inset:12px;border:3px dashed var(--ac);border-radius:14px;background:#4da3ff22;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:600;color:var(--ac);z-index:30;pointer-events:none}
+#llmm{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;z-index:13}#llmm.on{display:flex}
+#llmbox{background:var(--p);border:1px solid var(--ln);border-radius:12px;width:min(580px,94vw);max-height:90vh;overflow:auto;padding:20px 24px}
+#llmbox h2{margin:0 0 10px;font-size:18px}#llmbox>p{margin:0 0 12px;color:var(--mu);line-height:1.5}#llmbox .r{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+#llmbox .row label:first-child{width:76px;flex:none}#llmbox .r button{padding:8px 16px}#llmbox>.r{position:sticky;bottom:-20px;background:var(--p);padding:10px 0;margin-bottom:-10px;z-index:1}
+.llmta{width:100%;font:13px/1.45 Consolas,monospace;background:var(--bg);color:var(--tx);border:1px solid var(--ln);border-radius:8px;padding:10px 12px;resize:vertical}.llmta:focus{outline:2px solid var(--tx);outline-offset:1px}
+.llmd{margin:8px 0}.llmd>summary{cursor:pointer;color:var(--mu);font-size:12px;padding:4px 0}.llmd ul{margin:4px 0;padding-left:20px;font-size:12px}.llmd .llmta{margin-top:6px}
+.llmst{min-height:1em;margin:8px 0 0}.llmr .llmw{background:var(--p2);border:1px solid var(--ln);border-radius:8px;padding:10px 12px;margin:10px 0;max-height:38vh;overflow:auto;line-height:1.5}
+.llmr .llmok{color:#22a55a;font-weight:600;margin:8px 0}.llmp{white-space:pre-wrap}.llmp:empty{display:none}.llmt{border-collapse:collapse;margin:8px 0;font-size:12px;white-space:normal}.llmt th,.llmt td{border:1px solid var(--ln);padding:3px 8px;text-align:left;vertical-align:top}.llmt th{background:var(--p)}.llmr .warn{margin:8px 0}.llmr .warn ul{margin:4px 0;padding-left:20px}
+.llmalt{display:flex;gap:18px;flex-wrap:wrap;border-top:1px solid var(--ln);margin-top:16px;padding-top:12px}button.lnk{background:none;border:0;padding:0;color:var(--mu);text-decoration:underline;text-underline-offset:3px;font-size:12px}button.lnk:hover{color:var(--tx)}
 </style></head><body>
 <header><a class="logo" href="https://github.com/peanutismint/CaptainsMate" target="_blank" rel="noopener" title="CaptainsMate on GitHub" style="color:inherit;text-decoration:none">CAPTAINS<b>MATE</b></a>
-<button id="bOpen">Load config</button><button id="bSave">Save config</button><button id="bImp">Import pages</button><button id="bEx" title="Open a ready-made example config to see what a full setup looks like">Examples</button><span id="sz" class="chip" title="Size of this config"></span><span class="sep"></span>
+<button id="bOpen">Load config</button><button id="bSave">Save config</button><button id="bImp">Import pages</button><button id="bEx" title="Open a ready-made example config to see what a full setup looks like">Examples</button><button id="bLlm" class="ic" title="Build keys with an LLM: describe what you want, or name your gear" aria-label="Build keys with an LLM"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/><path d="M5 3l.6 1.4L7 5l-1.4.6L5 7l-.6-1.4L3 5l1.4-.6z"/></svg></button><span id="sz" class="chip" title="Size of this config"></span><span class="sep"></span>
 <button id="bConn" class="pri">Connect pedal</button><span id="chip" class="chip">Not connected</span><button id="bPush">Send</button><button id="bPull">Receive</button>
 <label class="tg" id="lLive"><input type="checkbox" id="live">Live</label><span class="sep"></span>
 <button id="bUndo" class="ic"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-15-6.7L3 13"/></svg></button><button id="bRedo" class="ic"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 15-6.7L21 13"/></svg></button><span style="flex:1"></span>
@@ -87,6 +96,7 @@ html,body{max-width:100%;overflow-x:hidden}main>*{min-width:0}
 <span id="st" class="hint"></span><input id="f" type="file" accept=".json" hidden><input id="fImp" type="file" accept=".json" hidden></header>
 <main><section id="mid"></section><div class="insp" id="insp"></div></main><div id="toast"></div>
 <div id="exm"><div><h3>Example configs</h3><p class="hint">Pick one to look around. You can bring in just some of its pages, or open the whole thing. Nothing is sent to a pedal until you press Send.</p><div id="exL"></div><div class="r"><button id="exX">Close</button></div></div></div>
+<div id="llmm" role="dialog" aria-modal="true" aria-label="Build keys with an LLM"><div id="llmbox"></div></div>
 <div id="impm"><div><h3>Import pages</h3><p class="hint" id="impF"></p><div id="impL"></div>
 <div class="row" style="margin-top:10px"><label>Add</label><select id="impP"><option value="end">at the end</option><option value="after">after the current page</option><option value="start">at the start</option></select></div>
 <label class="tg" style="margin-top:6px;font-size:12px"><input type="checkbox" id="impG">Also take its settings (MIDI channel, battery, screen...)</label>
@@ -146,7 +156,7 @@ html,body{max-width:100%;overflow-x:hidden}main>*{min-width:0}
 <button id="bLogCopy">Copy log</button> <button id="bLogClr">Clear</button> <button id="bInfo">Ask pedal for info</button> <button id="bBootLog">Pedal boot log</button></div>
 <div style="margin-top:16px;text-align:right"><button id="bSetX">Close</button></div></div></div>
 <div id="man"><div id="manh"><b>User guide</b><button id="manPop">Pop out</button><button id="manX" class="ic" title="Close">✕</button></div><div id="manb"><div id="mant" style="padding:16px 20px"><h1>CaptainsMate guide</h1>
-<nav><a href="#m1">Quick start</a><a href="#m2">The screen</a><a href="#m3">Keys &amp; states</a><a href="#m4">Messages</a><a href="#m5">Pages</a><a href="#m6">Expression &amp; encoder</a><a href="#m7">Global &amp; settings</a><a href="#m8">Live update</a><a href="#m9">Saving &amp; backups</a><a href="#m10">Troubleshooting</a></nav>
+<nav><a href="#m1">Quick start</a><a href="#m2">The screen</a><a href="#m3">Keys &amp; states</a><a href="#m4">Messages</a><a href="#m5">Pages</a><a href="#m6">Expression &amp; encoder</a><a href="#m7">Global &amp; settings</a><a href="#m8">Live update</a><a href="#m11">LLM helper</a><a href="#m9">Saving &amp; backups</a><a href="#m10">Troubleshooting</a></nav>
 <h2 id="m1">Quick start</h2><ol><li>Click the folder button <b>Load config</b> to load your config (or start with the default).</li><li>Click a key in the grid. Its settings appear on the right.</li><li>Click <b>Connect pedal</b> (Chrome or Edge). From then on every edit is sent to the pedal after half a second.</li></ol>
 <h2 id="m2">The screen</h2><p><b>Left:</b> pages and global settings. <b>Middle:</b> the 10 keys, expression and encoder, and a preview of the pedal screen. <b>Right:</b> the inspector for the selected key. Click a key to simulate a tap; Shift-click simulates a long press. The preview shows the pop-up the pedal would show.</p>
 <h2 id="m3">Keys &amp; states</h2><p>Each key has a <b>label</b> and <b>color</b>. <b>Action</b> is either <i>keytimes</i> (send MIDI) or a page key. A keytimes key has <b>short</b> (tap) and <b>long</b> (hold) <b>states</b>. With several short states, each tap moves to the next one, which is how a key toggles on/off or steps through choices. Each state has its own label and LED color, and lists of messages sent on <b>down</b> (press) and <b>up</b> (release).</p>
@@ -155,6 +165,7 @@ html,body{max-width:100%;overflow-x:hidden}main>*{min-width:0}
 <h2 id="m6">Expression &amp; encoder</h2><p>Each expression input sends a CC that follows the pedal between <b>min</b> and <b>max</b>; <b>ch</b> sets its channel. The encoder (wheel) can send a CC when turned, or move between pages (set <b>does</b> to page; <b>reverse</b> swaps direction). Leave Expression off until a pedal is plugged in. Untick <b>on</b> to disable an input, which is best for unplugged pedals.</p>
 <h2 id="m7">Global &amp; settings</h2><ul><li><b>MIDI ch</b>: default channel for everything.</li><li><b>Hold ms</b>: how long counts as a long press.</li><li><b>SPI MHz</b>: screen speed; needs a restart.</li><li><b>Settings (gear)</b>: <b>Dev mode</b> shows the pedal as a USB drive at every boot, and <b>Restart pedal</b>. <b>Battery</b>: charging for NiMH AAs (off by default, never with alkaline), an on-screen battery display as voltage, percent or an icon, and a Probe button to find the right sense pin.</li><li><b>Sun/moon icon</b> cycles Auto, Light and Dark. <b>Tooltips</b> turns hover hints on or off.</li></ul>
 <h2 id="m8">Live update</h2><p>Click <b>Connect pedal</b>, pick the pedal's port, and keep <b>Live update</b> ticked. The green dot means connected. <b>Send</b> pushes your config to the pedal now; <b>Receive</b> loads what the pedal has. Close other serial programs first, since only one can use the port.</p>
+<h2 id="m11">LLM helper</h2><p>The sparkle button next to <b>Examples</b> builds keys from a plain description. Ask for one key ("a green key that turns red when on, CC 23 on channel 2") or a whole setup for a device ("my HX Stomp: scroll presets, engage each one, show the names"). The result loads straight into the editor, so you can click the keys and watch the screen. <b>Ask for a change</b> carries on the same conversation, <b>Discard</b> puts back what you had, and Undo steps through each change.</p><ul><li><b>Device MIDI:</b> if you name a device, the reply starts with a table of the MIDI messages it used and where each came from. Anything from the model's memory is listed in yellow to check before a gig. For the best results open <b>Paste the device's MIDI chart</b> and paste the chart from the manual.</li><li><b>Web search:</b> in <b>LLM settings</b> you can let it look the chart up online. Claude and OpenRouter charge a little per search, and Gemini only searches on a paid key. If the provider refuses, it answers from memory and says so.</li><li><b>No key needed:</b> <b>Copy the prompt instead</b> puts the whole request on the clipboard for any chatbot, and <b>Paste a reply</b> brings its answer back.</li><li>Your key stays in this browser and goes only to the provider you pick. The pedal can't read names from a device, so preset names on screen are whatever is typed into the config.</li></ul>
 <h2 id="m9">Saving &amp; backups</h2><p><b>Import pages</b> merges pages from another config file into this one: tick the pages you want and where they go (you can also drop a file onto the editor). <b>Export</b> in the page bar saves just the current page as a small file you can import elsewhere. The size chip at the top shows how big the config is; above about 12 KB the pedal may run out of memory.</p><p><b>Save config</b> saves a file on your computer; do this before big changes. With dev mode off, live edits are also saved on the pedal. With the USB drive mounted the pedal cannot save, so changes last until power-off. Holding switch 1 while plugging in always shows the drive.</p>
 <h2 id="m10">Troubleshooting</h2><ul><li><b>Connect fails:</b> close other serial consoles, and check the pedal runs code.py v0.3 or newer.</li><li><b>Device ignores the pedal:</b> check MIDI channel match, and USB versus 5-pin DIN cabling.</li><li><b>Preset off by one:</b> MIDI counts from 0, many devices from 1.</li><li><b>Counter out of sync:</b> the pedal can't read the device's value; reset the key or re-send.</li><li><b>Stray expression values:</b> disable unplugged inputs.</li></ul></div></div></div>
 <div id="basics"><div><h3>MIDI basics (click outside to close)</h3>
@@ -338,6 +349,7 @@ $('#bDevSave').onclick=async()=>{if(!dirH)return toast('Open the device folder f
 // ---- tooltips
 const TIPS={
 '#bImp':'Bring pages from another config file into this one, or drop a file onto the editor.',
+'#bLlm':'Build keys with an LLM: describe what you want, or name your gear. Works with your own API key, or by copying the prompt into any chatbot.',
 '#bOpen':'Load a saved config .json from your computer.','#bSave':'Download the current config as a .json file (backup).',
 '#bDev':'Old way: pick the pedal USB drive folder (hold switch 1 while plugging in).','#bDevSave':'Old way: write config.json to the folder chosen above, then eject and reboot.',
 '#bConn':'Link the editor to the pedal over USB (Chrome/Edge). Close any other serial console first.','#bPush':'Send the current config to the pedal now.','#bPull':'Receive the pedal\'s current config and replace what you see here.',
@@ -464,5 +476,332 @@ document.addEventListener('dragenter',e=>{if(hasF(e)){dzn++;document.body.classL
 document.addEventListener('dragleave',e=>{if(hasF(e)&&--dzn<=0){dzn=0;document.body.classList.remove('dz')}});
 document.addEventListener('dragover',e=>{if(hasF(e))e.preventDefault()});
 document.addEventListener('drop',async e=>{if(!hasF(e))return;e.preventDefault();dzn=0;document.body.classList.remove('dz');const f=e.dataTransfer.files[0];if(!f)return;try{openImport(JSON.parse(await f.text()),f.name)}catch(x){toast('Invalid JSON')}});
+// ---- LLM assistant: describe keys or a device, get a config back.
+// Same pattern as WazaMate: no server, the user's own key, or copy the prompt and paste the reply.
+const LLM_KEY='captainsmate.llm';
+const LLM_PROVIDERS={
+gemini:{name:'Google Gemini',model:'gemini-2.5-flash',keys:'https://aistudio.google.com/apikey',
+ note:'Free tier, and confirmed to work from a web page. The best place to start.',
+ search:'Web search needs a paid Gemini key. On a free key it answers from what the model knows.',
+ async send(c,turns,signal,search){const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(c.model)}:generateContent`,{method:'POST',signal,headers:{'content-type':'application/json','x-goog-api-key':c.key},
+  body:JSON.stringify({contents:turns.map(t=>({role:t.role==='assistant'?'model':'user',parts:[{text:t.text}]})),generationConfig:{temperature:0.3},...(search?{tools:[{google_search:{}}]}:{})})});
+  const d=await llmJson(r),cand=d.candidates?.[0]||{};
+  return{text:(cand.content?.parts||[]).map(p=>p.thought?'':(p.text||'')).join(''),sources:(cand.groundingMetadata?.groundingChunks||[]).map(g=>g.web).filter(Boolean).map(w=>({url:w.uri,title:w.title}))}}},
+anthropic:{name:'Anthropic Claude',model:'claude-sonnet-5-5',keys:'https://console.anthropic.com/settings/keys',
+ note:'Paid. Needs a browser-access header, which CaptainsMate sends for you.',
+ search:'Web search costs $10 per 1,000 searches on top of the tokens, and it is limited to 3 searches per request here.',
+ async send(c,turns,signal,search){const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',signal,
+  headers:{'content-type':'application/json','x-api-key':c.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+  body:JSON.stringify({model:c.model,max_tokens:8000,temperature:0.3,messages:turns.map(t=>({role:t.role,content:t.text})),...(search?{tools:[{type:'web_search_20250305',name:'web_search',max_uses:3}]}:{})})});
+  const d=await llmJson(r),blocks=d.content||[],seen=new Map();
+  for(const b of blocks)for(const ct of b.citations||[])if(ct.url&&!seen.has(ct.url))seen.set(ct.url,{url:ct.url,title:ct.title});
+  return{text:blocks.filter(b=>b.type==='text').map(b=>b.text).join(''),sources:[...seen.values()]}}},
+openrouter:{name:'OpenRouter',model:'google/gemini-2.5-flash',openai:'https://openrouter.ai/api/v1',keys:'https://openrouter.ai/keys',
+ note:'One key reaches many models, including free ones.',
+ search:'Web search costs OpenRouter credits, even with a free model.'},
+groq:{name:'Groq',model:'llama-3.3-70b-versatile',openai:'https://api.groq.com/openai/v1',keys:'https://console.groq.com/keys',
+ note:'Generous free tier. Whether it accepts calls from a web page is unconfirmed, so this one may come back blocked.'},
+custom:{name:'Anything OpenAI-compatible',model:'',openai:'',keys:'',
+ note:'A local model, a proxy of your own, or any other endpoint that speaks the OpenAI chat format.'}};
+async function llmOpenAi(c,turns,signal,search){const p=LLM_PROVIDERS[c.provider],base=(c.baseUrl||p.openai||'').replace(/\/+$/,'');
+ if(!base)throw new Error('No endpoint address is set for this provider.');
+ const r=await fetch(base+'/chat/completions',{method:'POST',signal,headers:{'content-type':'application/json',authorization:'Bearer '+c.key},
+  body:JSON.stringify({model:c.model,temperature:0.3,messages:turns.map(t=>({role:t.role,content:t.text})),...(search&&c.provider==='openrouter'?{plugins:[{id:'web',max_results:5}]}:{})})});
+ const d=await llmJson(r),m=d.choices?.[0]?.message||{};
+ return{text:m.content||'',sources:(m.annotations||[]).map(a=>a.url_citation).filter(Boolean).map(u=>({url:u.url,title:u.title}))}}
+async function llmJson(r){const text=await r.text();let d=null;try{d=JSON.parse(text)}catch(e){}
+ if(!r.ok){const msg=d?.error?.message||d?.message||text.slice(0,200)||('HTTP '+r.status);const e=new Error(msg);e.status=r.status;
+  if(r.status===401||r.status===403)e.message='The provider rejected the key: '+msg;
+  else if(r.status===404)e.message='No such model. Open LLM settings and press "Load models" to see what this key can use. '+msg;
+  else if(r.status===429)e.message='Rate limit or quota reached. Wait a moment, or try a different model: '+msg;
+  else if(r.status>=500)e.message='The provider is having trouble, which is usually temporary: '+msg;
+  e.raw=msg;throw e}
+ if(!d)throw new Error('The provider sent something that was not JSON.');return d}
+// The editor lives on the same site as WazaMate, so a key saved there is offered here too.
+let llmFromWaza=false;
+const llmCfg=()=>{llmFromWaza=false;try{const own=localStorage.getItem(LLM_KEY);if(own)return JSON.parse(own);const w=JSON.parse(localStorage.getItem('wazamate.llm')||'null');if(w&&w.key){llmFromWaza=true;return{...w,search:true}}}catch(e){}return null};
+const saveLlmCfg=c=>{try{localStorage.setItem(LLM_KEY,JSON.stringify(c))}catch(e){toast('This browser would not save the settings.')}};
+const llmLog=t=>lg('LLM: '+t);
+const canSearch=c=>!!(c&&LLM_PROVIDERS[c.provider]?.search);
+/** Asks the provider. If it refuses web search (a free Gemini key, search switched off for the
+ *  org), asks again without it, so the lookup is a bonus and never the reason a request fails. */
+async function askLlm(c,turns,signal){const p=LLM_PROVIDERS[c.provider],want=c.search!==false&&canSearch(c);
+ const size=turns.reduce((n,t)=>n+t.text.length,0),started=Date.now();
+ const go=async s=>{llmLog(`asking ${p.name}, model "${c.model}", ${turns.length} message${turns.length>1?'s':''}, ${(size/1024).toFixed(1)} KB${s?', web search on':''}`);
+  const r=await(p.send?p.send(c,turns,signal,s):llmOpenAi(c,turns,signal,s));if(!r.text.trim())throw new Error('The provider replied with nothing. It may have refused the request without saying why.');return r};
+ try{let r,searched=want,dropped=false;
+  try{r=await go(want)}catch(e){if(!want||e.name==='AbortError'||e instanceof TypeError||!(e.status===400||e.status===403||e.status===429)||!/search|ground|tool|plugin|web|not (available|supported|enabled)|quota/i.test(e.raw||e.message))throw e;
+   llmLog('web search refused ('+(e.raw||e.message).slice(0,120)+'), asking again without it');searched=false;dropped=true;r=await go(false)}
+  llmLog(`reply after ${((Date.now()-started)/1000).toFixed(1)}s, ${(r.text.length/1024).toFixed(1)} KB${r.sources.length?', '+r.sources.length+' web sources':''}`);
+  return{...r,searched,dropped}}
+ catch(e){const secs=((Date.now()-started)/1000).toFixed(1);
+  if(e.name==='AbortError'){llmLog(`cancelled or timed out after ${secs}s`);throw e}
+  if(e instanceof TypeError){llmLog(`the browser blocked the request to ${p.name} after ${secs}s (cross-origin)`);throw new Error('The browser blocked the request before it reached '+p.name+'. This provider probably does not allow calls from a web page. Gemini is the safe choice.')}
+  llmLog(`failed after ${secs}s: ${e.message}`);throw e}}
+async function listModels(c){const p=LLM_PROVIDERS[c.provider];llmLog('asking '+p.name+' which models the key can use');let names=[];
+ if(c.provider==='gemini'){const d=await llmJson(await fetch('https://generativelanguage.googleapis.com/v1beta/models?pageSize=200',{headers:{'x-goog-api-key':c.key}}));names=(d.models||[]).filter(m=>(m.supportedGenerationMethods||[]).includes('generateContent')).map(m=>String(m.name).replace(/^models\//,''))}
+ else if(c.provider==='anthropic'){names=((await llmJson(await fetch('https://api.anthropic.com/v1/models?limit=100',{headers:{'x-api-key':c.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'}}))).data||[]).map(m=>m.id)}
+ else{const base=(c.baseUrl||p.openai||'').replace(/\/+$/,'');if(!base)throw new Error('Set the endpoint address first.');names=((await llmJson(await fetch(base+'/models',{headers:{authorization:'Bearer '+c.key}}))).data||[]).map(m=>m.id)}
+ llmLog(names.length+' model'+(names.length===1?'':'s')+' offered');return names.sort()}
+
+// ---- the prompt, built from the editor's own tables so it cannot drift from what the editor accepts
+const LLM_EX=['Toggle (CC on/off)','Momentary (held)','Tap tempo, tuner on hold','Preset up','Radio patch (group A)','Counter (CC steps)','Sequence (3 states)','Drum pad (note)','Press macro (taps key 1)','Page up'];
+function llmConfigNow(){const c=compact(cfg);return JSON.stringify({midi_channel:c.midi_channel||1,pages:c.pages.map((p,i)=>({page:i+1,...p}))})}
+function llmPrompt(wanted,chart){const ch=+cfg.midi_channel||1;
+ const msgLines=Object.keys(MF).map(t=>'- '+t+(MF[t].length?': '+MF[t].join(', '):'')+' '+({cc:'(control change: cc 0-127, value 0-127)',pc:'(program change: program 0-127. Preset 1 on most gear is program 0)',note:'(note on while held, note off on release if you put a velocity 0 copy in "up". note 0-127 where 60 is middle C, called C4. velocity 1-127)',pc_inc:'(next preset, wraps 127 to 0)',pc_dec:'(previous preset)',cc_inc:'(steps the key\'s counter up, see Counters)',cc_dec:'(steps the key\'s counter down)',sysex:'(hex bytes as a string, "F0 41 ... F7")',press:'(macro: taps other keys. keys is "2" or "3,4", press is "short" or "long", page is optional, 1-based, blank means this page)'}[t]||'')).join('\n');
+ return['You are setting up a PaintAudio MIDI Captain 10 STD foot controller running CaptainsMate firmware.','',
+ 'WHAT I WANT: '+(wanted||'<describe it here, for example "a green button that toggles red when engaged, sending CC 23 on channel 2", or "basic setup for a Line 6 HX Stomp: scroll presets, engage each one, show the names">'),'',
+ ...(chart&&chart.trim()?['THE DEVICE\'S MIDI CHART, pasted by me. Treat this as the truth and prefer it over anything you remember:',chart.trim().slice(0,20000),'']:[]),
+ 'Reply in two parts.','',
+ 'PART 1, plain English, short:',
+ '- If I named a device, first a compact table of its MIDI implementation as far as this setup needs it: function, message (CC number and values, PC range, SysEx), and where each line comes from: the chart I pasted, a web page you read (give the address), or your own memory. If you can search the web, look up the manufacturer\'s MIDI implementation chart before you answer. Never invent a number. If you do not know one, say so.',
+ '- Then what each key does, where it sits, and anything I need to set on the device itself (its MIDI channel, MIDI in source, a setting that must be switched on).',
+ '- If my request can be read two ways (for example "CC 23 or note F5"), pick the most useful reading and say which you picked.',
+ '- Say plainly what the pedal cannot do for this request, and what you did instead.','',
+ 'PART 2, the changes as JSON in a fenced code block, in exactly this shape:','```json',
+ '{"format":"captainsmate-setup","version":1,"replace":false,"pages":[{"page":1,"name":"Stage","keys":{"3":{KEY}},"encoder":{...},"expression":{"exp1":{...}}},{"page":"new","name":"HX Stomp","keys":{"1":{KEY},"2":{KEY},"10":{KEY}}}],"unverified":["Key 6 SNAP 1: CC 69 value 0, from memory"]}','```','',
+ 'Rules for part 2:',
+ '- "page" is the number of one of my pages below (to change it) or "new" (to add one). Pages count from 1.',
+ '- On an existing page, list only the keys you change. Every key you list is replaced whole. Keys you leave out stay as they are.',
+ '- On a new page, list all 10 keys. Any you leave out are blank.',
+ '- Set "replace" to true only when I ask for a whole new setup. Then your pages become all of my pages and every page must be "new".',
+ '- If my config is still the editor\'s untouched starter (one page, keys named KEY 1 to KEY 9 sending CC 20 to 28), treat it as empty: change page 1 rather than adding a page after it.',
+ '- Put every message, CC number or SysEx string you took from memory rather than from my chart or a page you read into "unverified", one short line each, naming the key.',
+ '- Leave out fields that are at their defaults. Keep it compact: the pedal has little memory, under about 8 KB of config is comfortable and above about 12 KB it may fail.',
+ '- Put nothing but the JSON inside the code block.','',
+ 'THE PEDAL',
+ '- 10 footswitch keys in two rows of five: keys 1 to 5 in one row and 6 to 10 in the other, left to right. Keys 5 and 10, at the right end of each row, are the usual page up and page down keys.',
+ '- Each key has an RGB LED. It glows dimly in the key\'s base color when idle and shows the color of the state that fired when pressed.',
+ '- A 240x240 color screen. When a key fires it shows a pop-up: a big line of at most 10 characters and a small line of at most 18. Below that are four cells showing the label and current value of up to four keys on the page that have a counter or more than one state.',
+ '- One encoder wheel, and two expression pedal inputs (exp1, exp2), set per page.',
+ '- It sends every message on USB MIDI and 5-pin DIN MIDI out at the same time.',
+ '- It only sends. It cannot read anything back from a device, so it cannot show a device\'s preset names, tuner, or current state. Any text on the screen must be written into the config: key labels, state labels, or counter names. If I want preset names shown and did not give them, use a placeholder like "PRESET 1" and tell me to type the real names in.',
+ '- The pedal counts presets itself for pc_inc and pc_dec, starting from 0 at power-up, so it can drift from the device if presets are changed elsewhere.',
+ '- Global MIDI channel is '+ch+'. It belongs to me, so do not change it. If a message must go on another channel, give that message its own "channel" (1-16).','',
+ 'A KEY',
+ '{"label":"<10 chars>","color":"<base color>","short":[STATE,...],"long":[STATE],"radio":"<group>","show":{...}}',
+ '- Colors: '+Object.keys(COL).join(', ')+'. "off" means the LED stays dark.',
+ '- "short" is the list of states for a tap. With one state every tap does the same. With several, each tap moves to the next one, which is how toggles and cycles work.',
+ '- "long" is what a hold does (held longer than '+(cfg.long_press_threshold_ms||700)+' ms). Usually one state, or leave it out.',
+ '- STATE: {"label":"<10 chars>","color":"<LED color when this fires>","dim":false,"down":[MESSAGE],"up":[MESSAGE]}. "down" is sent on press, "up" on release. "dim":false keeps the LED fully lit after this state fires (an engaged effect, the active preset); leave dim out and the LED falls back to its dim idle glow.',
+ '- "radio":"A" puts keys in a pick-one group: firing one lights it and dims the others in the group. Use it for preset banks.',
+ '- Page keys are just {"label":"PG UP","color":"white","type":"page_inc"} or "page_dec".',
+ '- "show" controls the pop-up: {"src":"label"|"cc"|"pc","zero":<subtracted>,"signed":true,"caption":"<18 chars>"}. src "pc" shows the pedal\'s preset number; zero -1 counts it from 1.','',
+ 'COUNTERS (one value stepped by keys)',
+ '- A key with cc_inc or cc_dec messages also has "cc", "cc_min", "cc_max", "cc_step", "cc_wrap" (true to wrap around) and "initial".',
+ '- "names" is a list of words shown big for each value, from cc_min up. An up key and a down key with the same cc share the value and the names.','',
+ 'MESSAGE TYPES (fields after the colon):',msgLines,
+ '- Any message except sysex and press can carry "channel" (1-16).','',
+ 'ENCODER, per page: {"enabled":true,"action":"cc"|"page","cc":11,"min":0,"max":127,"initial":64,"reverse":false,"label":"ENC","channel":<1-16>}',
+ 'EXPRESSION, per page: {"exp1":{"enabled":true,"label":"WAH","cc":1,"min":0,"max":127,"channel":<1-16>},"exp2":{...}}. Only enable an input if I said a pedal is plugged in or asked for one.','',
+ 'EXAMPLE KEYS, as the editor makes them:',
+ ...LLM_EX.filter(n=>TPL[n]).map(n=>'- '+n+': '+JSON.stringify(compact(TPL[n]()))),'',
+ 'MY CONFIG NOW (page numbers count from 1):',llmConfigNow()].join('\n')}
+
+// ---- reading the reply: pull out the JSON, then check every value against what the pedal accepts
+function extractJson(text){const tries=[],fence=text.match(/```(?:json)?\s*([\s\S]*?)```/i);if(fence)tries.push(fence[1]);tries.push(text);
+ const first=text.indexOf('{'),last=text.lastIndexOf('}');if(first>=0&&last>first)tries.push(text.slice(first,last+1));
+ const at=text.search(/\{\s*"format"/);if(at>=0){let depth=0,str=false,es=false;for(let i=at;i<text.length;i++){const c=text[i];if(es){es=false;continue}if(c==='\\'){es=true;continue}if(c==='"'){str=!str;continue}if(str)continue;if(c==='{')depth++;else if(c==='}'&&--depth===0){tries.push(text.slice(at,i+1));break}}}
+ for(const t of tries){try{const d=JSON.parse(t.trim());if(d&&typeof d==='object')return d}catch(e){}}return null}
+const COL_ALIAS={pink:'magenta',violet:'purple',lime:'green',teal:'cyan',aqua:'cyan',turquoise:'cyan',amber:'orange',gold:'yellow',black:'off',none:'off',dark:'off',lightblue:'cyan',skyblue:'cyan',navy:'blue',fuchsia:'magenta',indigo:'purple'};
+const NOTE_SEMI={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
+/** Checks one reply. Nothing is dropped in silence: every change of value or ignored field is
+ *  reported, because a quietly ignored line reads as the editor undoing what the model said it did. */
+function llmReader(){const R={skipped:[],notes:[]};
+ const num=(v,lo,hi,where,dflt)=>{if(v==null||v==='')return dflt;const n=typeof v==='number'?v:parseFloat(v);if(!isFinite(n)){R.skipped.push(where+' was '+JSON.stringify(v)+', not a number');return undefined}
+  const c=Math.max(lo,Math.min(hi,Math.round(n)));if(c!==n)R.notes.push(where+' was '+v+', so it was set to '+c+' (allowed '+lo+' to '+hi+')');return c};
+ const color=(v,where)=>{if(v==null||v==='')return undefined;const k=String(v).toLowerCase().replace(/[\s_-]/g,'');if(COL[k])return k;if(COL_ALIAS[k]){R.notes.push(where+' color "'+v+'" became '+COL_ALIAS[k]);return COL_ALIAS[k]}R.notes.push(where+' color "'+v+'" is not one the pedal has, so it became white');return'white'};
+ const text=(v,n,where)=>{if(v==null)return undefined;let s=String(v).trim();if(s.length>n){R.notes.push(where+' "'+s+'" was cut to '+n+' characters');s=s.slice(0,n)}return s};
+ const note=(v,where)=>{if(typeof v==='string'){const m=/^\s*([A-G])\s*([#b♯♭]?)\s*(-?\d)\s*$/i.exec(v);if(m){const n=(+m[3]+1)*12+NOTE_SEMI[m[1].toUpperCase()]+(/[#♯]/.test(m[2])?1:m[2]?-1:0);R.notes.push(where+' note '+v+' became number '+n+' (C4 = 60; some gear calls that note '+m[1].toUpperCase()+m[2]+(+m[3]+1)+')');return num(n,0,127,where)}}return num(v,0,127,where+' note',60)};
+ function msg(m,where){if(!m||typeof m!=='object'){R.skipped.push(where+' has a message that is not an object');return null}
+  let t=String(m.type||'').toLowerCase().replace(/[\s-]/g,'_');t={control_change:'cc',program_change:'pc',program:'pc',note_on:'note',preset_up:'pc_inc',preset_down:'pc_dec',next_preset:'pc_inc',previous_preset:'pc_dec',macro:'press'}[t]||t;
+  if(!MF[t]){R.skipped.push(where+' message type "'+m.type+'" is not one the pedal sends');return null}
+  const o={type:t};
+  if(t==='cc'){o.cc=num(m.cc??m.number??m.controller,0,127,where+' cc');o.value=num(m.value,0,127,where+' value',127);if(o.cc==null){R.skipped.push(where+' cc message has no CC number');return null}}
+  if(t==='pc'){o.program=num(m.program??m.value??m.preset,0,127,where+' program');if(o.program==null){R.skipped.push(where+' pc message has no program number');return null}}
+  if(t==='note'){o.note=note(m.note??m.number,where);o.velocity=num(m.velocity,0,127,where+' velocity',127)}
+  if(t==='sysex'){let d=Array.isArray(m.data)?m.data.map(x=>typeof x==='number'?x.toString(16):String(x)).join(' '):String(m.data||'');d=d.replace(/0x/gi,'').replace(/[,\s]+/g,' ').trim();
+   const bytes=d.split(' ').filter(Boolean);if(!bytes.length||bytes.some(b=>!/^[0-9a-f]{1,2}$/i.test(b))){R.skipped.push(where+' SysEx "'+String(m.data).slice(0,40)+'" is not hex bytes');return null}
+   o.data=bytes.map(b=>b.toUpperCase().padStart(2,'0')).join(' ')}
+  if(t==='press'){const ks=(Array.isArray(m.keys)?m.keys:String(m.keys??'').split(',')).map(x=>parseInt(x,10)).filter(n=>n>=1&&n<=10);if(!ks.length){R.skipped.push(where+' press macro names no keys 1 to 10');return null}
+   o.keys=ks.join(',');o.press=m.press==='long'?'long':'short';if(m.page!=null&&m.page!=='')o.page=num(m.page,1,99,where+' page')}
+  if(m.channel!=null&&m.channel!==''&&!['sysex','press'].includes(t))o.channel=num(m.channel,1,16,where+' channel');
+  return o}
+ function list(v,where){if(v==null)return[];if(!Array.isArray(v))v=[v];return v.map((m,i)=>msg(m,where)).filter(Boolean)}
+ function state(s,where){if(!s||typeof s!=='object'){R.skipped.push(where+' is not a state object');return null}
+  const o={};const c=color(s.color,where);if(c)o.color=c;const l=text(s.label,10,where+' label');if(l)o.label=l;if(s.dim===false||s.dim==='false'||s.lit===true)o.dim=false;
+  const down=list(s.down??s.press,where),up=list(s.up??s.release??s.messages??s.send,where);if(down.length)o.down=down;if(up.length)o.up=up;
+  for(const k in s)if(!['color','label','dim','lit','down','up','press','release','messages','send'].includes(k))R.skipped.push(where+' field "'+k+'" is not something a state has');return o}
+ function key(src,where){if(!src||typeof src!=='object'){R.skipped.push(where+' is not a key object');return null}
+  const b={};b.color=color(src.color,where)||'white';b.label=text(src.label??'',10,where+' label');
+  if(src.type==='page_inc'||src.type==='page_dec'){b.type=src.type;return b}
+  b.mode='keytimes';const states=(v,w)=>(v==null?[]:Array.isArray(v)?v:[v]).map((s,i)=>state(s,where+' '+w+' state '+(i+1))).filter(Boolean);
+  b.short=states(src.short,'tap');b.long=states(src.long,'hold');
+  if(src.radio!=null&&src.radio!=='')b.radio=text(src.radio,8,where+' radio group');
+  const ms=allMsgs(b),counter=ms.some(x=>x.type==='cc_inc'||x.type==='cc_dec');
+  if(counter||src.cc!=null){b.cc=num(src.cc,0,127,where+' cc');if(b.cc==null){if(counter){R.skipped.push(where+' steps a counter but has no cc number, so the key was left out');return null}delete b.cc}}
+  if(b.cc!=null){for(const k of['cc_min','cc_max','cc_step','initial']){const v=num(src[k],k==='cc_step'?1:0,127,where+' '+k);if(v!=null)b[k]=v}
+   if(src.cc_wrap)b.cc_wrap=true;
+   if((b.cc_min??0)>(b.cc_max??127)){R.notes.push(where+' cc_min was above cc_max, so they were swapped');[b.cc_min,b.cc_max]=[b.cc_max,b.cc_min]}
+   if(Array.isArray(src.names)&&src.names.length){b.names=src.names.map((n,i)=>text(n,10,where+' name '+(i+1))||'');const span=Math.floor(((b.cc_max??127)-(b.cc_min??0))/(b.cc_step||1))+1;
+    if(b.names.length!==span)R.notes.push(where+' has '+b.names.length+' names for '+span+' counter values, so some values show a number')}}
+  if(src.show&&typeof src.show==='object'){const s=src.show,o={};if(['label','cc','pc'].includes(s.src))o.src=s.src;if(s.zero!=null)o.zero=num(s.zero,-128,127,where+' show zero');if(s.signed)o.signed=true;const cp=text(s.caption,18,where+' caption');if(cp)o.caption=cp;if(Object.keys(o).length)b.show=o}
+  if(!b.short.length&&!b.long.length&&!counter)R.notes.push(where+' sends nothing');
+  for(const k in src)if(!['color','label','type','mode','short','long','radio','show','cc','cc_min','cc_max','cc_step','cc_wrap','initial','names'].includes(k))R.skipped.push(where+' field "'+k+'" is not part of a key');
+  return b}
+ function enc(e,where){if(!e||typeof e!=='object')return null;const o={};if(e.enabled!=null)o.enabled=!!e.enabled;if(e.action)o.action=e.action==='page'?'page':'cc';
+  for(const k of['cc','min','max','initial']){const v=num(e[k],0,127,where+' '+k);if(v!=null)o[k]=v}if(e.channel!=null)o.channel=num(e.channel,1,16,where+' channel');if(e.reverse!=null)o.reverse=!!e.reverse;const l=text(e.label,10,where+' label');if(l)o.label=l;return o}
+ return{R,key,enc,text}}
+const blankKey=()=>({color:'off',label:'',mode:'keytimes',short:[],long:[]});
+/** Applies a reply to a copy of the config, then swaps it in. Returns a report, or throws in plain words. */
+function applySetup(d){if(!d)throw new Error('there was no JSON in that reply');
+ if(!Array.isArray(d.pages)){if(Array.isArray(d.buttons))d={pages:[{page:'new',keys:Object.fromEntries(d.buttons.map((b,i)=>[i+1,b]))}]};else throw new Error('the JSON has no "pages" list, so it is not a CaptainsMate setup')}
+ const {R,key,enc,text}=llmReader(),next=JSON.parse(JSON.stringify(cfg)),touched=[],made=[];const replace=d.replace===true;if(replace)next.pages=[];
+ for(const [n,src] of d.pages.entries()){if(!src||typeof src!=='object')continue;
+  const isNew=replace||src.page==='new'||src.page==null,ix=isNew?-1:parseInt(src.page,10)-1;
+  if(!isNew&&!next.pages[ix]){R.skipped.push('page '+src.page+' does not exist, so its changes were left out');continue}
+  const p=isNew?{...np(),buttons:Array.from({length:10},blankKey)}:next.pages[ix],label=isNew?'new page '+(src.name?'"'+src.name+'"':n+1):'page '+(ix+1),keys=[];
+  if(src.name)p.name=text(src.name,24,label+' name')||p.name;
+  let ks=src.keys;if(Array.isArray(ks))ks=Object.fromEntries(ks.map((k,i)=>[k&&k.key!=null?k.key:i+1,k]));
+  for(const kk in ks||{}){const i=parseInt(kk,10)-1;if(!(i>=0&&i<10)){R.skipped.push(label+' key "'+kk+'" is not 1 to 10');continue}const src2={...ks[kk]};delete src2.key;const b=key(src2,label+' key '+(i+1));if(b){p.buttons[i]=b;keys.push(i)}}
+  if(src.encoder){const e=enc(src.encoder,label+' encoder');if(e)p.encoder={...(p.encoder||{}),...e}}
+  if(src.expression&&typeof src.expression==='object')for(const x of['exp1','exp2'])if(src.expression[x]){const e=enc(src.expression[x],label+' '+x);if(e)p.expression[x]={...(p.expression[x]||{}),...e}}
+  if(isNew){next.pages.push(p);made.push(next.pages.length-1)}
+  touched.push({pg:isNew?next.pages.length-1:ix,keys,isNew,name:p.name})}
+ if(!next.pages.length)throw new Error('the reply left no pages at all');
+ if(!touched.some(t=>t.keys.length||t.isNew))throw new Error('nothing in the reply could be used'+(R.skipped.length?': '+R.skipped[0]:''));
+ if(Array.isArray(d.sysex_preamble)&&d.sysex_preamble.length)next.sysex_preamble=d.sysex_preamble.map(String);
+ // press macros name key numbers on a page, so check they land on a real page
+ next.pages.forEach((p,pi)=>p.buttons.forEach((b,bi)=>allMsgs(b).forEach(m=>{if(m.type==='press'&&m.page&&!next.pages[m.page-1])R.notes.push('page '+(pi+1)+' key '+(bi+1)+' presses keys on page '+m.page+', which does not exist')})));
+ snap();cfg=next;const t0=touched[0];pg=t0.pg;sel=t0.keys.length?t0.keys[0]:0;sim={pc:0,cc:{},st:{},rad:{}};render();schedulePush();
+ for(const l of R.skipped)llmLog('ignored: '+l);for(const l of R.notes)llmLog(l);
+ return{...R,touched,replace,unverified:(Array.isArray(d.unverified)?d.unverified:[]).map(String).filter(Boolean)}}
+
+// ---- LLM dialog
+const hh=(tag,attrs,...kids)=>{const e=document.createElement(tag);for(const k in attrs||{}){const v=attrs[k];if(v==null||v===false)continue;if(k.startsWith('on'))e.addEventListener(k.slice(2),v);else if(k==='hidden')e.hidden=true;else e.setAttribute(k,v===true?'':v)}for(const c of kids.flat())if(c!=null&&c!==false)e.append(c);return e};
+const llmBox=()=>$('#llmbox'),llmOpen=()=>$('#llmm').classList.add('on'),llmClose=()=>{$('#llmm').classList.remove('on');llmStop&&llmStop()};
+let llmStop=null;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#llmm').classList.contains('on'))llmClose()});
+$('#llmm').addEventListener('mousedown',e=>{if(e.target.id==='llmm')llmClose()});
+function llmSettings(then){const c=llmCfg()||{provider:'gemini',key:'',model:LLM_PROVIDERS.gemini.model,baseUrl:'',search:true},box=llmBox();box.textContent='';
+ const sel=hh('select',{'aria-label':'Provider'},Object.keys(LLM_PROVIDERS).map(id=>hh('option',{value:id,selected:id===c.provider},LLM_PROVIDERS[id].name)));
+ const key=hh('input',{type:'password',value:c.key||'',placeholder:'Paste your API key',autocomplete:'off',spellcheck:'false','aria-label':'API key'});
+ const model=hh('input',{type:'text',value:c.model||'',placeholder:'Model name',spellcheck:'false','aria-label':'Model'});
+ const base=hh('input',{type:'text',value:c.baseUrl||'',placeholder:'https://example.com/v1',spellcheck:'false','aria-label':'Endpoint address'});
+ const note=hh('p',{class:'hint'}),keyLink=hh('p',{class:'hint'}),srch=hh('input',{type:'checkbox'});srch.checked=c.search!==false;
+ const srchNote=hh('p',{class:'hint'}),srchRow=hh('label',{class:'tg'},srch,'Let it search the web for the device\'s MIDI chart');
+ const baseRow=hh('div',{class:'row'},hh('label',{},'Endpoint'),base),baseNote=hh('p',{class:'hint'},'Only for an endpoint of your own, such as a local model. Give the address ending in /v1, with no /chat/completions after it.');
+ const modelNote=hh('p',{class:'hint'},'Model names change often. If the provider says there is no such model, press Load models.');
+ const picker=hh('select',{'aria-label':'Models this key can use'}),pickerRow=hh('div',{class:'row',hidden:true},hh('label',{},'Available'),picker);
+ picker.addEventListener('change',()=>{if(picker.value)model.value=picker.value});
+ const loadBtn=hh('button',{type:'button'},'Load models');
+ loadBtn.addEventListener('click',async()=>{const probe={provider:sel.value,key:key.value.trim(),model:model.value.trim(),baseUrl:base.value.trim()};if(!probe.key&&probe.provider!=='custom')return toast('Paste an API key first.');
+  loadBtn.disabled=true;modelNote.textContent='Asking the provider which models it offers...';
+  try{const names=await listModels(probe);picker.textContent='';picker.append(hh('option',{value:''},names.length+' available, pick one'),...names.map(n=>hh('option',{value:n},n)));pickerRow.hidden=false;
+   modelNote.textContent=names.includes(probe.model)?'The model you have is on the list.':'Your current model is not on the list, so pick one above.'}catch(e){modelNote.textContent='Could not fetch the list: '+e.message}loadBtn.disabled=false});
+ const refresh=()=>{const p=LLM_PROVIDERS[sel.value];note.textContent=p.note;keyLink.textContent='';if(p.keys)keyLink.append('Get a key: ',hh('a',{href:p.keys,target:'_blank',rel:'noopener'},p.keys));
+  baseRow.hidden=baseNote.hidden=sel.value!=='custom';pickerRow.hidden=true;srchRow.hidden=!p.search;srchNote.textContent=p.search||'This provider has no web search here, so it answers from what the model knows. Pasting the device\'s MIDI chart works with any provider.';
+  if(!model.value||Object.values(LLM_PROVIDERS).some(q=>q.model===model.value))model.value=p.model};
+ sel.addEventListener('change',refresh);
+ box.append(hh('h2',{},'LLM settings'),
+  hh('p',{class:'hint'},'CaptainsMate has no server, so your key is kept in this browser and sent straight to the provider you pick. It is never logged, never saved in a config, and never reaches anyone else.'),
+  llmFromWaza?hh('p',{class:'hint'},'This is the key you saved in WazaMate, which lives on the same site. Save here to give CaptainsMate its own copy.'):null,
+  hh('div',{class:'row'},hh('label',{},'Provider'),sel),note,
+  hh('div',{class:'row'},hh('label',{},'API key'),key),keyLink,
+  hh('div',{class:'row'},hh('label',{},'Model'),model,loadBtn),pickerRow,modelNote,baseRow,baseNote,srchRow,srchNote,
+  hh('div',{class:'r'},
+   hh('button',{type:'button',onclick:()=>then?then():llmClose()},'Cancel'),
+   hh('button',{type:'button',onclick:()=>{saveLlmCfg({provider:'gemini',key:'',model:LLM_PROVIDERS.gemini.model,baseUrl:'',search:true});toast('Key removed from CaptainsMate.');then?then():llmClose()}},'Forget my key'),
+   hh('button',{type:'button',class:'pri',onclick:()=>{if(!key.value.trim()&&sel.value!=='custom')return toast('Paste an API key first.');
+    saveLlmCfg({provider:sel.value,key:key.value.trim(),model:model.value.trim()||LLM_PROVIDERS[sel.value].model,baseUrl:base.value.trim(),search:srch.checked});then?then():llmClose()}},'Save')));
+ refresh();llmOpen();key.focus()}
+
+/** The model's reasoning as plain text, with any markdown table drawn as a real table. */
+function llmWords(words){const out=hh('div',{class:'llmw'}),lines=words.split('\n');let buf=[];
+ const flush=()=>{if(buf.length){out.append(hh('div',{class:'llmp'},buf.join('\n').trim()));buf=[]}};
+ for(let i=0;i<lines.length;i++){if(/^\s*\|.*\|\s*$/.test(lines[i])){const rows=[];while(i<lines.length&&/^\s*\|.*\|\s*$/.test(lines[i]))rows.push(lines[i++]);i--;
+   const cells=r=>r.trim().replace(/^\||\|$/g,'').split('|').map(c=>c.trim()),body=rows.filter(r=>!/^\s*\|[\s:|-]+\|\s*$/.test(r));flush();
+   const [head,...rest]=body;out.append(hh('table',{class:'llmt'},hh('tr',{},cells(head).map(c=>hh('th',{},c))),rest.map(r=>hh('tr',{},cells(r).map(c=>hh('td',{},c))))))}
+  else buf.push(lines[i])}
+ flush();return out}
+// The conversation lives here, so closing and reopening the dialog carries on where it left off.
+const llmS={thread:[],base:null,chart:'',chartSent:''};
+function llmCreate(){const c=llmCfg(),keyed=!!(c&&(c.key||c.provider==='custom')),box=llmBox();box.textContent='';
+ const want=hh('textarea',{class:'llmta',rows:'3','aria-label':'What you want the pedal to do',placeholder:llmS.thread.length?'Ask for a change, for example: swap keys 1 and 2, or make the toggle blue':'Give me a green button that toggles red when engaged, sending CC 23 on channel 2'});
+ const chart=hh('textarea',{class:'llmta',rows:'4','aria-label':'The device\'s MIDI chart',placeholder:'Optional. Paste the device\'s MIDI implementation chart, or the part of the manual that lists its CC and PC numbers. It is used instead of the model\'s memory.'});chart.value=llmS.chart;
+ chart.addEventListener('input',()=>llmS.chart=chart.value);
+ const chartBox=hh('details',{class:'llmd'},hh('summary',{},'Paste the device\'s MIDI chart'),chart);if(llmS.chart)chartBox.open=true;
+ const status=hh('p',{class:'hint llmst'}),reason=hh('div',{class:'llmr'}),buttons=hh('div',{class:'r'});
+ let ctrl=null,started=0,timer=null,giveUp=null,timedOut=false;
+ const setStage=t=>{const s=Math.round((Date.now()-started)/1000);status.textContent=t+' ('+s+'s'+(s>30?', slower than usual':'')+')'};
+ llmStop=()=>{clearInterval(timer);timer=null;clearTimeout(giveUp);if(ctrl){ctrl.abort();ctrl=null}};
+ const row=(...k)=>{buttons.textContent='';buttons.append(...k)};
+ function showResult(text,report,extra){
+  // everything but the JSON is the model's reasoning, which is the useful part
+  reason.textContent='';const words=text.replace(/```[\s\S]*?```/g,'').replace(/\{\s*"format"[\s\S]*\}/,'').replace(/\*\*(.+?)\*\*/g,'$1').replace(/^#{1,6}\s*/gm,'').replace(/\n{3,}/g,'\n\n').trim();
+  if(words)reason.append(llmWords(words));
+  const ch=report.touched.map(t=>t.isNew?'added page '+(t.pg+1)+(t.name?' "'+t.name+'"':''):'page '+(t.pg+1)+' key'+(t.keys.length>1?'s ':' ')+t.keys.map(k=>k+1).join(', ')).join('; ');
+  reason.append(hh('p',{class:'llmok'},(report.replace?'Replaced all pages: ':'Changed: ')+ch+'.'));
+  if(report.unverified.length)reason.append(hh('div',{class:'warn'},hh('b',{},'From the model\'s memory, check before a gig:'),hh('ul',{},report.unverified.slice(0,12).map(t=>hh('li',{},t)))));
+  if(report.skipped.length)reason.append(hh('div',{class:'warn'},hh('b',{},report.skipped.length+' part'+(report.skipped.length>1?'s':'')+' of the reply could not be used:'),hh('ul',{},report.skipped.slice(0,8).map(t=>hh('li',{},t))),'Asking again often fixes it, or say which key to correct.'));
+  if(report.notes.length)reason.append(hh('details',{class:'llmd'},hh('summary',{},report.notes.length+' value'+(report.notes.length>1?'s were':' was')+' adjusted to fit the pedal'),hh('ul',{},report.notes.slice(0,20).map(t=>hh('li',{},t)))));
+  if(extra&&extra.sources&&extra.sources.length)reason.append(hh('details',{class:'llmd'},hh('summary',{},'Pages it read ('+extra.sources.length+')'),hh('ul',{},extra.sources.slice(0,10).map(s=>hh('li',{},hh('a',{href:s.url,target:'_blank',rel:'noopener'},s.title||s.url))))));
+  const kb=JSON.stringify(compact(cfg)).length/1024;
+  status.textContent=(extra&&extra.dropped?'The provider would not search the web with this key, so it answered from memory. ':'')+'Loaded into the editor'+(port&&$('#live').checked?' and sent to the pedal':'')+'. Try the keys, ask for a change, or Discard to put back what you had.'+(kb>12?' The config is now '+kb.toFixed(1)+' KB, which may be too big for the pedal.':'')}
+ async function go(){const wanted=want.value.trim();if(!wanted)return toast('Say what you want the keys to do first.');
+  ctrl=new AbortController();timedOut=false;clearTimeout(giveUp);const secs=(c.search!==false&&canSearch(c))?150:90;
+  giveUp=setTimeout(()=>{if(ctrl){timedOut=true;ctrl.abort()}},secs*1000);started=Date.now();want.disabled=true;reason.textContent='';
+  const who='Asking '+LLM_PROVIDERS[c.provider].name;setStage(who);timer=setInterval(()=>setStage(who),1000);
+  row(hh('button',{type:'button',onclick:()=>{llmStop()}},'Cancel'));
+  try{const chartNew=llmS.chart.trim()&&llmS.chart.trim()!==llmS.chartSent;
+   // first time the full brief; after that just the change, the chart if it changed, and the config as it is now
+   const message=llmS.thread.length?wanted+'\n\nThis is a change to what you just built, so keep what works and alter only what I asked for.'
+     +(chartNew?'\n\nHere is the device\'s MIDI chart. Treat it as the truth:\n'+llmS.chart.trim().slice(0,20000):'')
+     +'\n\nMy config as it stands now (I may have edited it by hand, page numbers count from 1):\n'+llmConfigNow()
+     +'\n\nReply in the same two parts as before: the explanation, then the changes as JSON in a fenced code block, in the same format.'
+    :llmPrompt(wanted,llmS.chart);
+   // the thread only grows once a reply has been used, so a failed try leaves nothing behind
+   const turns=[...llmS.thread,{role:'user',text:message}],before=JSON.stringify(cfg);
+   const r=await askLlm(c,turns,ctrl.signal);clearTimeout(giveUp);llmStop();
+   status.textContent='Reading the reply';
+   const report=applySetup(extractJson(r.text));
+   llmS.thread=[...turns,{role:'assistant',text:r.text}];if(llmS.chart.trim())llmS.chartSent=llmS.chart.trim();if(llmS.base==null)llmS.base=before;
+   showResult(r.text,report,r);
+   want.disabled=false;want.value='';want.placeholder='Now ask for a change, for example: make key 3 blue, or add a tap tempo key';want.focus();
+   row(hh('button',{type:'button',title:'Forget this conversation and start from a new description. Your config stays as it is.',onclick:startFresh},'Start fresh'),
+    hh('button',{type:'button',title:'Put back the config you had before asking',onclick:discard},'Discard'),
+    hh('button',{type:'button',onclick:go},'Ask for a change'),hh('button',{type:'button',class:'pri',onclick:done},'Done'))}
+  catch(e){llmStop();want.disabled=false;
+   status.textContent=e.name!=='AbortError'?(/^(there was|the JSON|the reply|nothing in)/.test(e.message)?'Could not use the reply: '+e.message+'. Try again, or pick a stronger model in LLM settings.':e.message)
+    :timedOut?'No reply after '+secs+' seconds, so the request was dropped. The model may be overloaded. Try again, or pick another one in LLM settings.':'Cancelled.';
+   row(hh('button',{type:'button',onclick:()=>llmSettings(llmCreate)},'LLM settings'),hh('button',{type:'button',onclick:llmClose},'Close'),hh('button',{type:'button',class:'pri',onclick:go},'Try again'))}}
+ function discard(){if(llmS.base==null)return;snap();cfg=JSON.parse(llmS.base);pg=Math.min(pg,cfg.pages.length-1);sel=0;sim={pc:0,cc:{},st:{},rad:{}};render();llmS.base=null;llmS.thread=[];schedulePush();toast('Put back the config you had before asking.');llmCreate()}
+ function done(){llmS.base=null;llmClose();toast('Kept. Undo still steps back through each change, and Save config keeps a copy on your computer.')}
+ function startFresh(){llmS.thread=[];llmS.base=null;llmS.chartSent='';llmCreate()}
+ const first=()=>[hh('button',{type:'button',onclick:llmClose},'Cancel'),keyed?hh('button',{type:'button',class:'pri',onclick:go},llmS.thread.length?'Ask for a change':'Build keys'):hh('button',{type:'button',class:'pri',onclick:()=>llmSettings(llmCreate)},'Add a key')];
+ async function copyPrompt(){const text=llmPrompt(want.value.trim(),llmS.chart);
+  try{await navigator.clipboard.writeText(text);status.textContent='Prompt copied ('+Math.round(text.length/1024)+' KB). Paste it into any chat LLM'+(want.value.trim()?'':', fill in what you want at the top')+', then bring the whole reply back with Paste a reply.'}
+  catch(e){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download='CaptainsMate LLM prompt.txt';a.click();status.textContent='This browser would not let the page copy, so the prompt was downloaded as a text file instead.'}}
+ function pasteView(){const area=hh('textarea',{class:'llmta',rows:'10','aria-label':'An LLM reply',placeholder:'Paste the whole reply here, explanation and all. The keys are pulled out of it.'});
+  box.textContent='';box.append(hh('h2',{},'Paste a reply from an LLM'),hh('p',{class:'hint'},'Paste everything it wrote, including the text around the JSON. The keys load into the editor straight away, and Discard or Undo puts back what you had.'),area,status,reason,buttons);
+  status.textContent='';row(hh('button',{type:'button',onclick:llmCreate},'Back'),hh('button',{type:'button',class:'pri',onclick:()=>{const t=area.value;if(!t.trim())return toast('Paste a reply first.');
+   try{const before=JSON.stringify(cfg);const report=applySetup(extractJson(t));if(llmS.base==null)llmS.base=before;area.hidden=true;showResult(t,report);
+    row(hh('button',{type:'button',onclick:discard},'Discard'),hh('button',{type:'button',onclick:pasteView},'Paste another'),hh('button',{type:'button',class:'pri',onclick:done},'Done'))}
+   catch(e){status.textContent='Could not use that reply: '+e.message+'.'}}},'Load these keys'));area.focus()}
+ const other=hh('div',{class:'llmalt'},
+  hh('button',{type:'button',class:'lnk',title:'Choose which LLM to use and store your API key in this browser',onclick:()=>llmSettings(llmCreate)},'LLM settings'),
+  hh('button',{type:'button',class:'lnk',title:'Copies the whole prompt, so you can paste it into any chatbot instead of using a key',onclick:copyPrompt},'Copy the prompt instead'),
+  hh('button',{type:'button',class:'lnk',title:'Paste a reply you got elsewhere, explanation and all',onclick:pasteView},'Paste a reply'));
+ box.append(hh('h2',{},'Build keys with an LLM'),
+  hh('p',{},'Describe what the keys should do, or name the gear you want to control and what you need from it. The result loads into the editor so you can try it, and Discard puts back what you had. Keep asking for changes and it remembers what it built.'),
+  want,chartBox,status,reason,buttons,other);
+ if(!keyed)status.textContent='No API key yet, so this cannot build the keys for you. Add one, or copy the prompt and bring a reply back, which needs no key.';
+ else if(llmS.thread.length)status.textContent='Carrying on from the last conversation. Start fresh to begin a new one.';
+ row(...first());
+ if(llmS.thread.length)row(hh('button',{type:'button',onclick:startFresh},'Start fresh'),...first());
+ llmOpen();want.focus();
+ want.addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&keyed&&!want.disabled){e.preventDefault();go()}})}
+$('#bLlm').onclick=llmCreate;
+
 render();
 </script></body></html>
