@@ -85,6 +85,9 @@ html,body{max-width:100%;overflow-x:hidden}main>*{min-width:0}
 .llmd{margin:8px 0}.llmd>summary{cursor:pointer;color:var(--mu);font-size:12px;padding:4px 0}.llmd ul{margin:4px 0;padding-left:20px;font-size:12px}.llmd .llmta{margin-top:6px}
 .llmst{min-height:1em;margin:8px 0 0}.llmr .llmw{background:var(--p2);border:1px solid var(--ln);border-radius:8px;padding:10px 12px;margin:10px 0;max-height:38vh;overflow:auto;line-height:1.5}
 .llmr .llmok{color:#22a55a;font-weight:600;margin:8px 0}.llmp{white-space:pre-wrap}.llmp:empty{display:none}.llmt{border-collapse:collapse;margin:8px 0;font-size:12px;white-space:normal}.llmt th,.llmt td{border:1px solid var(--ln);padding:3px 8px;text-align:left;vertical-align:top}.llmt th{background:var(--p)}.llmr .warn{margin:8px 0}.llmr .warn ul{margin:4px 0;padding-left:20px}
+.kh{display:flex;align-items:center;gap:8px}.llmk{margin-left:auto;gap:4px;font-size:11px;letter-spacing:0;text-transform:none;color:var(--mu)}.llmk:hover{color:var(--ac)}
+.llmscope{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}.llmscope button{border-radius:14px;padding:4px 12px;font-size:12px}.llmscope button.on{border-color:var(--ac);color:var(--ac);background:var(--bg)}
+.llmq{background:var(--p2);border:1px solid var(--ln);border-radius:8px;padding:10px 12px;margin:8px 0}.llmq p{margin:0 0 8px;font-weight:600}.llmq .ch{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.llmq .ch button{border-radius:14px;padding:4px 12px}.llmq .ch button.on{background:var(--ac);border-color:var(--ac);color:#04121f;font-weight:600}.llmq .ch input{flex:1;min-width:120px;border-radius:14px;padding:4px 12px}
 .llmalt{display:flex;gap:18px;flex-wrap:wrap;border-top:1px solid var(--ln);margin-top:16px;padding-top:12px}button.lnk{background:none;border:0;padding:0;color:var(--mu);text-decoration:underline;text-underline-offset:3px;font-size:12px}button.lnk:hover{color:var(--tx)}
 </style></head><body>
 <header><a class="logo" href="https://github.com/peanutismint/CaptainsMate" target="_blank" rel="noopener" title="CaptainsMate on GitHub" style="color:inherit;text-decoration:none">CAPTAINS<b>MATE</b></a>
@@ -165,7 +168,7 @@ html,body{max-width:100%;overflow-x:hidden}main>*{min-width:0}
 <h2 id="m6">Expression &amp; encoder</h2><p>Each expression input sends a CC that follows the pedal between <b>min</b> and <b>max</b>; <b>ch</b> sets its channel. The encoder (wheel) can send a CC when turned, or move between pages (set <b>does</b> to page; <b>reverse</b> swaps direction). Leave Expression off until a pedal is plugged in. Untick <b>on</b> to disable an input, which is best for unplugged pedals.</p>
 <h2 id="m7">Global &amp; settings</h2><ul><li><b>MIDI ch</b>: default channel for everything.</li><li><b>Hold ms</b>: how long counts as a long press.</li><li><b>SPI MHz</b>: screen speed; needs a restart.</li><li><b>Settings (gear)</b>: <b>Dev mode</b> shows the pedal as a USB drive at every boot, and <b>Restart pedal</b>. <b>Battery</b>: charging for NiMH AAs (off by default, never with alkaline), an on-screen battery display as voltage, percent or an icon, and a Probe button to find the right sense pin.</li><li><b>Sun/moon icon</b> cycles Auto, Light and Dark. <b>Tooltips</b> turns hover hints on or off.</li></ul>
 <h2 id="m8">Live update</h2><p>Click <b>Connect pedal</b>, pick the pedal's port, and keep <b>Live update</b> ticked. The green dot means connected. <b>Send</b> pushes your config to the pedal now; <b>Receive</b> loads what the pedal has. Close other serial programs first, since only one can use the port.</p>
-<h2 id="m11">LLM helper</h2><p>The sparkle button next to <b>Examples</b> builds keys from a plain description. Ask for one key ("a green key that turns red when on, CC 23 on channel 2") or a whole setup for a device ("my HX Stomp: scroll presets, engage each one, show the names"). The result loads straight into the editor, so you can click the keys and watch the screen. <b>Ask for a change</b> carries on the same conversation, <b>Discard</b> puts back what you had, and Undo steps through each change.</p><ul><li><b>Device MIDI:</b> if you name a device, the reply starts with a table of the MIDI messages it used and where each came from. Anything from the model's memory is listed in yellow to check before a gig. For the best results open <b>Paste the device's MIDI chart</b> and paste the chart from the manual.</li><li><b>Web search:</b> in <b>LLM settings</b> you can let it look the chart up online. Claude and OpenRouter charge a little per search, and Gemini only searches on a paid key. If the provider refuses, it answers from memory and says so.</li><li><b>No key needed:</b> <b>Copy the prompt instead</b> puts the whole request on the clipboard for any chatbot, and <b>Paste a reply</b> brings its answer back.</li><li>Your key stays in this browser and goes only to the provider you pick. The pedal can't read names from a device, so preset names on screen are whatever is typed into the config.</li></ul>
+<h2 id="m11">LLM helper</h2><p>The sparkle button next to <b>Examples</b> builds keys from a plain description, and <b>Ask AI</b> at the top of a key's settings does the same for just that key. In the dialog, <b>Whole setup</b>, <b>This page</b> and <b>This key</b> set what it may change; anything outside that is listed and left alone. For a bigger request it may ask up to four questions first: click an answer, type your own, or press <b>Just build it</b> to let it use its defaults. Ask for one key ("a green key that turns red when on, CC 23 on channel 2") or a whole setup for a device ("my HX Stomp: scroll presets, engage each one, show the names"). The result loads straight into the editor, so you can click the keys and watch the screen. <b>Ask for a change</b> carries on the same conversation, <b>Discard</b> puts back what you had, and Undo steps through each change.</p><ul><li><b>Device MIDI:</b> if you name a device, the reply starts with a table of the MIDI messages it used and where each came from. Anything from the model's memory is listed in yellow to check before a gig. For the best results open <b>Paste the device's MIDI chart</b> and paste the chart from the manual.</li><li><b>Web search:</b> in <b>LLM settings</b> you can let it look the chart up online. Claude and OpenRouter charge a little per search, and Gemini only searches on a paid key. If the provider refuses, it answers from memory and says so.</li><li><b>No key needed:</b> <b>Copy the prompt instead</b> puts the whole request on the clipboard for any chatbot, and <b>Paste a reply</b> brings its answer back.</li><li>Your key stays in this browser and goes only to the provider you pick. The pedal can't read names from a device, so preset names on screen are whatever is typed into the config.</li></ul>
 <h2 id="m9">Saving &amp; backups</h2><p><b>Import pages</b> merges pages from another config file into this one: tick the pages you want and where they go (you can also drop a file onto the editor). <b>Export</b> in the page bar saves just the current page as a small file you can import elsewhere. The size chip at the top shows how big the config is; above about 12 KB the pedal may run out of memory.</p><p><b>Save config</b> saves a file on your computer; do this before big changes. With dev mode off, live edits are also saved on the pedal. With the USB drive mounted the pedal cannot save, so changes last until power-off. Holding switch 1 while plugging in always shows the drive.</p>
 <h2 id="m10">Troubleshooting</h2><ul><li><b>Connect fails:</b> close other serial consoles, and check the pedal runs code.py v0.3 or newer.</li><li><b>Device ignores the pedal:</b> check MIDI channel match, and USB versus 5-pin DIN cabling.</li><li><b>Preset off by one:</b> MIDI counts from 0, many devices from 1.</li><li><b>Counter out of sync:</b> the pedal can't read the device's value; reset the key or re-send.</li><li><b>Stray expression values:</b> disable unplugged inputs.</li></ul></div></div></div>
 <div id="basics"><div><h3>MIDI basics (click outside to close)</h3>
@@ -235,7 +238,7 @@ function states(P,w,b){const list=b[w]||[];let h=`<h4>${w==='short'?'Short press
 list.forEach((s,i)=>{const q=`${P}.${w}.${i}`;h+=`<div class="card"><div class="row"><label>#${i+1}</label>${inp(q+'.label',s.label,'text')}<button class="x" data-act="delState" data-p="${q}">✕</button></div><div class="row" style="margin-top:4px"><label style="min-width:0">Pressed color</label>${colSel(q+'.color',s.color)}<label style="margin-left:12px" title="After this state fires, should the key fall back to its dim idle glow? Untick to keep it fully bright (for example a toggle that is ON, or the active key in a Radio group).">dim after${chk(q+'.dim',s.dim!==false)}</label></div><div class="hint">On press</div>${msgs(q+'.down',s.down)}<div class="hint">On release</div>${msgs(q+'.up',s.up)}</div>`});
 return h+`<button data-act="addState" data-p="${P}.${w}">+ state</button>`}
 function inspector(){const b=cfg.pages[pg].buttons[sel],P=`pages.${pg}.buttons.${sel}`;
-let h=`<h3>Key ${sel+1}</h3><div class="row"><label>Label</label>${inp(P+'.label',b.label)}</div><div class="row"><label title="The key's resting color. It glows dim at the Idle LED % until pressed, then shows the color of the state that fired.">Base color</label>${colSel(P+'.color',b.color)}<span class="hint" style="margin:0 0 0 8px">shown dim when idle</span></div><div class="row"><label>Type</label>${sel_(P,ktype(b),KT,'ktype')}</div><div class="hint">${KH[ktype(b)]}</div><div class="row"><label>Template</label><select id="tplSel"><option value="">Replace this key with a template...</option>${Object.keys(TPL).map(k=>`<option>${k}</option>`).join('')}</select></div>${ktype(b)==='Radio (exclusive)'?`<div class="row"><label>Group</label>${inp(P+'.radio',b.radio,'text')}</div>`:''}`;
+let h=`<h3 class="kh">Key ${sel+1}<button type="button" class="ic llmk" data-act="llmKey" title="Set up this key with an LLM" aria-label="Set up this key with an LLM"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg> Ask AI</button></h3><div class="row"><label>Label</label>${inp(P+'.label',b.label)}</div><div class="row"><label title="The key's resting color. It glows dim at the Idle LED % until pressed, then shows the color of the state that fired.">Base color</label>${colSel(P+'.color',b.color)}<span class="hint" style="margin:0 0 0 8px">shown dim when idle</span></div><div class="row"><label>Type</label>${sel_(P,ktype(b),KT,'ktype')}</div><div class="hint">${KH[ktype(b)]}</div><div class="row"><label>Template</label><select id="tplSel"><option value="">Replace this key with a template...</option>${Object.keys(TPL).map(k=>`<option>${k}</option>`).join('')}</select></div>${ktype(b)==='Radio (exclusive)'?`<div class="row"><label>Group</label>${inp(P+'.radio',b.radio,'text')}</div>`:''}`;
 if(!isPage(b)){const uses=ktype(b).startsWith('Counter');const stt=states(P,'short',b)+states(P,'long',b);h+=uses?'':stt;
 {const sh=b.show||{};h+=`<h4>Pop-up display</h4><div class="card"><div class="m">big${sel_(P+'.show.src',sh.src||'label',['label','cc','pc'])}zero${inp(P+'.show.zero',sh.zero,'number')}+/-${chk(P+'.show.signed',sh.signed)}caption${inp(P+'.show.caption',sh.caption,'text','90px')}</div><div class="hint">label = show the key name. cc = big number from this key's counter, pc = current preset number. The zero point is subtracted (64 gives capo steps, -1 makes presets start at 1).</div></div>`}
 if(uses)h+=`<h4>Counter</h4><div class="card"><div class="m">`+[['cc',b.cc],['cc_step',b.cc_step],['cc_min',b.cc_min],['cc_max',b.cc_max],['initial',b.initial]].map(([k,v])=>`${k}${inp(P+'.'+k,v,'number')}`).join('')+`wrap${chk(P+'.cc_wrap',b.cc_wrap)}</div><div class="m">names${inp(P+'.names',(b.names||[]).join(', '),'list','100%')}</div><div class="hint">Optional. Comma-separated names shown big on the pedal for each value, starting at the min value (for example Clean, Crunch, Lead). Only one of the up/down keys needs them.</div></div>`+`<details id="adv" ${advOpen?'open':''}><summary>Messages (advanced)</summary>${stt}</details>`}
@@ -326,6 +329,7 @@ else if(t==='mode'){const b=gp(cfg,p);if(v==='keytimes'){delete b.type;b.mode='k
 sp(cfg,p,v);render()});
 document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el)return;const a=el.dataset.act,p=el.dataset.p,i=+el.dataset.i;e.stopPropagation();
 if(a==='testMsg'){testMsg(gp(cfg,p));return}
+if(a==='llmKey'){llmCreate('key');return}
 if(a==='key'){sel=i;press(i,e.shiftKey);sim.flash=i+':'+pg;clearTimeout(sim.ft);sim.ft=setTimeout(()=>{sim.flash=null;$('#mid')&&render()},260)}
 else if(a==='copyKey')doCopy(i)
 else if(a==='expPage')expPage()
@@ -547,12 +551,26 @@ async function listModels(c){const p=LLM_PROVIDERS[c.provider];llmLog('asking '+
 // ---- the prompt, built from the editor's own tables so it cannot drift from what the editor accepts
 const LLM_EX=['Toggle (CC on/off)','Momentary (held)','Tap tempo, tuner on hold','Preset up','Radio patch (group A)','Counter (CC steps)','Sequence (3 states)','Drum pad (note)','Press macro (taps key 1)','Page up'];
 function llmConfigNow(){const c=compact(cfg);return JSON.stringify({midi_channel:c.midi_channel||1,pages:c.pages.map((p,i)=>({page:i+1,...p}))})}
-function llmPrompt(wanted,chart){const ch=+cfg.midi_channel||1;
+/** What the request may touch, said the same way in the first prompt and every follow-up. */
+function llmScope(sc){sc=sc||{kind:'all'};const P=(sc.pg??0)+1,pgo=cfg.pages[sc.pg]||{},K=(sc.key??0)+1,kb=(pgo.buttons||[])[sc.key]||{};
+ if(sc.kind==='key')return'SCOPE: only key '+K+' on page '+P+' (now labelled "'+(kb.label||'')+'"). Reply with one page entry, {"page":'+P+',"keys":{"'+K+'":{KEY}}}, and change nothing else. If doing this well needs other keys too (an up and down pair, a radio group), build this key and say in part 1 what to set on the others.';
+ if(sc.kind==='page')return'SCOPE: only page '+P+(pgo.name?' ("'+pgo.name+'")':'')+'. Change any of its keys, its encoder and its expression inputs, but no other page, and add no pages.';
+ return'SCOPE: the whole setup. Change any page, add pages, or replace them all if I ask for a whole new setup.'}
+function llmPrompt(wanted,chart,sc){const ch=+cfg.midi_channel||1;
  const msgLines=Object.keys(MF).map(t=>'- '+t+(MF[t].length?': '+MF[t].join(', '):'')+' '+({cc:'(control change: cc 0-127, value 0-127)',pc:'(program change: program 0-127. Preset 1 on most gear is program 0)',note:'(note on while held, note off on release if you put a velocity 0 copy in "up". note 0-127 where 60 is middle C, called C4. velocity 1-127)',pc_inc:'(next preset, wraps 127 to 0)',pc_dec:'(previous preset)',cc_inc:'(steps the key\'s counter up, see Counters)',cc_dec:'(steps the key\'s counter down)',sysex:'(hex bytes as a string, "F0 41 ... F7")',press:'(macro: taps other keys. keys is "2" or "3,4", press is "short" or "long", page is optional, 1-based, blank means this page)'}[t]||'')).join('\n');
  return['You are setting up a PaintAudio MIDI Captain 10 STD foot controller running CaptainsMate firmware.','',
  'WHAT I WANT: '+(wanted||'<describe it here, for example "a green button that toggles red when engaged, sending CC 23 on channel 2", or "basic setup for a Line 6 HX Stomp: scroll presets, engage each one, show the names">'),'',
+ llmScope(sc),'',
  ...(chart&&chart.trim()?['THE DEVICE\'S MIDI CHART, pasted by me. Treat this as the truth and prefer it over anything you remember:',chart.trim().slice(0,20000),'']:[]),
- 'Reply in two parts.','',
+ 'Reply in one of two ways: ask me questions first, or build it.','',
+ 'ASKING FIRST',
+ '- Ask only when a wrong guess would mean redoing most of what you build: which device or model I mean, how many presets or songs I use, their names, which of the device\'s features I want on the pedal, or how many pages.',
+ '- Do not ask about things I can change in a second in the editor: colors, labels, which key goes where.',
+ '- If I gave the numbers or the request is small (one key, one effect), build straight away.'+(sc&&sc.kind==='key'?' This request is for one key, so ask only if you cannot build it at all without an answer.':''),
+ '- At most 4 questions, each with 2 to 5 short options and the option you would pick if I do not answer. After I answer, build. Never ask twice in a row.',
+ '- To ask, write one or two sentences on what you understood so far, then the questions as JSON in a fenced code block, in exactly this shape:','```json',
+ '{"format":"captainsmate-questions","version":1,"questions":[{"id":"presets","text":"How many presets do you switch between live?","options":["4","8","16"],"default":"8"}]}','```','',
+ 'BUILDING: reply in two parts.','',
  'PART 1, plain English, short:',
  '- If I named a device, first a compact table of its MIDI implementation as far as this setup needs it: function, message (CC number and values, PC range, SysEx), and where each line comes from: the chart I pasted, a web page you read (give the address), or your own memory. If you can search the web, look up the manufacturer\'s MIDI implementation chart before you answer. Never invent a number. If you do not know one, say so.',
  '- Then what each key does, where it sits, and anything I need to set on the device itself (its MIDI channel, MIDI in source, a setting that must be switched on).',
@@ -636,7 +654,7 @@ function llmReader(){const R={skipped:[],notes:[]};
   const b={};b.color=color(src.color,where)||'white';b.label=text(src.label??'',10,where+' label');
   if(src.type==='page_inc'||src.type==='page_dec'){b.type=src.type;return b}
   b.mode='keytimes';const states=(v,w)=>(v==null?[]:Array.isArray(v)?v:[v]).map((s,i)=>state(s,where+' '+w+' state '+(i+1))).filter(Boolean);
-  b.short=states(src.short,'tap');b.long=states(src.long,'hold');
+  b.short=states(src.short,'tap');b.long=states(src.long,'hold');for(const st of[...b.short,...b.long])if(!st.color)st.color=b.color;
   if(src.radio!=null&&src.radio!=='')b.radio=text(src.radio,8,where+' radio group');
   const ms=allMsgs(b),counter=ms.some(x=>x.type==='cc_inc'||x.type==='cc_dec');
   if(counter||src.cc!=null){b.cc=num(src.cc,0,127,where+' cc');if(b.cc==null){if(counter){R.skipped.push(where+' steps a counter but has no cc number, so the key was left out');return null}delete b.cc}}
@@ -654,23 +672,31 @@ function llmReader(){const R={skipped:[],notes:[]};
  return{R,key,enc,text}}
 const blankKey=()=>({color:'off',label:'',mode:'keytimes',short:[],long:[]});
 /** Applies a reply to a copy of the config, then swaps it in. Returns a report, or throws in plain words. */
-function applySetup(d){if(!d)throw new Error('there was no JSON in that reply');
+function applySetup(d,sc){if(!d)throw new Error('there was no JSON in that reply');if(d.format==='captainsmate-questions')throw new Error('that reply asks questions rather than building anything');
  if(!Array.isArray(d.pages)){if(Array.isArray(d.buttons))d={pages:[{page:'new',keys:Object.fromEntries(d.buttons.map((b,i)=>[i+1,b]))}]};else throw new Error('the JSON has no "pages" list, so it is not a CaptainsMate setup')}
- const {R,key,enc,text}=llmReader(),next=JSON.parse(JSON.stringify(cfg)),touched=[],made=[];const replace=d.replace===true;if(replace)next.pages=[];
+ const {R,key,enc,text}=llmReader(),next=JSON.parse(JSON.stringify(cfg)),touched=[],made=[];let replace=d.replace===true;
+ d.pages=d.pages.map(src=>{if(!src||typeof src!=='object')return src;let ks=src.keys;if(Array.isArray(ks))ks=Object.fromEntries(ks.map((k,i)=>[k&&k.key!=null?k.key:i+1,k]));return{...src,keys:ks}});
+ // a page or key request may only touch that page or key; anything else is reported, never applied
+ if(sc&&sc.kind!=='all'){const P=sc.pg+1,K=sc.key+1,where=sc.kind==='key'?'key '+K+' on page '+P:'page '+P;
+  if(replace){R.skipped.push('the reply wanted to replace every page, which is more than '+where);replace=false}
+  d.pages=d.pages.filter(src=>{if(src&&String(src.page)===String(P))return true;R.skipped.push((src&&src.page!=null&&src.page!=='new'?'page '+src.page:'a new page')+' is outside '+where+', so it was left out');return false});
+  if(sc.kind==='key')for(const src of d.pages){for(const kk in src.keys||{})if(String(parseInt(kk,10))!==String(K)){R.skipped.push('key '+kk+' is outside '+where+', so it was left as it was');delete src.keys[kk]}
+   for(const f of['encoder','expression','name'])if(src[f]!=null){R.skipped.push('the page '+f+' is outside '+where+', so it was left as it was');delete src[f]}}}
+ if(replace)next.pages=[];
  for(const [n,src] of d.pages.entries()){if(!src||typeof src!=='object')continue;
   const isNew=replace||src.page==='new'||src.page==null,ix=isNew?-1:parseInt(src.page,10)-1;
   if(!isNew&&!next.pages[ix]){R.skipped.push('page '+src.page+' does not exist, so its changes were left out');continue}
   const p=isNew?{...np(),buttons:Array.from({length:10},blankKey)}:next.pages[ix],label=isNew?'new page '+(src.name?'"'+src.name+'"':n+1):'page '+(ix+1),keys=[];
   if(src.name)p.name=text(src.name,24,label+' name')||p.name;
-  let ks=src.keys;if(Array.isArray(ks))ks=Object.fromEntries(ks.map((k,i)=>[k&&k.key!=null?k.key:i+1,k]));
+  const ks=src.keys;let other=false;
   for(const kk in ks||{}){const i=parseInt(kk,10)-1;if(!(i>=0&&i<10)){R.skipped.push(label+' key "'+kk+'" is not 1 to 10');continue}const src2={...ks[kk]};delete src2.key;const b=key(src2,label+' key '+(i+1));if(b){p.buttons[i]=b;keys.push(i)}}
-  if(src.encoder){const e=enc(src.encoder,label+' encoder');if(e)p.encoder={...(p.encoder||{}),...e}}
-  if(src.expression&&typeof src.expression==='object')for(const x of['exp1','exp2'])if(src.expression[x]){const e=enc(src.expression[x],label+' '+x);if(e)p.expression[x]={...(p.expression[x]||{}),...e}}
+  if(src.encoder){const e=enc(src.encoder,label+' encoder');if(e&&Object.keys(e).length){p.encoder={...(p.encoder||{}),...e};other=true}}
+  if(src.expression&&typeof src.expression==='object')for(const x of['exp1','exp2'])if(src.expression[x]){const e=enc(src.expression[x],label+' '+x);if(e&&Object.keys(e).length){p.expression[x]={...(p.expression[x]||{}),...e};other=true}}
   if(isNew){next.pages.push(p);made.push(next.pages.length-1)}
-  touched.push({pg:isNew?next.pages.length-1:ix,keys,isNew,name:p.name})}
+  touched.push({pg:isNew?next.pages.length-1:ix,keys,isNew,other,name:p.name})}
  if(!next.pages.length)throw new Error('the reply left no pages at all');
- if(!touched.some(t=>t.keys.length||t.isNew))throw new Error('nothing in the reply could be used'+(R.skipped.length?': '+R.skipped[0]:''));
- if(Array.isArray(d.sysex_preamble)&&d.sysex_preamble.length)next.sysex_preamble=d.sysex_preamble.map(String);
+ if(!touched.some(t=>t.keys.length||t.isNew||t.other))throw new Error('none of it fits what was asked'+(R.skipped.length?' ('+R.skipped[0]+')':''));
+ if((!sc||sc.kind==='all')&&Array.isArray(d.sysex_preamble)&&d.sysex_preamble.length)next.sysex_preamble=d.sysex_preamble.map(String);
  // press macros name key numbers on a page, so check they land on a real page
  next.pages.forEach((p,pi)=>p.buttons.forEach((b,bi)=>allMsgs(b).forEach(m=>{if(m.type==='press'&&m.page&&!next.pages[m.page-1])R.notes.push('page '+(pi+1)+' key '+(bi+1)+' presses keys on page '+m.page+', which does not exist')})));
  snap();cfg=next;const t0=touched[0];pg=t0.pg;sel=t0.keys.length?t0.keys[0]:0;sim={pc:0,cc:{},st:{},rad:{}};render();schedulePush();
@@ -724,23 +750,45 @@ function llmWords(words){const out=hh('div',{class:'llmw'}),lines=words.split('\
    const [head,...rest]=body;out.append(hh('table',{class:'llmt'},hh('tr',{},cells(head).map(c=>hh('th',{},c))),rest.map(r=>hh('tr',{},cells(r).map(c=>hh('td',{},c))))))}
   else buf.push(lines[i])}
  flush();return out}
+/** Everything the model wrote except the JSON block. */
+const llmProse=text=>text.replace(/```[\s\S]*?```/g,'').replace(/\{\s*"format"[\s\S]*\}/,'').replace(/\*\*(.+?)\*\*/g,'$1').replace(/^#{1,6}\s*/gm,'').replace(/\n{3,}/g,'\n\n').trim();
+/** Reads a questions reply into at most 4 questions, each with a few short options. */
+function llmQuestions(d){if(!d||d.format!=='captainsmate-questions'||!Array.isArray(d.questions))return null;
+ const qs=d.questions.slice(0,4).map((q,i)=>({id:String(q.id||'q'+(i+1)),text:String(q.text||q.question||'').trim(),options:(Array.isArray(q.options)?q.options:[]).map(String).filter(Boolean).slice(0,6),def:q.default!=null?String(q.default):null})).filter(q=>q.text);
+ return qs.length?qs:null}
+/** Draws the questions with clickable answers, the model's default picked, and a box for anything else. */
+function llmQuestionForm(qs){const picks=qs.map(q=>q.def&&q.options.includes(q.def)?q.def:(q.options[0]||'')),others=[];
+ const form=hh('div',{},qs.map((q,i)=>{const chips=q.options.map(o=>hh('button',{type:'button',class:o===picks[i]?'on':null,onclick:e=>{picks[i]=o;others[i].value='';chips.forEach(c=>c.classList.toggle('on',c===e.currentTarget))}},o));
+  others[i]=hh('input',{type:'text',placeholder:q.options.length?'Or type your own':'Your answer','aria-label':'Your own answer to: '+q.text});
+  others[i].addEventListener('input',()=>{if(others[i].value.trim())chips.forEach(c=>c.classList.remove('on'));else chips.forEach(c=>c.classList.toggle('on',c.textContent===picks[i]))});
+  return hh('div',{class:'llmq'},hh('p',{},(i+1)+'. '+q.text),hh('div',{class:'ch'},chips,others[i]))}));
+ const answers=()=>'Here are my answers:\n'+qs.map((q,i)=>'- '+q.text+' '+(others[i].value.trim()||picks[i]||'(no answer, use your default)')).join('\n');
+ return{form,answers}}
+
 // The conversation lives here, so closing and reopening the dialog carries on where it left off.
-const llmS={thread:[],base:null,chart:'',chartSent:''};
-function llmCreate(){const c=llmCfg(),keyed=!!(c&&(c.key||c.provider==='custom')),box=llmBox();box.textContent='';
- const want=hh('textarea',{class:'llmta',rows:'3','aria-label':'What you want the pedal to do',placeholder:llmS.thread.length?'Ask for a change, for example: swap keys 1 and 2, or make the toggle blue':'Give me a green button that toggles red when engaged, sending CC 23 on channel 2'});
+const llmS={thread:[],base:null,chart:'',chartSent:'',scope:null};
+const SCOPE_TXT={all:'Whole setup',page:'This page',key:'This key'};
+const scopeLabel=sc=>sc.kind==='key'?'Key '+(sc.key+1)+((cfg.pages[sc.pg]?.buttons[sc.key]?.label)?' · '+cfg.pages[sc.pg].buttons[sc.key].label:''):sc.kind==='page'?'Page '+(sc.pg+1)+(cfg.pages[sc.pg]?.name?' · '+cfg.pages[sc.pg].name:''):'Whole setup';
+/** Opens the dialog. A kind ('all', 'page', 'key') sets what it may change, starting from the page and key in view. */
+function llmCreate(kind){if(typeof kind==='string')llmS.scope={kind,pg,key:sel};if(!llmS.scope)llmS.scope={kind:'all',pg,key:sel};
+ if(!cfg.pages[llmS.scope.pg])llmS.scope={kind:'all',pg,key:sel};
+ const sc=llmS.scope,c=llmCfg(),keyed=!!(c&&(c.key||c.provider==='custom')),box=llmBox();box.textContent='';
+ const PH={all:'Give me a green button that toggles red when engaged, sending CC 23 on channel 2. Or: a basic setup for my HX Stomp',page:'Turn this page into a preset bank for my HX Stomp, with tap tempo on the last key',key:'Make this a tap tempo key, with the tuner on a long press'};
+ const want=hh('textarea',{class:'llmta',rows:'3','aria-label':'What you want the pedal to do',placeholder:llmS.thread.length?'Ask for a change, for example: swap keys 1 and 2, or make the toggle blue':PH[sc.kind]});
  const chart=hh('textarea',{class:'llmta',rows:'4','aria-label':'The device\'s MIDI chart',placeholder:'Optional. Paste the device\'s MIDI implementation chart, or the part of the manual that lists its CC and PC numbers. It is used instead of the model\'s memory.'});chart.value=llmS.chart;
  chart.addEventListener('input',()=>llmS.chart=chart.value);
  const chartBox=hh('details',{class:'llmd'},hh('summary',{},'Paste the device\'s MIDI chart'),chart);if(llmS.chart)chartBox.open=true;
+ const scopeRow=hh('div',{class:'llmscope',role:'group','aria-label':'What it may change'},['all','page','key'].map(k=>hh('button',{type:'button',class:sc.kind===k?'on':null,title:k==='all'?'It can change any page and add new ones':k==='page'?'It only changes page '+(pg+1):'It only changes key '+(sel+1)+' on page '+(pg+1),
+  onclick:()=>{const keep=want.value;llmS.scope={kind:k,pg,key:sel};llmCreate();const t=llmBox().querySelector('textarea.llmta');t.value=keep;t.focus()}},k===sc.kind?scopeLabel(sc):SCOPE_TXT[k])));
  const status=hh('p',{class:'hint llmst'}),reason=hh('div',{class:'llmr'}),buttons=hh('div',{class:'r'});
  let ctrl=null,started=0,timer=null,giveUp=null,timedOut=false;
  const setStage=t=>{const s=Math.round((Date.now()-started)/1000);status.textContent=t+' ('+s+'s'+(s>30?', slower than usual':'')+')'};
  llmStop=()=>{clearInterval(timer);timer=null;clearTimeout(giveUp);if(ctrl){ctrl.abort();ctrl=null}};
  const row=(...k)=>{buttons.textContent='';buttons.append(...k)};
- function showResult(text,report,extra){
-  // everything but the JSON is the model's reasoning, which is the useful part
-  reason.textContent='';const words=text.replace(/```[\s\S]*?```/g,'').replace(/\{\s*"format"[\s\S]*\}/,'').replace(/\*\*(.+?)\*\*/g,'$1').replace(/^#{1,6}\s*/gm,'').replace(/\n{3,}/g,'\n\n').trim();
-  if(words)reason.append(llmWords(words));
-  const ch=report.touched.map(t=>t.isNew?'added page '+(t.pg+1)+(t.name?' "'+t.name+'"':''):'page '+(t.pg+1)+' key'+(t.keys.length>1?'s ':' ')+t.keys.map(k=>k+1).join(', ')).join('; ');
+ const afterButtons=()=>row(hh('button',{type:'button',title:'Forget this conversation and start from a new description. Your config stays as it is.',onclick:startFresh},'Start fresh'),
+  hh('button',{type:'button',title:'Put back the config you had before asking',onclick:discard},'Discard'),hh('button',{type:'button',onclick:()=>go()},'Ask for a change'),hh('button',{type:'button',class:'pri',onclick:done},'Done'));
+ function showResult(text,report,extra){reason.textContent='';const words=llmProse(text);if(words)reason.append(llmWords(words));
+  const ch=report.touched.map(t=>t.isNew?'added page '+(t.pg+1)+(t.name?' "'+t.name+'"':''):'page '+(t.pg+1)+(t.keys.length?' key'+(t.keys.length>1?'s ':' ')+t.keys.map(k=>k+1).join(', '):'')+(t.other?(t.keys.length?' and':'')+' its encoder or expression':'')).join('; ');
   reason.append(hh('p',{class:'llmok'},(report.replace?'Replaced all pages: ':'Changed: ')+ch+'.'));
   if(report.unverified.length)reason.append(hh('div',{class:'warn'},hh('b',{},'From the model\'s memory, check before a gig:'),hh('ul',{},report.unverified.slice(0,12).map(t=>hh('li',{},t)))));
   if(report.skipped.length)reason.append(hh('div',{class:'warn'},hh('b',{},report.skipped.length+' part'+(report.skipped.length>1?'s':'')+' of the reply could not be used:'),hh('ul',{},report.skipped.slice(0,8).map(t=>hh('li',{},t))),'Asking again often fixes it, or say which key to correct.'));
@@ -748,60 +796,75 @@ function llmCreate(){const c=llmCfg(),keyed=!!(c&&(c.key||c.provider==='custom')
   if(extra&&extra.sources&&extra.sources.length)reason.append(hh('details',{class:'llmd'},hh('summary',{},'Pages it read ('+extra.sources.length+')'),hh('ul',{},extra.sources.slice(0,10).map(s=>hh('li',{},hh('a',{href:s.url,target:'_blank',rel:'noopener'},s.title||s.url))))));
   const kb=JSON.stringify(compact(cfg)).length/1024;
   status.textContent=(extra&&extra.dropped?'The provider would not search the web with this key, so it answered from memory. ':'')+'Loaded into the editor'+(port&&$('#live').checked?' and sent to the pedal':'')+'. Try the keys, ask for a change, or Discard to put back what you had.'+(kb>12?' The config is now '+kb.toFixed(1)+' KB, which may be too big for the pedal.':'')}
- async function go(){const wanted=want.value.trim();if(!wanted)return toast('Say what you want the keys to do first.');
+ /** Shows the model's questions and returns the form, whose answers() becomes the next message. */
+ function showQuestions(text,qs,extra){reason.textContent='';const words=llmProse(text);if(words)reason.append(llmWords(words));
+  const f=llmQuestionForm(qs);reason.append(f.form);
+  status.textContent=(extra&&extra.dropped?'The provider would not search the web with this key, so it is working from memory. ':'')+'A few questions before it builds anything. Pick answers, or type your own.';
+  want.value='';want.placeholder='Anything else it should know (optional)';
+  return f}
+ async function go(override){const wanted=want.value.trim();if(!override&&!wanted)return toast('Say what you want the keys to do first.');
   ctrl=new AbortController();timedOut=false;clearTimeout(giveUp);const secs=(c.search!==false&&canSearch(c))?150:90;
   giveUp=setTimeout(()=>{if(ctrl){timedOut=true;ctrl.abort()}},secs*1000);started=Date.now();want.disabled=true;reason.textContent='';
   const who='Asking '+LLM_PROVIDERS[c.provider].name;setStage(who);timer=setInterval(()=>setStage(who),1000);
   row(hh('button',{type:'button',onclick:()=>{llmStop()}},'Cancel'));
   try{const chartNew=llmS.chart.trim()&&llmS.chart.trim()!==llmS.chartSent;
-   // first time the full brief; after that just the change, the chart if it changed, and the config as it is now
-   const message=llmS.thread.length?wanted+'\n\nThis is a change to what you just built, so keep what works and alter only what I asked for.'
+   // first time the full brief; after that the new words, the chart if it changed, the scope and the config as it is now
+   const message=llmS.thread.length?(override||wanted+'\n\nThis is a change to what you just built, so keep what works and alter only what I asked for.')
+     +(override&&wanted?'\n\n'+wanted:'')
      +(chartNew?'\n\nHere is the device\'s MIDI chart. Treat it as the truth:\n'+llmS.chart.trim().slice(0,20000):'')
-     +'\n\nMy config as it stands now (I may have edited it by hand, page numbers count from 1):\n'+llmConfigNow()
-     +'\n\nReply in the same two parts as before: the explanation, then the changes as JSON in a fenced code block, in the same format.'
-    :llmPrompt(wanted,llmS.chart);
+     +'\n\n'+llmScope(sc)+'\n\nMy config as it stands now (I may have edited it by hand, page numbers count from 1):\n'+llmConfigNow()
+     +'\n\nNow build it: reply in two parts, the explanation, then the changes as JSON in a fenced code block in the captainsmate-setup format.'+(override?' Do not ask any more questions.':' Ask first only if the rules say you must.')
+    :llmPrompt(wanted,llmS.chart,sc);
    // the thread only grows once a reply has been used, so a failed try leaves nothing behind
    const turns=[...llmS.thread,{role:'user',text:message}],before=JSON.stringify(cfg);
    const r=await askLlm(c,turns,ctrl.signal);clearTimeout(giveUp);llmStop();
-   status.textContent='Reading the reply';
-   const report=applySetup(extractJson(r.text));
+   status.textContent='Reading the reply';want.disabled=false;
+   const d=extractJson(r.text),qs=llmQuestions(d);
+   if(qs){llmS.thread=[...turns,{role:'assistant',text:r.text}];if(llmS.chart.trim())llmS.chartSent=llmS.chart.trim();
+    const f=showQuestions(r.text,qs,r);
+    row(hh('button',{type:'button',title:'Skip the questions and let it use its own defaults',onclick:()=>go('Use your defaults for everything you asked and build it.')},'Just build it'),
+     hh('button',{type:'button',class:'pri',onclick:()=>go(f.answers())},'Answer and build'));return}
+   const report=applySetup(d,sc);
    llmS.thread=[...turns,{role:'assistant',text:r.text}];if(llmS.chart.trim())llmS.chartSent=llmS.chart.trim();if(llmS.base==null)llmS.base=before;
    showResult(r.text,report,r);
-   want.disabled=false;want.value='';want.placeholder='Now ask for a change, for example: make key 3 blue, or add a tap tempo key';want.focus();
-   row(hh('button',{type:'button',title:'Forget this conversation and start from a new description. Your config stays as it is.',onclick:startFresh},'Start fresh'),
-    hh('button',{type:'button',title:'Put back the config you had before asking',onclick:discard},'Discard'),
-    hh('button',{type:'button',onclick:go},'Ask for a change'),hh('button',{type:'button',class:'pri',onclick:done},'Done'))}
+   want.value='';want.placeholder='Now ask for a change, for example: make key 3 blue, or add a tap tempo key';want.focus();
+   afterButtons()}
   catch(e){llmStop();want.disabled=false;
-   status.textContent=e.name!=='AbortError'?(/^(there was|the JSON|the reply|nothing in)/.test(e.message)?'Could not use the reply: '+e.message+'. Try again, or pick a stronger model in LLM settings.':e.message)
+   status.textContent=e.name!=='AbortError'?(/^(there was|the JSON|the reply|none of it|that reply)/.test(e.message)?'Could not use the reply: '+e.message+'. Try again, or pick a stronger model in LLM settings.':e.message)
     :timedOut?'No reply after '+secs+' seconds, so the request was dropped. The model may be overloaded. Try again, or pick another one in LLM settings.':'Cancelled.';
-   row(hh('button',{type:'button',onclick:()=>llmSettings(llmCreate)},'LLM settings'),hh('button',{type:'button',onclick:llmClose},'Close'),hh('button',{type:'button',class:'pri',onclick:go},'Try again'))}}
+   row(hh('button',{type:'button',onclick:()=>llmSettings(llmCreate)},'LLM settings'),hh('button',{type:'button',onclick:llmClose},'Close'),hh('button',{type:'button',class:'pri',onclick:()=>go(override)},'Try again'))}}
  function discard(){if(llmS.base==null)return;snap();cfg=JSON.parse(llmS.base);pg=Math.min(pg,cfg.pages.length-1);sel=0;sim={pc:0,cc:{},st:{},rad:{}};render();llmS.base=null;llmS.thread=[];schedulePush();toast('Put back the config you had before asking.');llmCreate()}
  function done(){llmS.base=null;llmClose();toast('Kept. Undo still steps back through each change, and Save config keeps a copy on your computer.')}
  function startFresh(){llmS.thread=[];llmS.base=null;llmS.chartSent='';llmCreate()}
- const first=()=>[hh('button',{type:'button',onclick:llmClose},'Cancel'),keyed?hh('button',{type:'button',class:'pri',onclick:go},llmS.thread.length?'Ask for a change':'Build keys'):hh('button',{type:'button',class:'pri',onclick:()=>llmSettings(llmCreate)},'Add a key')];
- async function copyPrompt(){const text=llmPrompt(want.value.trim(),llmS.chart);
-  try{await navigator.clipboard.writeText(text);status.textContent='Prompt copied ('+Math.round(text.length/1024)+' KB). Paste it into any chat LLM'+(want.value.trim()?'':', fill in what you want at the top')+', then bring the whole reply back with Paste a reply.'}
+ const first=()=>[hh('button',{type:'button',onclick:llmClose},'Cancel'),keyed?hh('button',{type:'button',class:'pri',onclick:()=>go()},llmS.thread.length?'Ask for a change':sc.kind==='key'?'Set up this key':'Build keys'):hh('button',{type:'button',class:'pri',onclick:()=>llmSettings(llmCreate)},'Add a key')];
+ async function copyPrompt(){const text=llmPrompt(want.value.trim(),llmS.chart,sc);
+  try{await navigator.clipboard.writeText(text);status.textContent='Prompt copied ('+Math.round(text.length/1024)+' KB). Paste it into any chat LLM'+(want.value.trim()?'':', fill in what you want at the top')+', answer any questions it asks there, then bring its final reply back with Paste a reply.'}
   catch(e){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download='CaptainsMate LLM prompt.txt';a.click();status.textContent='This browser would not let the page copy, so the prompt was downloaded as a text file instead.'}}
  function pasteView(){const area=hh('textarea',{class:'llmta',rows:'10','aria-label':'An LLM reply',placeholder:'Paste the whole reply here, explanation and all. The keys are pulled out of it.'});
-  box.textContent='';box.append(hh('h2',{},'Paste a reply from an LLM'),hh('p',{class:'hint'},'Paste everything it wrote, including the text around the JSON. The keys load into the editor straight away, and Discard or Undo puts back what you had.'),area,status,reason,buttons);
-  status.textContent='';row(hh('button',{type:'button',onclick:llmCreate},'Back'),hh('button',{type:'button',class:'pri',onclick:()=>{const t=area.value;if(!t.trim())return toast('Paste a reply first.');
-   try{const before=JSON.stringify(cfg);const report=applySetup(extractJson(t));if(llmS.base==null)llmS.base=before;area.hidden=true;showResult(t,report);
+  box.textContent='';box.append(hh('h2',{},'Paste a reply from an LLM'),hh('p',{class:'hint'},'Paste everything it wrote, including the text around the JSON. The keys load into the editor straight away, and Discard or Undo puts back what you had.'+(sc.kind!=='all'?' Only '+scopeLabel(sc)+' can change.':'')),area,status,reason,buttons);
+  status.textContent='';row(hh('button',{type:'button',onclick:()=>llmCreate()},'Back'),hh('button',{type:'button',class:'pri',onclick:()=>{const t=area.value;if(!t.trim())return toast('Paste a reply first.');
+   const d=extractJson(t),qs=llmQuestions(d);
+   // a chatbot asked questions: answer them here and copy the answers back to it
+   if(qs){area.hidden=true;const f=showQuestions(t,qs);status.textContent='It has a few questions. Pick answers, copy them, paste them into the chatbot, then paste its next reply here.';
+    row(hh('button',{type:'button',onclick:pasteView},'Back'),hh('button',{type:'button',class:'pri',onclick:async()=>{try{await navigator.clipboard.writeText(f.answers());toast('Answers copied. Paste them into the chatbot.')}catch(e){toast('This browser would not let the page copy.')}pasteView()}},'Copy my answers'));return}
+   try{const before=JSON.stringify(cfg);const report=applySetup(d,sc);if(llmS.base==null)llmS.base=before;area.hidden=true;showResult(t,report);
     row(hh('button',{type:'button',onclick:discard},'Discard'),hh('button',{type:'button',onclick:pasteView},'Paste another'),hh('button',{type:'button',class:'pri',onclick:done},'Done'))}
    catch(e){status.textContent='Could not use that reply: '+e.message+'.'}}},'Load these keys'));area.focus()}
  const other=hh('div',{class:'llmalt'},
   hh('button',{type:'button',class:'lnk',title:'Choose which LLM to use and store your API key in this browser',onclick:()=>llmSettings(llmCreate)},'LLM settings'),
   hh('button',{type:'button',class:'lnk',title:'Copies the whole prompt, so you can paste it into any chatbot instead of using a key',onclick:copyPrompt},'Copy the prompt instead'),
   hh('button',{type:'button',class:'lnk',title:'Paste a reply you got elsewhere, explanation and all',onclick:pasteView},'Paste a reply'));
- box.append(hh('h2',{},'Build keys with an LLM'),
-  hh('p',{},'Describe what the keys should do, or name the gear you want to control and what you need from it. The result loads into the editor so you can try it, and Discard puts back what you had. Keep asking for changes and it remembers what it built.'),
-  want,chartBox,status,reason,buttons,other);
+ const intro={all:'Describe what the keys should do, or name the gear you want to control and what you need from it. If it needs to know more it asks first. The result loads into the editor so you can try it, and Discard puts back what you had.',
+  page:'Describe what this page should do. Only this page changes. If it needs to know more it asks first, and Discard puts back what you had.',
+  key:'Describe what this one key should do. Nothing else on the pedal changes, and Discard puts back what you had.'}[sc.kind];
+ box.append(hh('h2',{},sc.kind==='key'?'Set up key '+(sc.key+1)+' with an LLM':'Build keys with an LLM'),hh('p',{},intro),scopeRow,want,chartBox,status,reason,buttons,other);
  if(!keyed)status.textContent='No API key yet, so this cannot build the keys for you. Add one, or copy the prompt and bring a reply back, which needs no key.';
  else if(llmS.thread.length)status.textContent='Carrying on from the last conversation. Start fresh to begin a new one.';
  row(...first());
  if(llmS.thread.length)row(hh('button',{type:'button',onclick:startFresh},'Start fresh'),...first());
  llmOpen();want.focus();
  want.addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&keyed&&!want.disabled){e.preventDefault();go()}})}
-$('#bLlm').onclick=llmCreate;
+$('#bLlm').onclick=()=>llmCreate('all');
 
 render();
 </script></body></html>
