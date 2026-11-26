@@ -88,10 +88,14 @@ html,body{max-width:100%;overflow-x:hidden}main>*{min-width:0}
 .kh{display:flex;align-items:center;gap:8px}.llmk{margin-left:auto;gap:4px;font-size:11px;letter-spacing:0;text-transform:none;color:var(--mu)}.llmk:hover{color:var(--ac)}
 .llmscope{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}.llmscope button{border-radius:14px;padding:4px 12px;font-size:12px}.llmscope button.on{border-color:var(--ac);color:var(--ac);background:var(--bg)}
 .llmq{background:var(--p2);border:1px solid var(--ln);border-radius:8px;padding:10px 12px;margin:8px 0}.llmq p{margin:0 0 8px;font-weight:600}.llmq .ch{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.llmq .ch button{border-radius:14px;padding:4px 12px}.llmq .ch button.on{background:var(--ac);border-color:var(--ac);color:#04121f;font-weight:600}.llmq .ch input{flex:1;min-width:120px;border-radius:14px;padding:4px 12px}
+.cbar{flex-wrap:wrap;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--ln)}.cbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);margin-right:2px}.cbar select{font-weight:600;min-width:170px}.cbar #cfgName{flex:1;min-width:140px;max-width:260px}
+.devpick{margin-left:6px;max-width:200px;color:var(--mu)}.llmdev label{width:76px;flex:none}.llmdev select{flex:1}
+.devtw{overflow-x:auto;margin:8px 0}.devt{border-collapse:collapse;width:100%;font-size:12px}.devt th{text-align:left;color:var(--mu);font-weight:600;padding:2px 4px}.devt td{padding:2px 3px}.devt input,.devt select{width:100%;padding:4px 6px}#llmbox.wide{width:min(780px,95vw)}.devt td:nth-child(1){width:24%}.devt td:nth-child(2) select{min-width:76px}.devt td:nth-child(5) select{min-width:150px}.devt td:nth-child(4){min-width:190px}
+.devt tr.mem td{background:#f5b94222}.devt input.bad{border-color:#ff7b72}.devrow{align-items:center}.devrow button{flex:none}#llmbox h4{margin:16px 0 6px}#llmbox>input[type=text]{width:100%;margin-bottom:4px}
 .llmalt{display:flex;gap:18px;flex-wrap:wrap;border-top:1px solid var(--ln);margin-top:16px;padding-top:12px}button.lnk{background:none;border:0;padding:0;color:var(--mu);text-decoration:underline;text-underline-offset:3px;font-size:12px}button.lnk:hover{color:var(--tx)}
 </style></head><body>
 <header><a class="logo" href="https://github.com/peanutismint/CaptainsMate" target="_blank" rel="noopener" title="CaptainsMate on GitHub" style="color:inherit;text-decoration:none">CAPTAINS<b>MATE</b></a>
-<button id="bOpen">Load config</button><button id="bSave">Save config</button><button id="bImp">Import pages</button><button id="bEx" title="Open a ready-made example config to see what a full setup looks like">Examples</button><button id="bLlm" class="ic" title="Build keys with an LLM: describe what you want, or name your gear" aria-label="Build keys with an LLM"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/><path d="M5 3l.6 1.4L7 5l-1.4.6L5 7l-.6-1.4L3 5l1.4-.6z"/></svg></button><span id="sz" class="chip" title="Size of this config"></span><span class="sep"></span>
+<button id="bImp">Import pages</button><button id="bEx" title="Open a ready-made example config to see what a full setup looks like">Examples</button><button id="bDevs" title="Your devices and the MIDI messages they understand">Devices</button><button id="bLlm" class="ic" title="Build keys with an LLM: describe what you want, or name your gear" aria-label="Build keys with an LLM"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/><path d="M5 3l.6 1.4L7 5l-1.4.6L5 7l-.6-1.4L3 5l1.4-.6z"/></svg></button><span id="sz" class="chip" title="Size of this config"></span><span class="sep"></span>
 <button id="bConn" class="pri">Connect pedal</button><span id="chip" class="chip">Not connected</span><button id="bPush">Send</button><button id="bPull">Receive</button>
 <label class="tg" id="lLive"><input type="checkbox" id="live">Live</label><span class="sep"></span>
 <button id="bUndo" class="ic"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-15-6.7L3 13"/></svg></button><button id="bRedo" class="ic"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 15-6.7L21 13"/></svg></button><span style="flex:1"></span>
@@ -103,7 +107,7 @@ html,body{max-width:100%;overflow-x:hidden}main>*{min-width:0}
 <div id="impm"><div><h3>Import pages</h3><p class="hint" id="impF"></p><div id="impL"></div>
 <div class="row" style="margin-top:10px"><label>Add</label><select id="impP"><option value="end">at the end</option><option value="after">after the current page</option><option value="start">at the start</option></select></div>
 <label class="tg" style="margin-top:6px;font-size:12px"><input type="checkbox" id="impG">Also take its settings (MIDI channel, battery, screen...)</label>
-<div class="r"><button id="impX">Cancel</button><button id="impR" title="Throw away the current config and open this one instead">Replace whole config</button><button id="impGo" class="pri">Import selected</button></div></div></div>
+<div class="r"><button id="impX">Cancel</button><button id="impR" title="Add this file to your configs and open it, keeping the one you have">Open as a new config</button><button id="impGo" class="pri">Import selected</button></div></div></div>
 <div id="chgc"><div><h3>&#9888; Turn on battery charging?</h3><p>Charging is only safe with <b>rechargeable NiMH</b> AA batteries.</p><p>With alkaline or any other non-rechargeable batteries it can make them <b>leak, overheat or burst</b>.</p><div class="r"><button id="chgNo">Cancel</button><button id="chgYes" class="pri">Yes, my batteries are rechargeable NiMH</button></div></div></div>
 
 <div id="setm" class="ov"><div><h3>Settings</h3>
@@ -159,8 +163,8 @@ html,body{max-width:100%;overflow-x:hidden}main>*{min-width:0}
 <button id="bLogCopy">Copy log</button> <button id="bLogClr">Clear</button> <button id="bInfo">Ask pedal for info</button> <button id="bBootLog">Pedal boot log</button></div>
 <div style="margin-top:16px;text-align:right"><button id="bSetX">Close</button></div></div></div>
 <div id="man"><div id="manh"><b>User guide</b><button id="manPop">Pop out</button><button id="manX" class="ic" title="Close">✕</button></div><div id="manb"><div id="mant" style="padding:16px 20px"><h1>CaptainsMate guide</h1>
-<nav><a href="#m1">Quick start</a><a href="#m2">The screen</a><a href="#m3">Keys &amp; states</a><a href="#m4">Messages</a><a href="#m5">Pages</a><a href="#m6">Expression &amp; encoder</a><a href="#m7">Global &amp; settings</a><a href="#m8">Live update</a><a href="#m11">LLM helper</a><a href="#m9">Saving &amp; backups</a><a href="#m10">Troubleshooting</a></nav>
-<h2 id="m1">Quick start</h2><ol><li>Click the folder button <b>Load config</b> to load your config (or start with the default).</li><li>Click a key in the grid. Its settings appear on the right.</li><li>Click <b>Connect pedal</b> (Chrome or Edge). From then on every edit is sent to the pedal after half a second.</li></ol>
+<nav><a href="#m1">Quick start</a><a href="#m2">The screen</a><a href="#m3">Keys &amp; states</a><a href="#m4">Messages</a><a href="#m5">Pages</a><a href="#m6">Expression &amp; encoder</a><a href="#m7">Global &amp; settings</a><a href="#m8">Live update</a><a href="#m11">LLM helper</a><a href="#m12">Devices</a><a href="#m9">Saving &amp; backups</a><a href="#m10">Troubleshooting</a></nav>
+<h2 id="m1">Quick start</h2><ol><li>Use <b>Load</b> in the config bar to add your config file, or start with the blank one. Configs you open stay in the <b>Config</b> menu for next time.</li><li>Click a key in the grid. Its settings appear on the right.</li><li>Click <b>Connect pedal</b> (Chrome or Edge). From then on every edit is sent to the pedal after half a second.</li></ol>
 <h2 id="m2">The screen</h2><p><b>Left:</b> pages and global settings. <b>Middle:</b> the 10 keys, expression and encoder, and a preview of the pedal screen. <b>Right:</b> the inspector for the selected key. Click a key to simulate a tap; Shift-click simulates a long press. The preview shows the pop-up the pedal would show.</p>
 <h2 id="m3">Keys &amp; states</h2><p>Each key has a <b>label</b> and <b>color</b>. <b>Action</b> is either <i>keytimes</i> (send MIDI) or a page key. A keytimes key has <b>short</b> (tap) and <b>long</b> (hold) <b>states</b>. With several short states, each tap moves to the next one, which is how a key toggles on/off or steps through choices. Each state has its own label and LED color, and lists of messages sent on <b>down</b> (press) and <b>up</b> (release).</p>
 <h2 id="m4">Messages</h2><p>Use <b>+ message</b> inside a state. Types:</p><ul><li><b>cc</b>: control change, number 0-127 and value 0-127.</li><li><b>pc</b>: program change to a preset number. <b>pc_inc / pc_dec</b> step to the next or previous preset.</li><li><b>cc_inc / cc_dec</b>: step a counter between its min and max (set on the key), optionally wrapping.</li><li><b>note</b>: note number and velocity.</li></ul><p>The <b>ch</b> box on a message sets its MIDI channel (1-16). Blank uses the global channel.</p>
@@ -169,7 +173,8 @@ html,body{max-width:100%;overflow-x:hidden}main>*{min-width:0}
 <h2 id="m7">Global &amp; settings</h2><ul><li><b>MIDI ch</b>: default channel for everything.</li><li><b>Hold ms</b>: how long counts as a long press.</li><li><b>SPI MHz</b>: screen speed; needs a restart.</li><li><b>Settings (gear)</b>: <b>Dev mode</b> shows the pedal as a USB drive at every boot, and <b>Restart pedal</b>. <b>Battery</b>: charging for NiMH AAs (off by default, never with alkaline), an on-screen battery display as voltage, percent or an icon, and a Probe button to find the right sense pin.</li><li><b>Sun/moon icon</b> cycles Auto, Light and Dark. <b>Tooltips</b> turns hover hints on or off.</li></ul>
 <h2 id="m8">Live update</h2><p>Click <b>Connect pedal</b>, pick the pedal's port, and keep <b>Live update</b> ticked. The green dot means connected. <b>Send</b> pushes your config to the pedal now; <b>Receive</b> loads what the pedal has. Close other serial programs first, since only one can use the port.</p>
 <h2 id="m11">LLM helper</h2><p>The sparkle button next to <b>Examples</b> builds keys from a plain description, and <b>Ask AI</b> at the top of a key's settings does the same for just that key. In the dialog, <b>Whole setup</b>, <b>This page</b> and <b>This key</b> set what it may change; anything outside that is listed and left alone. For a bigger request it may ask up to four questions first: click an answer, type your own, or press <b>Just build it</b> to let it use its defaults. Ask for one key ("a green key that turns red when on, CC 23 on channel 2") or a whole setup for a device ("my HX Stomp: scroll presets, engage each one, show the names"). The result loads straight into the editor, so you can click the keys and watch the screen. <b>Ask for a change</b> carries on the same conversation, <b>Discard</b> puts back what you had, and Undo steps through each change.</p><ul><li><b>Device MIDI:</b> if you name a device, the reply starts with a table of the MIDI messages it used and where each came from. Anything from the model's memory is listed in yellow to check before a gig. For the best results open <b>Paste the device's MIDI chart</b> and paste the chart from the manual.</li><li><b>Web search:</b> in <b>LLM settings</b> you can let it look the chart up online. Claude and OpenRouter charge a little per search, and Gemini only searches on a paid key. If the provider refuses, it answers from memory and says so.</li><li><b>No key needed:</b> <b>Copy the prompt instead</b> puts the whole request on the clipboard for any chatbot, and <b>Paste a reply</b> brings its answer back.</li><li>Your key stays in this browser and goes only to the provider you pick. The pedal can't read names from a device, so preset names on screen are whatever is typed into the config.</li></ul>
-<h2 id="m9">Saving &amp; backups</h2><p><b>Import pages</b> merges pages from another config file into this one: tick the pages you want and where they go (you can also drop a file onto the editor). <b>Export</b> in the page bar saves just the current page as a small file you can import elsewhere. The size chip at the top shows how big the config is; above about 12 KB the pedal may run out of memory.</p><p><b>Save config</b> saves a file on your computer; do this before big changes. With dev mode off, live edits are also saved on the pedal. With the USB drive mounted the pedal cannot save, so changes last until power-off. Holding switch 1 while plugging in always shows the drive.</p>
+<h2 id="m12">Devices</h2><p><b>Devices</b> at the top keeps a checked list of the MIDI messages each of your devices understands. The Peavey AT-200 and Boss Waza-Air come built in. Every message list in the key editor gets a <b>+ from device</b> menu, so you can pick "Snapshot: Snap 2" instead of looking up a CC number.</p><ul><li><b>Adding a device:</b> type its name and press <b>Look up with LLM</b> (pasting the MIDI chart from its manual gives the best results), or use <b>Add by hand</b>, <b>Paste a reply</b> or <b>Import a file</b>. You check the result before it is saved. Rows in yellow came from the model's memory, so change their source once you have tried them.</li><li><b>With the LLM helper:</b> pick the device in the dialog and it builds with those exact numbers. After it builds, every message on the changed keys is checked against the profile, and anything not in it, from memory, or on the wrong channel is listed.</li><li>Values are written as Name=number pairs separated by commas (Off=0, On=127), or a range (0-127). SysEx values are Name=hex bytes.</li></ul>
+<h2 id="m9">Saving &amp; backups</h2><p><b>Import pages</b> merges pages from another config file into this one: tick the pages you want and where they go (you can also drop a file onto the editor). <b>Export</b> in the page bar saves just the current page as a small file you can import elsewhere. The size chip at the top shows how big the config is; above about 12 KB the pedal may run out of memory.</p><p><b>Configs:</b> the config bar above the page bar keeps several configs in this browser, for example one per device or rig. Pick one from the menu to open it, type in the name box to rename it, and use <b>+ New</b>, <b>Duplicate</b>, <b>Copy</b> and <b>Paste</b> (to move a config between browsers or share it), <b>Load</b> to add a file, <b>Save</b> to download the open config, and <b>Delete</b>. Every edit is kept automatically. Opening a config does not send it: press <b>Send</b>, and the menu marks the one on the pedal. Browser storage can be cleared, so use <b>Back up all</b> now and then; it saves every config and device in one file that Load brings back.</p><p><b>Save</b> saves the open config as a file on your computer; do this before big changes. With dev mode off, live edits are also saved on the pedal. With the USB drive mounted the pedal cannot save, so changes last until power-off. Holding switch 1 while plugging in always shows the drive.</p>
 <h2 id="m10">Troubleshooting</h2><ul><li><b>Connect fails:</b> close other serial consoles, and check the pedal runs code.py v0.3 or newer.</li><li><b>Device ignores the pedal:</b> check MIDI channel match, and USB versus 5-pin DIN cabling.</li><li><b>Preset off by one:</b> MIDI counts from 0, many devices from 1.</li><li><b>Counter out of sync:</b> the pedal can't read the device's value; reset the key or re-send.</li><li><b>Stray expression values:</b> disable unplugged inputs.</li></ul></div></div></div>
 <div id="basics"><div><h3>MIDI basics (click outside to close)</h3>
 <h4>What is MIDI?</h4><p>MIDI doesn't carry sound. It carries short commands, like a remote control: "switch to preset 5", "turn knob 11 to 64". Your pedal sends these to your amp, modeler, headphones, synth, or any other MIDI gear.</p>
@@ -192,7 +197,7 @@ const gp=(o,p)=>p===''?o:p.split('.').reduce((a,k)=>a?.[k],o);
 function sp(o,p,v){const k=p.split('.'),l=k.pop();let c=o;for(const x of k){if(c[x]==null||typeof c[x]!=='object')c[x]={};c=c[x]}c[l]=v}
 const nb=i=>({color:'white',label:'KEY '+(i+1),mode:'keytimes',short:[{color:'white',up:[{type:'cc',cc:20+i,value:127}]}],long:[]});
 const np=()=>({buttons:[...Array(10)].map((_,i)=>i===4?{color:'white',label:'PG UP',type:'page_inc'}:i===9?{color:'white',label:'PG DN',type:'page_dec'}:nb(i)),encoder:{cc:11,enabled:false,initial:64,label:'ENC',max:127,min:0,push:{enabled:false,label:'PUSH',mode:'momentary',cc:14},steps:null},expression:{exp1:{cc:12,enabled:false,label:'EXP1',max:127,min:0,polarity:'normal',threshold:2},exp2:{cc:13,enabled:false,label:'EXP2',max:127,min:0,polarity:'normal',threshold:2}}});
-cfg={active_page:0,dev_mode:false,device:'std10',display:{button_text_size:'medium',expression_text_size:'medium',status_text_size:'medium'},long_press_threshold_ms:700,pages:[np()],usb_drive_name:'MIDICAPTAIN'};
+const newCfg=()=>({active_page:0,dev_mode:false,device:'std10',display:{button_text_size:'medium',expression_text_size:'medium',status_text_size:'medium'},long_press_threshold_ms:700,pages:[np()],usb_drive_name:'MIDICAPTAIN'});cfg=newCfg();
 const toast=t=>{const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(e.t);e.t=setTimeout(()=>e.style.display='none',3500)};
 const inp=(p,v,t='text',w='')=>`<input data-p="${p}" data-t="${t}" type="${t==='number'?'number':'text'}" value="${esc(v)}" ${w?`style="width:${w}"`:''}>`;
 const chk=(p,v)=>`<input type="checkbox" data-p="${p}" data-t="bool" ${v?'checked':''}>`;
@@ -233,7 +238,7 @@ const KH={'Momentary':'Sends one value while held and another on release (like a
 let advOpen=false;document.addEventListener('toggle',e=>{if(e.target.id==='adv')advOpen=e.target.open},true);
 const hexBytes=t=>(String(t||'').match(/[0-9a-f]{1,2}/gi)||[]).map(x=>parseInt(x,16));
 const isPage=b=>(b.type||'').startsWith('page');
-function msgs(path,list){let h='';(list||[]).forEach((m,i)=>{const q=`${path}.${i}`;h+=`<div class="m">${sel_(q+'.type',m.type,Object.keys(MF),'msgtype')}${(MF[m.type]||[]).map(f=>f==='data'?`${f}${inp(q+'.data',m.data,'hex','230px')}`:f==='keys'?`keys${inp(q+'.keys',m.keys,'text','90px')}`:HS[f]?`${f}${sel_(q+'.'+f,m[f],HS[f])}`:`${f}${inp(q+'.'+f,m[f],'number')}`).join('')}${['sysex','press'].includes(m.type)?'':`ch${inp(q+'.channel',m.channel,'number','44px')}`}<button class="x" type="button" title="Send this message now" data-act="testMsg" data-p="${q}" style="color:var(--ac)">&#9654;</button><button class="x" data-act="delMsg" data-p="${q}">✕</button></div>`});return h+`<button data-act="addMsg" data-p="${path}">+ message</button>`}
+function msgs(path,list){let h='';(list||[]).forEach((m,i)=>{const q=`${path}.${i}`;h+=`<div class="m">${sel_(q+'.type',m.type,Object.keys(MF),'msgtype')}${(MF[m.type]||[]).map(f=>f==='data'?`${f}${inp(q+'.data',m.data,'hex','230px')}`:f==='keys'?`keys${inp(q+'.keys',m.keys,'text','90px')}`:HS[f]?`${f}${sel_(q+'.'+f,m[f],HS[f])}`:`${f}${inp(q+'.'+f,m[f],'number')}`).join('')}${['sysex','press'].includes(m.type)?'':`ch${inp(q+'.channel',m.channel,'number','44px')}`}<button class="x" type="button" title="Send this message now" data-act="testMsg" data-p="${q}" style="color:var(--ac)">&#9654;</button><button class="x" data-act="delMsg" data-p="${q}">✕</button></div>`});return h+`<button data-act="addMsg" data-p="${path}">+ message</button>${devPick(path)}`}
 function states(P,w,b){const list=b[w]||[];let h=`<h4>${w==='short'?'Short press (each tap steps to the next state)':'Long press'}</h4>`;
 list.forEach((s,i)=>{const q=`${P}.${w}.${i}`;h+=`<div class="card"><div class="row"><label>#${i+1}</label>${inp(q+'.label',s.label,'text')}<button class="x" data-act="delState" data-p="${q}">✕</button></div><div class="row" style="margin-top:4px"><label style="min-width:0">Pressed color</label>${colSel(q+'.color',s.color)}<label style="margin-left:12px" title="After this state fires, should the key fall back to its dim idle glow? Untick to keep it fully bright (for example a toggle that is ON, or the active key in a Radio group).">dim after${chk(q+'.dim',s.dim!==false)}</label></div><div class="hint">On press</div>${msgs(q+'.down',s.down)}<div class="hint">On release</div>${msgs(q+'.up',s.up)}</div>`});
 return h+`<button data-act="addState" data-p="${P}.${w}">+ state</button>`}
@@ -264,7 +269,7 @@ const op=L.lit?1:(idle<=0?.08:Math.max(.18,idle/100));return`<div class="led" ti
 function mid(){const p=cfg.pages[pg];
 const grid=p.buttons.map((b,i)=>`<div class="key ${i===sel?'on':''}" data-act="key" data-i="${i}" draggable="true"><div class="kb"><button type="button" class="ic" data-act="copyKey" data-i="${i}"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button><button type="button" class="ic" data-act="pasteKey" data-i="${i}" ${clip?'':'disabled'}><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg></button></div>${ledHtml(b,i)}<b>${esc(b.label)}</b><small>${isPage(b)?b.type:(b.short||[]).length+' short / '+(b.long||[]).length+' long'}</small></div>`).join('');
 const e=p.encoder,x=p.expression;
-return`<div class="top"><div style="min-width:0">${pagebar()}<div class="grid">${grid}</div><div class="hint">Click a key to edit and simulate a tap. Shift-click simulates a long press. The key's LED bar previews the pedal: dim until a state with Dim unticked fires, then it shows that state's color; Radio keys switch each other off.</div>
+return`${cfgbar()}<div class="top"><div style="min-width:0">${pagebar()}<div class="grid">${grid}</div><div class="hint">Click a key to edit and simulate a tap. Shift-click simulates a long press. The key's LED bar previews the pedal: dim until a state with Dim unticked fires, then it shows that state's color; Radio keys switch each other off.</div>
 <details id="exd" ${exOpen?'open':''}><summary>Expression &amp; encoder<span>${exsum(p)}</span></summary><div class="ex">${exr(`pages.${pg}.expression.exp1`,x.exp1,'EXP1')}${exr(`pages.${pg}.expression.exp2`,x.exp2,'EXP2')}<div><h3>Encoder</h3><div class="m">on${chk(`pages.${pg}.encoder.enabled`,e.enabled)}does${sel_(`pages.${pg}.encoder.action`,e.action||'cc',['cc','page'])}cc${inp(`pages.${pg}.encoder.cc`,e.cc,'number')}init${inp(`pages.${pg}.encoder.initial`,e.initial,'number')}reverse${chk(`pages.${pg}.encoder.reverse`,e.reverse)}</div></div></div></details></div>
 <div><h3>Screen preview</h3><div id="scr">${screen()}</div><div class="hint">Pop-ups appear here when you simulate a press.</div></div></div>`}
 const DROP0={mode:'keytimes'};
@@ -330,6 +335,7 @@ sp(cfg,p,v);render()});
 document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el)return;const a=el.dataset.act,p=el.dataset.p,i=+el.dataset.i;e.stopPropagation();
 if(a==='testMsg'){testMsg(gp(cfg,p));return}
 if(a==='llmKey'){llmCreate('key');return}
+if(a.startsWith('cfg')){cfgAct(a);return}
 if(a==='key'){sel=i;press(i,e.shiftKey);sim.flash=i+':'+pg;clearTimeout(sim.ft);sim.ft=setTimeout(()=>{sim.flash=null;$('#mid')&&render()},260)}
 else if(a==='copyKey')doCopy(i)
 else if(a==='expPage')expPage()
@@ -343,10 +349,8 @@ else if(a==='addState'){const l=gp(cfg,p)||(sp(cfg,p,[]),gp(cfg,p));l.push({colo
 else if(a==='addMsg'){const l=gp(cfg,p)||(sp(cfg,p,[]),gp(cfg,p));l.push({...MD.cc})}
 else if(a==='delMsg'||a==='delState'){const k=p.split('.'),ix=k.pop();gp(cfg,k.join('.')).splice(+ix,1)}
 render()});
-$('#bOpen').onclick=()=>$('#f').click();
-$('#f').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{load(JSON.parse(await f.text()));toast('Loaded '+f.name)}catch(x){toast('Invalid JSON')}};
+$('#f').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;libTakeText(await f.text(),f.name.replace(/\.json$/i,''))};
 function load(j){if(!Array.isArray(j.pages))throw 0;delete j.battery_pin;delete j.battery_ratio;hist=[];redo=[];cfg=j;pg=0;sel=0;sim={pc:0,cc:{},st:{},rad:{}};render()}
-$('#bSave').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(cfg,null,2)],{type:'application/json'}));a.download='config.json';a.click()};
 $('#bDev').onclick=async()=>{try{dirH=await showDirectoryPicker({mode:'readwrite'});try{const fh=await dirH.getFileHandle('config.json');load(JSON.parse(await(await fh.getFile()).text()));toast('Loaded config.json from device')}catch{toast('Folder opened, no config.json yet (Save to device will create it)')}render()}catch(x){toast(x.name==='AbortError'?'Cancelled':'Needs Chrome or Edge: '+x.message)}};
 $('#bDevSave').onclick=async()=>{if(!dirH)return toast('Open the device folder first (hold switch 1 while plugging in)');try{const fh=await dirH.getFileHandle('config.json',{create:true}),w=await fh.createWritable();await w.write(JSON.stringify(cfg,null,2));await w.close();toast('Saved. Eject the drive, then power-cycle the pedal.')}catch(x){toast('Save failed: '+x.message)}};
 
@@ -354,7 +358,7 @@ $('#bDevSave').onclick=async()=>{if(!dirH)return toast('Open the device folder f
 const TIPS={
 '#bImp':'Bring pages from another config file into this one, or drop a file onto the editor.',
 '#bLlm':'Build keys with an LLM: describe what you want, or name your gear. Works with your own API key, or by copying the prompt into any chatbot.',
-'#bOpen':'Load a saved config .json from your computer.','#bSave':'Download the current config as a .json file (backup).',
+
 '#bDev':'Old way: pick the pedal USB drive folder (hold switch 1 while plugging in).','#bDevSave':'Old way: write config.json to the folder chosen above, then eject and reboot.',
 '#bConn':'Link the editor to the pedal over USB (Chrome/Edge). Close any other serial console first.','#bPush':'Send the current config to the pedal now.','#bPull':'Receive the pedal\'s current config and replace what you see here.',
 '#lLive':'When on, every edit is sent to the pedal about half a second later. No ejecting or rebooting.','#bSet':'Settings: dev mode and restart pedal.','#bTheme':'Theme: click to cycle Auto (follows your system), Light, Dark.','#bManual':'Open the full user guide. It has a pop-out button for side-by-side use.','#devm':'Show the pedal as a USB drive at every boot.','#chgm':'Charge NiMH batteries from USB/DC power. Off by default. Never use with alkaline batteries.','#bdm':'Show the battery voltage between the page number and PC number at the top of the pedal screen (on by default; a + means charging is on).','#bLogCopy':'Copy the connection log to paste for troubleshooting.','#bInfo':'Ask the pedal for its status and write it in the log.','#bReboot':'Restart the pedal now (needed for dev mode / screen speed changes).','#bBasics':'Quick MIDI basics for beginners.','#bUndo':'Undo the last edit (Ctrl+Z).','#bRedo':'Redo (Ctrl+Y or Ctrl+Shift+Z).','#chip':'Connection and sync status.','#pgSel':'Choose which page of 10 keys to edit.','#lTip':'Turn these hover hints on or off.',
@@ -435,10 +439,10 @@ catch(x){port=null;setDot();toast(x.name==='NotFoundError'?'Cancelled':'Connect 
 async function push(){if(!port)return toast('Connect the pedal first');if(pushing){pend=true;return}pushing=true;setChip('busy','Sending\u2026');
 try{const t=JSON.stringify(compact(cfg)).replace(/[\u007f-\uffff]/g,c=>'\\u'+c.charCodeAt(0).toString(16).padStart(4,'0'));q=[];const n=Math.ceil(t.length/48);lg('push start: '+t.length+' bytes, '+n+' chunks');await send('@BEGIN '+t.length);await expect('@OK','waiting for BEGIN ack');
 for(let i=0,c=1;i<t.length;i+=48,c++){await send('@D'+t.slice(i,i+48));await expect('@OK','chunk '+c+'/'+n)}
-await send('@END');lg('> @END (sent '+n+' chunks)');const r=await expect('@APPLIED','pedal applying/saving config',20000);lg('push done: '+r);noteFree(r);const sv=/saved=1/.test(r);setChip('ok',sv?'Synced':'Live, unsaved',sv?'':'Drive is mounted, so the pedal could not save. Boot without holding switch 1.');toast(sv?'Sent and saved on pedal':'Applied live, but the pedal could not save it (see the log). Usually the USB drive is showing: restart the pedal without holding key 1, with Dev mode off')}
+await send('@END');lg('> @END (sent '+n+' chunks)');const r=await expect('@APPLIED','pedal applying/saving config',20000);lg('push done: '+r);noteFree(r);if(LIB){LIB.sent=LIB.active;libWrite();libLabels()}const sv=/saved=1/.test(r);setChip('ok',sv?'Synced':'Live, unsaved',sv?'':'Drive is mounted, so the pedal could not save. Boot without holding switch 1.');toast(sv?'Sent and saved on pedal':'Applied live, but the pedal could not save it (see the log). Usually the USB drive is showing: restart the pedal without holding key 1, with Dev mode off')}
 catch(x){setChip('err','Error',x.message);lg('PUSH FAILED: '+x.message);toast('Send failed: '+x.message);try{q=[];await send('@PING');await expect('@PONG','ping after failure',2500);lg('pedal still answers ping: it is alive, so a step was slow or a message was lost')}catch(e2){lg('pedal does NOT answer ping: firmware may be stalled or crashed (check pedal screen / console)')}}pushing=false;if(pend){pend=false;push()}}
 $('#bPush').onclick=push;
-const receive=async()=>{if(!port)return toast('Connect the pedal first');try{q=[];await send('@GET');await expect('@CBEGIN');let t='';for(;;){const l=await waitLine();if(l==='@CEND')break;if(l.startsWith('@C'))t+=l.slice(2)}load(JSON.parse(t));setChip('ok','Synced');toast('Received config from pedal')}catch(x){toast('Receive failed: '+x.message)}};
+const receive=async()=>{if(!port)return toast('Connect the pedal first');try{q=[];await send('@GET');await expect('@CBEGIN');let t='';for(;;){const l=await waitLine();if(l==='@CEND')break;if(l.startsWith('@C'))t+=l.slice(2)}const j=JSON.parse(t);if(!Array.isArray(j.pages))throw new Error('the pedal sent no pages');snap();cfg=j;pg=0;sel=0;sim={pc:0,cc:{},st:{},rad:{}};if(LIB)LIB.sent=LIB.active;render();setChip('ok','Synced');toast('Received the pedal\'s config into "'+(libCur()||{}).name+'". Undo puts back what you had.')}catch(x){toast('Receive failed: '+x.message)}};
 $('#bPull').onclick=receive;
 function schedulePush(){if(!port)return;if(!$('#live').checked){setChip('busy','Not sent');return}setChip('busy','Pending\u2026');clearTimeout(pt2);pt2=setTimeout(push,500)}
 document.addEventListener('change',e=>{if(e.target.dataset&&e.target.dataset.p)schedulePush()});
@@ -458,7 +462,7 @@ const _r=render;render=function(){_r();applyTips();$('#bUndo').disabled=!hist.le
 function expPage(){const q=cfg.pages[pg],nm=(q.name||'page-'+(pg+1)).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'page';
 const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({pages:[q]},null,2)],{type:'application/json'}));a.download=nm+'.json';a.click();toast('Exported this page as '+nm+'.json')}
 let imp=null;
-function openImport(j,name){if(!j||!Array.isArray(j.pages)||!j.pages.length)return toast('That file has no pages');imp=j;
+function openImport(j,name){if(!j||!Array.isArray(j.pages)||!j.pages.length)return toast('That file has no pages');imp=j;$('#impF').dataset.name=String(name).replace(/\.json$/i,'');
 $('#impF').textContent=name+' has '+j.pages.length+' page'+(j.pages.length>1?'s':'')+'. Tick the ones to bring in.';
 $('#impL').innerHTML=j.pages.map((q,i)=>`<label class="il"><input type="checkbox" data-ip="${i}" checked><span><b>${esc(q.name||'Page '+(i+1))}</b><small>${(q.buttons||[]).map(b=>esc(b.label||'-')).join(' · ')}</small></span></label>`).join('');
 $('#impm').classList.add('on')}
@@ -474,7 +478,7 @@ $('#exL').onclick=e=>{const b=e.target.closest('[data-ex]');if(!b)return;const x
 $('#exX').onclick=()=>$('#exm').classList.remove('on');
 $('#fImp').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{openImport(JSON.parse(await f.text()),f.name)}catch(x){toast('Invalid JSON')}};
 $('#impX').onclick=()=>$('#impm').classList.remove('on');$('#impGo').onclick=doImport;
-$('#impR').onclick=()=>{if(!confirm('Replace the whole current config with this file? (Undo is cleared.)'))return;$('#impm').classList.remove('on');load(JSON.parse(JSON.stringify(imp)));toast('Opened as the new config')};
+$('#impR').onclick=()=>{$('#impm').classList.remove('on');libAdd(String($('#impF').dataset.name||'Imported'),JSON.parse(JSON.stringify(imp)))};
 let dzn=0;const hasF=e=>e.dataTransfer&&[...e.dataTransfer.types].includes('Files');
 document.addEventListener('dragenter',e=>{if(hasF(e)){dzn++;document.body.classList.add('dz')}});
 document.addEventListener('dragleave',e=>{if(hasF(e)&&--dzn<=0){dzn=0;document.body.classList.remove('dz')}});
@@ -556,11 +560,12 @@ function llmScope(sc){sc=sc||{kind:'all'};const P=(sc.pg??0)+1,pgo=cfg.pages[sc.
  if(sc.kind==='key')return'SCOPE: only key '+K+' on page '+P+' (now labelled "'+(kb.label||'')+'"). Reply with one page entry, {"page":'+P+',"keys":{"'+K+'":{KEY}}}, and change nothing else. If doing this well needs other keys too (an up and down pair, a radio group), build this key and say in part 1 what to set on the others.';
  if(sc.kind==='page')return'SCOPE: only page '+P+(pgo.name?' ("'+pgo.name+'")':'')+'. Change any of its keys, its encoder and its expression inputs, but no other page, and add no pages.';
  return'SCOPE: the whole setup. Change any page, add pages, or replace them all if I ask for a whole new setup.'}
-function llmPrompt(wanted,chart,sc){const ch=+cfg.midi_channel||1;
+function llmPrompt(wanted,chart,sc,dev){const ch=+cfg.midi_channel||1;
  const msgLines=Object.keys(MF).map(t=>'- '+t+(MF[t].length?': '+MF[t].join(', '):'')+' '+({cc:'(control change: cc 0-127, value 0-127)',pc:'(program change: program 0-127. Preset 1 on most gear is program 0)',note:'(note on while held, note off on release if you put a velocity 0 copy in "up". note 0-127 where 60 is middle C, called C4. velocity 1-127)',pc_inc:'(next preset, wraps 127 to 0)',pc_dec:'(previous preset)',cc_inc:'(steps the key\'s counter up, see Counters)',cc_dec:'(steps the key\'s counter down)',sysex:'(hex bytes as a string, "F0 41 ... F7")',press:'(macro: taps other keys. keys is "2" or "3,4", press is "short" or "long", page is optional, 1-based, blank means this page)'}[t]||'')).join('\n');
  return['You are setting up a PaintAudio MIDI Captain 10 STD foot controller running CaptainsMate firmware.','',
  'WHAT I WANT: '+(wanted||'<describe it here, for example "a green button that toggles red when engaged, sending CC 23 on channel 2", or "basic setup for a Line 6 HX Stomp: scroll presets, engage each one, show the names">'),'',
  llmScope(sc),'',
+ ...(dev?devPromptBlock(dev):[]),
  ...(chart&&chart.trim()?['THE DEVICE\'S MIDI CHART, pasted by me. Treat this as the truth and prefer it over anything you remember:',chart.trim().slice(0,20000),'']:[]),
  'Reply in one of two ways: ask me questions first, or build it.','',
  'ASKING FIRST',
@@ -709,7 +714,7 @@ const llmBox=()=>$('#llmbox'),llmOpen=()=>$('#llmm').classList.add('on'),llmClos
 let llmStop=null;
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#llmm').classList.contains('on'))llmClose()});
 $('#llmm').addEventListener('mousedown',e=>{if(e.target.id==='llmm')llmClose()});
-function llmSettings(then){const c=llmCfg()||{provider:'gemini',key:'',model:LLM_PROVIDERS.gemini.model,baseUrl:'',search:true},box=llmBox();box.textContent='';
+function llmSettings(then){llmBox().classList.remove('wide');const c=llmCfg()||{provider:'gemini',key:'',model:LLM_PROVIDERS.gemini.model,baseUrl:'',search:true},box=llmBox();box.textContent='';
  const sel=hh('select',{'aria-label':'Provider'},Object.keys(LLM_PROVIDERS).map(id=>hh('option',{value:id,selected:id===c.provider},LLM_PROVIDERS[id].name)));
  const key=hh('input',{type:'password',value:c.key||'',placeholder:'Paste your API key',autocomplete:'off',spellcheck:'false','aria-label':'API key'});
  const model=hh('input',{type:'text',value:c.model||'',placeholder:'Model name',spellcheck:'false','aria-label':'Model'});
@@ -766,11 +771,11 @@ function llmQuestionForm(qs){const picks=qs.map(q=>q.def&&q.options.includes(q.d
  return{form,answers}}
 
 // The conversation lives here, so closing and reopening the dialog carries on where it left off.
-const llmS={thread:[],base:null,chart:'',chartSent:'',scope:null};
+const llmS={thread:[],base:null,chart:'',chartSent:'',scope:null,dev:'',devSent:null,draft:'',devName:''};
 const SCOPE_TXT={all:'Whole setup',page:'This page',key:'This key'};
 const scopeLabel=sc=>sc.kind==='key'?'Key '+(sc.key+1)+((cfg.pages[sc.pg]?.buttons[sc.key]?.label)?' · '+cfg.pages[sc.pg].buttons[sc.key].label:''):sc.kind==='page'?'Page '+(sc.pg+1)+(cfg.pages[sc.pg]?.name?' · '+cfg.pages[sc.pg].name:''):'Whole setup';
 /** Opens the dialog. A kind ('all', 'page', 'key') sets what it may change, starting from the page and key in view. */
-function llmCreate(kind){if(typeof kind==='string')llmS.scope={kind,pg,key:sel};if(!llmS.scope)llmS.scope={kind:'all',pg,key:sel};
+function llmCreate(kind){llmBox().classList.remove('wide');if(typeof kind==='string')llmS.scope={kind,pg,key:sel};if(!llmS.scope)llmS.scope={kind:'all',pg,key:sel};
  if(!cfg.pages[llmS.scope.pg])llmS.scope={kind:'all',pg,key:sel};
  const sc=llmS.scope,c=llmCfg(),keyed=!!(c&&(c.key||c.provider==='custom')),box=llmBox();box.textContent='';
  const PH={all:'Give me a green button that toggles red when engaged, sending CC 23 on channel 2. Or: a basic setup for my HX Stomp',page:'Turn this page into a preset bank for my HX Stomp, with tap tempo on the last key',key:'Make this a tap tempo key, with the tuner on a long press'};
@@ -778,6 +783,10 @@ function llmCreate(kind){if(typeof kind==='string')llmS.scope={kind,pg,key:sel};
  const chart=hh('textarea',{class:'llmta',rows:'4','aria-label':'The device\'s MIDI chart',placeholder:'Optional. Paste the device\'s MIDI implementation chart, or the part of the manual that lists its CC and PC numbers. It is used instead of the model\'s memory.'});chart.value=llmS.chart;
  chart.addEventListener('input',()=>llmS.chart=chart.value);
  const chartBox=hh('details',{class:'llmd'},hh('summary',{},'Paste the device\'s MIDI chart'),chart);if(llmS.chart)chartBox.open=true;
+ const dev=devById(llmS.dev);if(!dev)llmS.dev='';
+ const devSel=hh('select',{'aria-label':'Device profile'},hh('option',{value:''},'None (name it in your request if you like)'),devList().map(d=>hh('option',{value:d.id,selected:d.id===llmS.dev},d.name)),hh('option',{value:'__m'},'Manage devices\u2026'));
+ devSel.onchange=()=>{const keep=want.value;if(devSel.value==='__m'){llmS.draft=keep;return devManager(()=>llmCreate())}llmS.dev=devSel.value;llmCreate();const t=llmBox().querySelector('textarea.llmta');t.value=keep;t.focus()};
+ const devRow=hh('div',{class:'row llmdev',title:'With a device picked, it uses the messages in its profile instead of guessing numbers'},hh('label',{},'Device'),devSel);
  const scopeRow=hh('div',{class:'llmscope',role:'group','aria-label':'What it may change'},['all','page','key'].map(k=>hh('button',{type:'button',class:sc.kind===k?'on':null,title:k==='all'?'It can change any page and add new ones':k==='page'?'It only changes page '+(pg+1):'It only changes key '+(sel+1)+' on page '+(pg+1),
   onclick:()=>{const keep=want.value;llmS.scope={kind:k,pg,key:sel};llmCreate();const t=llmBox().querySelector('textarea.llmta');t.value=keep;t.focus()}},k===sc.kind?scopeLabel(sc):SCOPE_TXT[k])));
  const status=hh('p',{class:'hint llmst'}),reason=hh('div',{class:'llmr'}),buttons=hh('div',{class:'r'});
@@ -790,7 +799,7 @@ function llmCreate(kind){if(typeof kind==='string')llmS.scope={kind,pg,key:sel};
  function showResult(text,report,extra){reason.textContent='';const words=llmProse(text);if(words)reason.append(llmWords(words));
   const ch=report.touched.map(t=>t.isNew?'added page '+(t.pg+1)+(t.name?' "'+t.name+'"':''):'page '+(t.pg+1)+(t.keys.length?' key'+(t.keys.length>1?'s ':' ')+t.keys.map(k=>k+1).join(', '):'')+(t.other?(t.keys.length?' and':'')+' its encoder or expression':'')).join('; ');
   reason.append(hh('p',{class:'llmok'},(report.replace?'Replaced all pages: ':'Changed: ')+ch+'.'));
-  if(report.unverified.length)reason.append(hh('div',{class:'warn'},hh('b',{},'From the model\'s memory, check before a gig:'),hh('ul',{},report.unverified.slice(0,12).map(t=>hh('li',{},t)))));
+  if(report.unverified.length)reason.append(hh('div',{class:'warn'},hh('b',{},'Check these before a gig:'),hh('ul',{},report.unverified.slice(0,12).map(t=>hh('li',{},t)))));
   if(report.skipped.length)reason.append(hh('div',{class:'warn'},hh('b',{},report.skipped.length+' part'+(report.skipped.length>1?'s':'')+' of the reply could not be used:'),hh('ul',{},report.skipped.slice(0,8).map(t=>hh('li',{},t))),'Asking again often fixes it, or say which key to correct.'));
   if(report.notes.length)reason.append(hh('details',{class:'llmd'},hh('summary',{},report.notes.length+' value'+(report.notes.length>1?'s were':' was')+' adjusted to fit the pedal'),hh('ul',{},report.notes.slice(0,20).map(t=>hh('li',{},t)))));
   if(extra&&extra.sources&&extra.sources.length)reason.append(hh('details',{class:'llmd'},hh('summary',{},'Pages it read ('+extra.sources.length+')'),hh('ul',{},extra.sources.slice(0,10).map(s=>hh('li',{},hh('a',{href:s.url,target:'_blank',rel:'noopener'},s.title||s.url))))));
@@ -812,9 +821,10 @@ function llmCreate(kind){if(typeof kind==='string')llmS.scope={kind,pg,key:sel};
    const message=llmS.thread.length?(override||wanted+'\n\nThis is a change to what you just built, so keep what works and alter only what I asked for.')
      +(override&&wanted?'\n\n'+wanted:'')
      +(chartNew?'\n\nHere is the device\'s MIDI chart. Treat it as the truth:\n'+llmS.chart.trim().slice(0,20000):'')
+     +(dev&&llmS.devSent!==JSON.stringify(dev)?'\n\n'+devPromptBlock(dev).join('\n'):'')
      +'\n\n'+llmScope(sc)+'\n\nMy config as it stands now (I may have edited it by hand, page numbers count from 1):\n'+llmConfigNow()
      +'\n\nNow build it: reply in two parts, the explanation, then the changes as JSON in a fenced code block in the captainsmate-setup format.'+(override?' Do not ask any more questions.':' Ask first only if the rules say you must.')
-    :llmPrompt(wanted,llmS.chart,sc);
+    :llmPrompt(wanted,llmS.chart,sc,dev);
    // the thread only grows once a reply has been used, so a failed try leaves nothing behind
    const turns=[...llmS.thread,{role:'user',text:message}],before=JSON.stringify(cfg);
    const r=await askLlm(c,turns,ctrl.signal);clearTimeout(giveUp);llmStop();
@@ -824,8 +834,8 @@ function llmCreate(kind){if(typeof kind==='string')llmS.scope={kind,pg,key:sel};
     const f=showQuestions(r.text,qs,r);
     row(hh('button',{type:'button',title:'Skip the questions and let it use its own defaults',onclick:()=>go('Use your defaults for everything you asked and build it.')},'Just build it'),
      hh('button',{type:'button',class:'pri',onclick:()=>go(f.answers())},'Answer and build'));return}
-   const report=applySetup(d,sc);
-   llmS.thread=[...turns,{role:'assistant',text:r.text}];if(llmS.chart.trim())llmS.chartSent=llmS.chart.trim();if(llmS.base==null)llmS.base=before;
+   const report=applySetup(d,sc);devCheck(report,dev);
+   llmS.thread=[...turns,{role:'assistant',text:r.text}];if(llmS.chart.trim())llmS.chartSent=llmS.chart.trim();llmS.devSent=dev?JSON.stringify(dev):null;if(llmS.base==null)llmS.base=before;
    showResult(r.text,report,r);
    want.value='';want.placeholder='Now ask for a change, for example: make key 3 blue, or add a tap tempo key';want.focus();
    afterButtons()}
@@ -834,10 +844,10 @@ function llmCreate(kind){if(typeof kind==='string')llmS.scope={kind,pg,key:sel};
     :timedOut?'No reply after '+secs+' seconds, so the request was dropped. The model may be overloaded. Try again, or pick another one in LLM settings.':'Cancelled.';
    row(hh('button',{type:'button',onclick:()=>llmSettings(llmCreate)},'LLM settings'),hh('button',{type:'button',onclick:llmClose},'Close'),hh('button',{type:'button',class:'pri',onclick:()=>go(override)},'Try again'))}}
  function discard(){if(llmS.base==null)return;snap();cfg=JSON.parse(llmS.base);pg=Math.min(pg,cfg.pages.length-1);sel=0;sim={pc:0,cc:{},st:{},rad:{}};render();llmS.base=null;llmS.thread=[];schedulePush();toast('Put back the config you had before asking.');llmCreate()}
- function done(){llmS.base=null;llmClose();toast('Kept. Undo still steps back through each change, and Save config keeps a copy on your computer.')}
+ function done(){llmS.base=null;llmClose();toast('Kept. Undo still steps back through each change, and Save in the config bar keeps a copy on your computer.')}
  function startFresh(){llmS.thread=[];llmS.base=null;llmS.chartSent='';llmCreate()}
  const first=()=>[hh('button',{type:'button',onclick:llmClose},'Cancel'),keyed?hh('button',{type:'button',class:'pri',onclick:()=>go()},llmS.thread.length?'Ask for a change':sc.kind==='key'?'Set up this key':'Build keys'):hh('button',{type:'button',class:'pri',onclick:()=>llmSettings(llmCreate)},'Add a key')];
- async function copyPrompt(){const text=llmPrompt(want.value.trim(),llmS.chart,sc);
+ async function copyPrompt(){const text=llmPrompt(want.value.trim(),llmS.chart,sc,dev);
   try{await navigator.clipboard.writeText(text);status.textContent='Prompt copied ('+Math.round(text.length/1024)+' KB). Paste it into any chat LLM'+(want.value.trim()?'':', fill in what you want at the top')+', answer any questions it asks there, then bring its final reply back with Paste a reply.'}
   catch(e){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download='CaptainsMate LLM prompt.txt';a.click();status.textContent='This browser would not let the page copy, so the prompt was downloaded as a text file instead.'}}
  function pasteView(){const area=hh('textarea',{class:'llmta',rows:'10','aria-label':'An LLM reply',placeholder:'Paste the whole reply here, explanation and all. The keys are pulled out of it.'});
@@ -847,7 +857,7 @@ function llmCreate(kind){if(typeof kind==='string')llmS.scope={kind,pg,key:sel};
    // a chatbot asked questions: answer them here and copy the answers back to it
    if(qs){area.hidden=true;const f=showQuestions(t,qs);status.textContent='It has a few questions. Pick answers, copy them, paste them into the chatbot, then paste its next reply here.';
     row(hh('button',{type:'button',onclick:pasteView},'Back'),hh('button',{type:'button',class:'pri',onclick:async()=>{try{await navigator.clipboard.writeText(f.answers());toast('Answers copied. Paste them into the chatbot.')}catch(e){toast('This browser would not let the page copy.')}pasteView()}},'Copy my answers'));return}
-   try{const before=JSON.stringify(cfg);const report=applySetup(d,sc);if(llmS.base==null)llmS.base=before;area.hidden=true;showResult(t,report);
+   try{const before=JSON.stringify(cfg);const report=applySetup(d,sc);devCheck(report,dev);if(llmS.base==null)llmS.base=before;area.hidden=true;showResult(t,report);
     row(hh('button',{type:'button',onclick:discard},'Discard'),hh('button',{type:'button',onclick:pasteView},'Paste another'),hh('button',{type:'button',class:'pri',onclick:done},'Done'))}
    catch(e){status.textContent='Could not use that reply: '+e.message+'.'}}},'Load these keys'));area.focus()}
  const other=hh('div',{class:'llmalt'},
@@ -857,14 +867,245 @@ function llmCreate(kind){if(typeof kind==='string')llmS.scope={kind,pg,key:sel};
  const intro={all:'Describe what the keys should do, or name the gear you want to control and what you need from it. If it needs to know more it asks first. The result loads into the editor so you can try it, and Discard puts back what you had.',
   page:'Describe what this page should do. Only this page changes. If it needs to know more it asks first, and Discard puts back what you had.',
   key:'Describe what this one key should do. Nothing else on the pedal changes, and Discard puts back what you had.'}[sc.kind];
- box.append(hh('h2',{},sc.kind==='key'?'Set up key '+(sc.key+1)+' with an LLM':'Build keys with an LLM'),hh('p',{},intro),scopeRow,want,chartBox,status,reason,buttons,other);
+ box.append(hh('h2',{},sc.kind==='key'?'Set up key '+(sc.key+1)+' with an LLM':'Build keys with an LLM'),hh('p',{},intro),scopeRow,devRow,want,...(dev?[]:[chartBox]),status,reason,buttons,other);
  if(!keyed)status.textContent='No API key yet, so this cannot build the keys for you. Add one, or copy the prompt and bring a reply back, which needs no key.';
  else if(llmS.thread.length)status.textContent='Carrying on from the last conversation. Start fresh to begin a new one.';
  row(...first());
  if(llmS.thread.length)row(hh('button',{type:'button',onclick:startFresh},'Start fresh'),...first());
+ if(llmS.draft){want.value=llmS.draft;llmS.draft=''}
  llmOpen();want.focus();
  want.addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&keyed&&!want.disabled){e.preventDefault();go()}})}
 $('#bLlm').onclick=()=>llmCreate('all');
+
+// ---- Config library: several configs kept in this browser, for example one per device or rig
+var LIB=null;let libT=null,libLast='',cfgClip=null;const LIB_KEY='captainsmate.library';
+const libId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+function libCur(){return LIB&&LIB.items.find(x=>x.id===LIB.active)}
+function libWrite(){try{localStorage.setItem(LIB_KEY,JSON.stringify(LIB));return true}catch(e){toast('This browser would not save your configs ('+e.name+'). Use Save to keep a file.');return false}}
+/** Every render lands here, and the config is written to the library half a second after the last change. */
+function libTouch(){if(!LIB)return;clearTimeout(libT);libT=setTimeout(libFlush,400)}
+function libFlush(){clearTimeout(libT);const c=libCur();if(!c)return;const t=JSON.stringify(cfg);if(t===libLast)return;c.cfg=JSON.parse(t);c.at=Date.now();libLast=t;libWrite()}
+addEventListener('pagehide',libFlush);
+function libUnique(n,self){n=String(n||'').trim().slice(0,40)||'Config';const have=new Set(LIB.items.filter(x=>x!==self).map(x=>x.name));if(!have.has(n))return n;let k=2;while(have.has(n+' '+k))k++;return n+' '+k}
+function libLabels(){const s=$('#cfgSel');if(s)[...s.options].forEach(o=>{const x=LIB.items.find(i=>i.id===o.value);if(x)o.textContent=x.name+(x.id===LIB.sent?' · on pedal':'')})}
+function libOpen(id,quiet){libFlush();const c=LIB.items.find(x=>x.id===id);if(!c)return;LIB.active=id;libWrite();load(JSON.parse(JSON.stringify(c.cfg)));libLast=JSON.stringify(cfg);
+ if(typeof llmS!=='undefined'){llmS.thread=[];llmS.base=null}
+ if(port&&LIB.sent!==id)setChip('busy','Not sent');
+ if(!quiet)toast('Opened "'+c.name+'".'+(port&&LIB.sent!==id?' Press Send to put it on the pedal.':''))}
+function libAdd(name,c,quiet){libFlush();const it={id:libId(),name:libUnique(name),cfg:JSON.parse(JSON.stringify(c)),at:Date.now()};LIB.items.push(it);libWrite();libOpen(it.id,true);if(!quiet)toast('Added "'+it.name+'" to your configs.'+(port?' Press Send to put it on the pedal.':''));return it}
+function libInit(){try{LIB=JSON.parse(localStorage.getItem(LIB_KEY)||'null')}catch(e){LIB=null}
+ if(!LIB||!Array.isArray(LIB.items)||!LIB.items.length){LIB={v:1,items:[{id:libId(),name:'My config',cfg:JSON.parse(JSON.stringify(cfg)),at:Date.now()}]};LIB.active=LIB.items[0].id;libWrite()}
+ if(!libCur())LIB.active=LIB.items[0].id;
+ try{load(JSON.parse(JSON.stringify(libCur().cfg)))}catch(e){toast('The saved config "'+libCur().name+'" could not be opened, so a blank one is showing.')}
+ libLast=JSON.stringify(cfg)}
+const slug=n=>String(n||'config').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'config';
+function download(name,obj){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([typeof obj==='string'?obj:JSON.stringify(obj,null,2)],{type:'application/json'}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+/** Takes text from a file or the clipboard: one config, or a backup of several (which may carry devices too). */
+function libTakeText(text,name){let d;try{d=JSON.parse(text)}catch(e){d=typeof extractJson==='function'?extractJson(text):null}
+ if(d&&d.format==='captainsmate-library'&&Array.isArray(d.configs)){let n=0,first=null;libFlush();let same=0;for(const x of d.configs)if(x&&x.config&&Array.isArray(x.config.pages)){if(LIB.items.some(i=>i.name===x.name&&JSON.stringify(i.cfg)===JSON.stringify(x.config))){same++;continue}const it={id:libId(),name:libUnique(x.name),cfg:x.config,at:Date.now()};LIB.items.push(it);first=first||it;n++}
+  const dv=Array.isArray(d.devices)?devImport(d.devices,true):0;libWrite();if(first)libOpen(first.id,true);toast('Added '+n+' config'+(n===1?'':'s')+(dv?' and '+dv+' device'+(dv===1?'':'s'):'')+' from the backup.'+(same?' '+same+' you already had were skipped.':''));return true}
+ if(d&&d.format==='captainsmate-device'){devImport([d]);return true}
+ if(d&&Array.isArray(d.pages)){libAdd(name||'Pasted config',d);return true}
+ toast('That is not a CaptainsMate config.');return false}
+async function cfgAct(a){const c=libCur();if(!c)return;
+ if(a==='cfgNew')libAdd('New config',newCfg());
+ else if(a==='cfgDup')libAdd(c.name+' copy',cfg);
+ else if(a==='cfgCopy'){const t=JSON.stringify(cfg,null,1);cfgClip={name:c.name,cfg:JSON.parse(t)};try{await navigator.clipboard.writeText(t);toast('Copied "'+c.name+'". Paste adds it as a new config, here or in another browser.')}catch(e){toast('Copied "'+c.name+'" inside the editor. Paste adds it as a new config.')}}
+ else if(a==='cfgPaste'){let t='';try{t=await navigator.clipboard.readText()}catch(e){}
+  let d=null;try{d=JSON.parse(t)}catch(e){}
+  if(d&&(Array.isArray(d.pages)||d.format))return libTakeText(t,'Pasted config');
+  if(cfgClip)return libAdd(cfgClip.name+' copy',cfgClip.cfg);
+  const p=prompt('Paste a config here (its JSON text):');if(p&&p.trim())libTakeText(p,'Pasted config')}
+ else if(a==='cfgLoad')$('#f').click();
+ else if(a==='cfgSave'){download(slug(c.name)+'.json',cfg);toast('Saved "'+c.name+'" as '+slug(c.name)+'.json')}
+ else if(a==='cfgAll'){libFlush();download('captainsmate-backup.json',{format:'captainsmate-library',version:1,saved:new Date().toISOString(),configs:LIB.items.map(x=>({name:x.name,config:x.cfg})),devices:devList().map(devForFile)});toast('Saved all '+LIB.items.length+' configs and your devices in one file.')}
+ else if(a==='cfgDel'){if(LIB.items.length<2)return;if(!confirm('Delete "'+c.name+'" from this browser?\n\nSave it as a file first if you might want it back. This cannot be undone.'))return;
+  const i=LIB.items.indexOf(c);LIB.items.splice(i,1);if(LIB.sent===c.id)LIB.sent=null;LIB.active=LIB.items[Math.min(i,LIB.items.length-1)].id;libLast='';libWrite();libOpen(LIB.active,true);toast('Deleted "'+c.name+'".')}}
+function cfgbar(){if(!LIB)return'';const c=libCur(),n=LIB.items.length;
+ return`<div class="pbar cbar"><span class="cbl">Config</span><select id="cfgSel" title="Your configs, kept in this browser. Pick one to open it.">${LIB.items.map(x=>`<option value="${esc(x.id)}" ${x.id===LIB.active?'selected':''}>${esc(x.name)}${x.id===LIB.sent?' · on pedal':''}</option>`).join('')}</select><input id="cfgName" value="${esc(c?c.name:'')}" placeholder="Config name" maxlength="40" aria-label="Config name"><button data-act="cfgNew" title="Start a blank config. The current one stays in the list.">+ New</button><button data-act="cfgDup" title="Make a copy of this config to change">Duplicate</button><button data-act="cfgCopy" title="Copy this config, to paste here or in another browser">Copy</button><button data-act="cfgPaste" title="Add a copied config as a new one">Paste</button><button data-act="cfgLoad" title="Add a config file from your computer">Load</button><button data-act="cfgSave" title="Save this config as a file on your computer">Save</button><button data-act="cfgAll" title="Save every config and device in one backup file. Load brings it all back.">Back up all</button><button data-act="cfgDel" ${n<2?'disabled':''} title="Delete this config from this browser">Delete</button></div>`}
+document.addEventListener('change',e=>{if(e.target.id==='cfgSel')libOpen(e.target.value);
+ else if(e.target.id==='cfgName'){const c=libCur();if(!c)return;c.name=libUnique(e.target.value,c);e.target.value=c.name;libWrite();libLabels()}});
+
+// ---- Device profiles: a checked list of the MIDI messages a device understands
+var DEV=null;const DEV_KEY='captainsmate.devices';
+const SRC={tested:'Tested on my gear',chart:'From the chart',web:'From the web',you:'Entered by me',memory:'From memory, check it'};
+function devList(){return DEV?DEV.items:[]}
+function devById(id){return devList().find(d=>d.id===id)||null}
+function devSave(){try{localStorage.setItem(DEV_KEY,JSON.stringify(DEV))}catch(e){toast('This browser would not save your devices.')}}
+function devInit(){try{DEV=JSON.parse(localStorage.getItem(DEV_KEY)||'null')}catch(e){DEV=null}if(!DEV||!Array.isArray(DEV.items)){DEV={v:1,items:builtinDevices()};devSave()}}
+/** The two devices CaptainsMate already knows, built from the example configs so they never disagree with them. */
+function builtinDevices(){const out=[],ex=t=>(EXAMPLES.find(x=>x.title.includes(t))||{}).cfg;
+ const at=ex('AT-200');if(at){const k=at.pages[0].buttons,names=l=>(k.find(b=>b.label===l)||{}).names||[];
+  out.push({id:'builtin-at200',builtin:true,name:'Peavey AT-200',notes:'From the AT-200 example config. The rest of its CC table is not collected yet.',controls:[
+   {name:'Preset',type:'pc',min:0,max:63,source:'you',tip:'the complete pack holds 64 presets'},
+   {name:'Capo',type:'cc',cc:11,min:52,max:76,source:'you',tip:'64 is no capo, one semitone per step'},
+   {name:'Model',type:'cc',cc:14,values:names('MODEL UP').map((l,i)=>({label:l,value:i})),source:'you'},
+   {name:'Doubler',type:'cc',cc:27,values:names('DOUBL').map((l,i)=>({label:l,value:i})),source:'you'},
+   {name:'Tuning',type:'cc',cc:7,values:names('TUNE').map((l,i)=>({label:l,value:i})),source:'you'},
+   {name:'Expression 1',type:'cc',cc:12,min:0,max:127,source:'you'},{name:'Expression 2',type:'cc',cc:13,min:0,max:127,source:'you'}]})}
+ const wz=ex('Waza');if(wz){const ctl=[],groups={},one=s=>{const m=[...(s.down||[]),...(s.up||[])];return m.length===1&&m[0].type==='sysex'?m[0].data:null};
+  for(const p of wz.pages)for(const b of p.buttons){if(isPage(b))continue;const st=(b.short||[]).filter(one);if(!st.length)continue;
+   const g=/^(.+?)\s+(\d+)$/.exec(b.label||'');if(g&&b.short.length===1){(groups[g[1]]=groups[g[1]]||{name:g[1],type:'sysex',values:[],source:'tested'}).values.push({label:b.label,data:one(st[0])});if(!ctl.includes(groups[g[1]]))ctl.push(groups[g[1]]);continue}
+   if(ctl.some(c=>c.name===b.label))continue;ctl.push({name:b.label,type:'sysex',values:st.map(s=>({label:s.label||b.label,data:one(s)})),source:'tested'})}
+  out.push({id:'builtin-waza-air',builtin:true,name:'Boss Waza-Air',preamble:wz.sysex_preamble||[],notes:'Roland SysEx, device ID 00. Needs a Bluetooth MIDI adapter (for example a CME WIDI Master) between the pedal\'s DIN out and the headphones. From the Waza-Air example, which works on hardware.',controls:ctl})}
+ return out}
+const devForFile=d=>{const o={format:'captainsmate-device',version:1,...d};delete o.id;delete o.builtin;return o};
+function devExport(list){if(list.length===1)download(slug(list[0].name)+'.device.json',devForFile(list[0]));else download('captainsmate-devices.json',{format:'captainsmate-devices',version:1,devices:list.map(devForFile)})}
+/** Adds devices from a file, a backup or a reply. Returns how many were added. */
+function devImport(list,quiet){let n=0;const key=d=>JSON.stringify({n:d.name,c:d.controls,ch:d.channel||null,p:d.preamble||null});for(const x of list){const r=readDevice(x);if(r.err)continue;if(devList().some(d=>key(readDevice(d).dev||{})===key(r.dev)))continue;const have=new Set(devList().map(d=>d.name));let nm=r.dev.name,k=2;while(have.has(nm))nm=r.dev.name+' '+k++;DEV.items.push({...r.dev,name:nm,id:libId()});n++}
+ if(n){devSave();render()}if(!quiet)toast(n?'Added '+n+' device'+(n===1?'':'s')+'.':'No usable device in that file.');return n}
+/** Checks a device from any source and returns {dev, problems} or {err}. */
+function readDevice(d){if(!d||typeof d!=='object')return{err:'there was no device in it'};const P=[];
+ const n=(v,lo,hi)=>{const x=typeof v==='number'?v:parseFloat(v);return isFinite(x)?Math.max(lo,Math.min(hi,Math.round(x))):null};
+ const hex=v=>{const b=String(Array.isArray(v)?v.join(' '):v||'').replace(/0x/gi,'').replace(/[,\s]+/g,' ').trim().split(' ').filter(Boolean);return b.length&&b.every(x=>/^[0-9a-f]{1,2}$/i.test(x))?b.map(x=>x.toUpperCase().padStart(2,'0')).join(' '):null};
+ const dev={name:String(d.name||'').trim().slice(0,40),controls:[]};if(!dev.name)return{err:'the device has no name'};
+ if(d.channel!=null&&d.channel!=='')dev.channel=n(d.channel,1,16);if(d.notes)dev.notes=String(d.notes).slice(0,600);
+ if(Array.isArray(d.preamble)){dev.preamble=d.preamble.map(hex).filter(Boolean);if(!dev.preamble.length)delete dev.preamble}
+ for(const c of(Array.isArray(d.controls)?d.controls:[]).slice(0,80)){if(!c||typeof c!=='object')continue;const name=String(c.name||'').trim().slice(0,24);if(!name){P.push('a control with no name was left out');continue}
+  let t=String(c.type||'cc').toLowerCase();t={control_change:'cc',program_change:'pc',program:'pc',note_on:'note'}[t]||t;if(!['cc','pc','note','sysex'].includes(t)){P.push(name+': "'+c.type+'" is not a message the pedal sends');continue}
+  const o={name,type:t,source:SRC[c.source]?c.source:'memory'};if(c.url)o.url=String(c.url).slice(0,300);if(c.tip)o.tip=String(c.tip).slice(0,120);
+  if(t==='cc'){o.cc=n(c.cc??c.number,0,127);if(o.cc==null){P.push(name+' has no CC number, so it was left out');continue}}
+  if(t==='note'){o.note=typeof c.note==='string'&&/[a-g]/i.test(c.note)?(()=>{const m=/^\s*([A-G])\s*([#b]?)\s*(-?\d)\s*$/i.exec(c.note);return m?(+m[3]+1)*12+NOTE_SEMI[m[1].toUpperCase()]+(m[2]==='#'?1:m[2]?-1:0):null})():n(c.note??c.number,0,127);if(o.note==null){P.push(name+' has no note number, so it was left out');continue}}
+  if(Array.isArray(c.values)&&c.values.length){o.values=[];for(const v of c.values.slice(0,40)){const label=String((v&&v.label)??'').trim().slice(0,16);
+    if(t==='sysex'){const h=hex(v&&v.data);if(!h){P.push(name+' '+label+': the SysEx is not hex bytes');continue}o.values.push({label:label||name,data:h})}
+    else{const x=n(v&&v.value,0,127);if(x==null){P.push(name+' '+label+': no value');continue}o.values.push({label:label||String(x),value:x})}}
+   if(!o.values.length)delete o.values}
+  else if(t==='sysex'&&c.data){const h=hex(c.data);if(h)o.values=[{label:name,data:h}]}
+  if(!o.values&&t!=='sysex'){o.min=n(c.min,0,127)??0;o.max=n(c.max,0,127)??127;if(o.min>o.max)[o.min,o.max]=[o.max,o.min]}
+  if(t==='sysex'&&!o.values){P.push(name+' has no SysEx, so it was left out');continue}
+  dev.controls.push(o)}
+ if(!dev.controls.length)return{err:'none of its controls could be used'+(P.length?' ('+P[0]+')':'')};
+ return{dev,problems:P}}
+function msgName(c){return c.type==='cc'?'CC '+c.cc:c.type==='note'?'note '+c.note:c.type==='pc'?'PC':'SysEx'}
+/** The menu entries one control offers: one per named value, or one for a range. */
+function devOpts(d,c){const ch=d.channel&&d.channel!==(+cfg.midi_channel||1)&&c.type!=='sysex'?{channel:d.channel}:{},chk=c.source==='memory'?' (check)':'';
+ if(c.values)return c.values.map(v=>({text:c.name+': '+v.label+(c.type==='sysex'?'':' ('+msgName(c)+(c.type==='pc'?' ':' = ')+v.value+')')+chk,
+  msg:c.type==='sysex'?{type:'sysex',data:v.data}:c.type==='pc'?{type:'pc',program:v.value,...ch}:c.type==='note'?{type:'note',note:c.note,velocity:v.value||127,...ch}:{type:'cc',cc:c.cc,value:v.value,...ch}}));
+ if(c.type==='pc')return[{text:c.name+' (PC '+c.min+' to '+c.max+')'+chk,msg:{type:'pc',program:c.min,...ch}}];
+ if(c.type==='note')return[{text:c.name+' (note '+c.note+')'+chk,msg:{type:'note',note:c.note,velocity:127,...ch}}];
+ return[{text:c.name+' ('+msgName(c)+', '+c.min+' to '+c.max+')'+chk,msg:{type:'cc',cc:c.cc,value:c.max,...ch}}]}
+/** The "+ from device" menu under every message list in the key editor. */
+function devPick(path){const L=devList();if(!L.length)return'';
+ return`<select class="devpick" data-devp="${path}" title="Add a message from one of your devices (Devices button at the top)"><option value="">+ from device</option>${L.map(d=>`<optgroup label="${esc(d.name)}">${d.controls.flatMap((c,ci)=>devOpts(d,c).map((o,vi)=>`<option value="${esc(d.id)}|${ci}|${vi}">${esc(o.text)}</option>`)).join('')}</optgroup>`).join('')}</select>`}
+document.addEventListener('change',e=>{const el=e.target;if(!el.dataset||!el.dataset.devp||!el.value)return;const [id,ci,vi]=el.value.split('|'),d=devById(id);if(!d)return;
+ const o=devOpts(d,d.controls[+ci])[+vi];if(!o)return;snap();const p=el.dataset.devp,l=gp(cfg,p)||(sp(cfg,p,[]),gp(cfg,p));l.push(JSON.parse(JSON.stringify(o.msg)));
+ let extra='';if(o.msg.type==='sysex'&&d.preamble&&d.preamble.length&&!(cfg.sysex_preamble&&cfg.sysex_preamble.length)){cfg.sysex_preamble=d.preamble.slice();extra=' Also set the SysEx preamble '+d.name+' needs.'}
+ render();schedulePush();toast('Added '+o.text.replace(' (check)','')+'.'+extra+(d.controls[+ci].source==='memory'?' This one is from the model\'s memory, so check it on the device.':''))});
+/** Lines for the build prompt, so the model uses checked numbers instead of recalling them. */
+function devPromptBlock(d){const own=+cfg.midi_channel||1;
+ return['THE DEVICE: '+d.name+', from a profile I keep. Use these messages for it, with exactly these numbers. Ones marked "from memory" are not checked yet, so list any you use in "unverified". If I ask for something that is not here, say so in part 1 instead of guessing a number.'
+  +(d.channel?' It listens on MIDI channel '+d.channel+(d.channel!==own?', so give each of its messages (except SysEx) "channel":'+d.channel:'')+'.':''),
+  ...d.controls.map(c=>'- '+c.name+': '+(c.type==='pc'?'program change':msgName(c))+(c.values?', '+c.values.map(v=>v.label+'='+(c.type==='sysex'?'"'+v.data+'"':v.value)).join(', '):c.type==='cc'||c.type==='pc'?' '+c.min+'-'+c.max:'')+(c.tip?' ('+c.tip+')':'')+(c.source==='memory'?' (from memory)':'')),
+  ...(d.preamble&&d.preamble.length?['Its SysEx preamble ('+d.preamble.length+' message'+(d.preamble.length>1?'s':'')+') is added to my config for you, so do not set sysex_preamble.']:[]),
+  ...(d.notes?['Notes: '+d.notes]:[]),'']}
+/** After a build, checks every message on the changed keys against the profile, so nothing rests on the model's word alone. */
+function devCheck(report,d){if(!d)return;const out=[],ownCh=+cfg.midi_channel||1,norm=h=>String(h||'').replace(/\s+/g,'').toUpperCase();let sx=false;
+ for(const t of report.touched){const p=cfg.pages[t.pg];if(!p)continue;const keys=t.isNew?p.buttons.map((_,i)=>i):t.keys;
+  for(const k of keys){const b=p.buttons[k];if(!b||isPage(b))continue;const where='Page '+(t.pg+1)+' key '+(k+1)+(b.label?' '+b.label:'');
+   for(const m0 of allMsgs(b)){const m=/^cc_(inc|dec)$/.test(m0.type)?{type:'cc',cc:b.cc}:m0;if(!['cc','pc','note','sysex'].includes(m.type)||m.cc==null&&m.type==='cc')continue;if(m.type==='sysex')sx=true;
+    const c=d.controls.find(c=>c.type===m.type&&(m.type==='cc'?c.cc===m.cc:m.type==='note'?c.note===m.note:m.type==='pc'?true:(c.values||[]).some(v=>norm(v.data)===norm(m.data))));
+    if(!c)out.push(where+': '+(m.type==='sysex'?'a SysEx message':msgName(m))+' is not in the '+d.name+' profile');
+    else if(c.source==='memory')out.push(where+': '+c.name+' is from memory in the profile');
+    if(c&&d.channel&&m.type!=='sysex'&&(m.channel||ownCh)!==d.channel)out.push(where+': sends on channel '+(m.channel||ownCh)+', but '+d.name+' listens on '+d.channel)}}}
+ if(sx&&d.preamble&&d.preamble.length&&!(cfg.sysex_preamble&&cfg.sysex_preamble.length)){cfg.sysex_preamble=d.preamble.slice();render();schedulePush();report.notes.push('Set the SysEx preamble '+d.name+' needs before its first message')}
+ report.unverified=[...new Set([...report.unverified,...out])]}
+/** A device profile request for the LLM. */
+function llmDevicePrompt(name,chart){return['You are writing a MIDI profile for a device, so a PaintAudio MIDI Captain foot controller can control it. The controller sends control change, program change, notes and SysEx on USB MIDI and 5-pin DIN MIDI. It cannot receive.','',
+ 'THE DEVICE: '+(name||'<device name and model here>'),'',
+ ...(chart&&chart.trim()?['ITS MIDI CHART, pasted by me. Treat this as the truth:',chart.trim().slice(0,20000),'']:[]),
+ 'Reply in two parts.','',
+ 'PART 1, plain English, short: which MIDI channel it listens on by default and where to change that, which MIDI input to use (USB, DIN, or TRS and which TRS type), any setting that must be switched on before it accepts MIDI, and where your information comes from. If you can search the web, find the manufacturer\'s MIDI implementation chart or manual first and name the page.','',
+ 'PART 2, the profile as JSON in a fenced code block, in exactly this shape:','```json',
+ '{"format":"captainsmate-device","version":1,"name":"Line 6 HX Stomp","channel":1,"notes":"Set MIDI channel in Global Settings","preamble":[],"controls":[',
+ ' {"name":"Preset","type":"pc","min":0,"max":125,"source":"web","url":"https://..."},',
+ ' {"name":"Snapshot","type":"cc","cc":69,"values":[{"label":"Snap 1","value":0},{"label":"Snap 2","value":1}],"source":"memory"},',
+ ' {"name":"Volume","type":"cc","cc":7,"min":0,"max":127,"source":"chart"},',
+ ' {"name":"Amp","type":"sysex","values":[{"label":"On","data":"F0 .. F7"},{"label":"Off","data":"F0 .. F7"}],"source":"memory"}]}','```','',
+ 'Rules for part 2:',
+ '- Only what someone would want from a footswitch or an expression pedal: presets, scenes or snapshots, effects on and off, tap tempo, tuner, looper, volume and expression targets. At most 40 controls.',
+ '- "type" is cc, pc, note (with "note": 0-127) or sysex. A switch gets both its values, for example Off=0 and On=127. A knob gets "min" and "max" instead of values.',
+ '- "source" is "chart" (from the chart I pasted), "web" (from a page you read, put its address in "url") or "memory". Never invent a number. If you are not sure of one, leave that control out and say so in part 1.',
+ '- Name controls and values the way the device names them, 24 characters at most for a control and 16 for a value.',
+ '- "channel" is its default receive channel. Leave it out if it listens on every channel.',
+ '- "preamble" is SysEx it needs once before it accepts other SysEx. It is almost always empty.',
+ '- Put nothing but the JSON inside the code block.'].join('\n')}
+
+// ---- Devices dialog (it shares the LLM dialog's box)
+function devEditor(d){const w=JSON.parse(JSON.stringify(d));w.controls=w.controls||[];const el=hh('div',{class:'deved'});
+ const valText=c=>c.values?c.values.map(v=>v.label+'='+(c.type==='sysex'?v.data:v.value)).join(', '):c.type==='sysex'?'':(c.min??0)+'-'+(c.max??127);
+ function setVals(c,t,box){t=t.trim();box.classList.remove('bad');box.title='';delete c.values;delete c.min;delete c.max;
+  const r=/^(\d+)\s*-\s*(\d+)$/.exec(t);if(r&&c.type!=='sysex'){c.min=Math.min(127,+r[1]);c.max=Math.min(127,+r[2]);return}
+  if(!t){if(c.type!=='sysex'){c.min=0;c.max=127}return}
+  const vals=t.split(',').map(x=>x.trim()).filter(Boolean).map(x=>{const i=x.indexOf('=');return i<0?{label:x,raw:x}:{label:x.slice(0,i).trim(),raw:x.slice(i+1).trim()}});
+  const bad=vals.find(v=>c.type==='sysex'?!/^([0-9a-f]{1,2}\s*)+$/i.test(v.raw):!/^\d+$/.test(v.raw)||+v.raw>127);
+  if(bad){box.classList.add('bad');box.title='"'+bad.raw+'" is not '+(c.type==='sysex'?'hex bytes':'a number 0 to 127');}
+  c.values=vals.map(v=>c.type==='sysex'?{label:v.label,data:v.raw.toUpperCase()}:{label:v.label,value:Math.min(127,parseInt(v.raw,10)||0)})}
+ function draw(){el.textContent='';
+  const nm=hh('input',{type:'text',value:w.name||'',maxlength:'40',placeholder:'Device name','aria-label':'Device name'});nm.oninput=()=>w.name=nm.value;
+  const ch=hh('input',{type:'number',min:'1',max:'16',value:w.channel??'',placeholder:'any',style:'width:70px;flex:none','aria-label':'MIDI channel it listens on'});ch.oninput=()=>w.channel=ch.value===''?null:Math.max(1,Math.min(16,+ch.value));
+  const nt=hh('textarea',{class:'llmta',rows:'2',placeholder:'Notes, for example where to set its MIDI channel','aria-label':'Notes'});nt.value=w.notes||'';nt.oninput=()=>w.notes=nt.value;
+  const pre=hh('input',{type:'text',value:(w.preamble||[]).join(', '),placeholder:'Usually empty. SysEx sent once before the others, comma between messages','aria-label':'SysEx preamble'});pre.onchange=()=>w.preamble=pre.value.split(',').map(x=>x.trim()).filter(Boolean);
+  const rows=w.controls.map((c,i)=>{const n=hh('input',{type:'text',value:c.name||'',maxlength:'24','aria-label':'Control name'});n.oninput=()=>c.name=n.value;
+   const t=hh('select',{'aria-label':'Message type'},['cc','pc','note','sysex'].map(x=>hh('option',{value:x,selected:c.type===x},x==='sysex'?'SysEx':x.toUpperCase())));t.onchange=()=>{c.type=t.value;if(c.type==='sysex'||c.type==='pc'){delete c.cc;delete c.note}draw()};
+   const num=hh('input',{type:'number',min:'0',max:'127',value:c.type==='note'?(c.note??''):(c.cc??''),disabled:c.type==='pc'||c.type==='sysex',style:'width:58px','aria-label':'CC or note number'});num.oninput=()=>{const v=num.value===''?null:Math.max(0,Math.min(127,+num.value));if(c.type==='note')c.note=v;else c.cc=v};
+   const v=hh('input',{type:'text',value:valText(c),placeholder:c.type==='sysex'?'On=F0 .. F7, Off=F0 .. F7':'Off=0, On=127   or   0-127','aria-label':'Values'});v.onchange=()=>setVals(c,v.value,v);
+   const s=hh('select',{'aria-label':'Where this came from'},Object.keys(SRC).map(k=>hh('option',{value:k,selected:c.source===k},SRC[k])));s.onchange=()=>{c.source=s.value;tr.classList.toggle('mem',c.source==='memory')};
+   const tr=hh('tr',{class:c.source==='memory'?'mem':null},hh('td',{},n),hh('td',{},t),hh('td',{},num),hh('td',{},v),hh('td',{},s),hh('td',{},hh('button',{type:'button',class:'x',title:'Remove this control',onclick:()=>{w.controls.splice(i,1);draw()}},'✕')));return tr});
+  el.append(hh('div',{class:'row'},hh('label',{},'Name'),nm,hh('label',{style:'width:auto;margin-left:8px'},'Channel'),ch),nt,
+   hh('div',{class:'devtw'},hh('table',{class:'devt'},hh('tr',{},['Control','Type','No.','Values','Source',''].map(x=>hh('th',{},x))),rows)),
+   hh('button',{type:'button',onclick:()=>{w.controls.push({name:'',type:'cc',cc:null,min:0,max:127,source:'you'});draw();const ins=el.querySelectorAll('.devt tr:last-child input');ins[0]&&ins[0].focus()}},'+ control'),
+   hh('details',{class:'llmd'},hh('summary',{},'SysEx preamble'),pre))}
+ draw();return{el,get:()=>w}}
+/** Edit or review one device. `d` without an id is new (from the LLM, a paste, or by hand). */
+function devEdit(d,back,words,sources){const box=llmBox();box.textContent='';const ed=devEditor(d),status=hh('p',{class:'hint llmst'}),isNew=!d.id;
+ const mem=(d.controls||[]).filter(c=>c.source==='memory').length;
+ box.classList.add('wide');box.append(...[hh('h2',{},isNew?'New device':'Edit '+d.name),
+  words?llmWords(words):null,
+  sources&&sources.length?hh('details',{class:'llmd'},hh('summary',{},'Pages it read ('+sources.length+')'),hh('ul',{},sources.slice(0,10).map(s=>hh('li',{},hh('a',{href:s.url,target:'_blank',rel:'noopener'},s.title||s.url))))):null,
+  hh('p',{class:'hint'},'Check each line against the device\'s manual or by trying it. Values are Name=number pairs separated by commas, or a range like 0-127. Rows in yellow came from the model\'s memory: change their source once you have checked them.'+(mem?' '+mem+' row'+(mem>1?'s':'')+' to check here.':'')),
+  ed.el,status,
+  hh('div',{class:'r'},hh('button',{type:'button',onclick:()=>devManager(back)},'Cancel'),
+   !isNew?hh('button',{type:'button',onclick:()=>{if(!confirm('Delete "'+d.name+'" from your devices?'))return;DEV.items=DEV.items.filter(x=>x.id!==d.id);devSave();render();devManager(back)}},'Delete'):null,
+   hh('button',{type:'button',class:'pri',onclick:()=>{const r=readDevice(ed.get());if(r.err){status.textContent='Not saved: '+r.err+'.';return}
+    if(isNew){const have=new Set(devList().map(x=>x.name));let nm=r.dev.name,k=2;while(have.has(nm))nm=r.dev.name+' '+k++;DEV.items.push({...r.dev,name:nm,id:libId()});if(typeof llmS!=='undefined')llmS.dev=DEV.items[DEV.items.length-1].id}
+    else{const i=DEV.items.findIndex(x=>x.id===d.id);DEV.items[i]={...r.dev,id:d.id}}
+    devSave();render();toast('Saved '+r.dev.name+(r.problems.length?'. Left out: '+r.problems.slice(0,2).join('; '):'.'));devManager(back)}},isNew?'Save device':'Save'))].filter(Boolean));
+ llmOpen()}
+function devManager(back){const box=llmBox();box.textContent='';box.classList.add('wide');const c=llmCfg(),keyed=!!(c&&(c.key||c.provider==='custom'));
+ const name=hh('input',{type:'text',placeholder:'Device to add, for example Line 6 HX Stomp','aria-label':'Device to add'});name.value=llmS.devName||'';name.oninput=()=>llmS.devName=name.value;
+ const chart=hh('textarea',{class:'llmta',rows:'4',placeholder:'Optional, and the most reliable: paste its MIDI implementation chart from the manual.','aria-label':'MIDI chart'});chart.value=llmS.chart;chart.oninput=()=>llmS.chart=chart.value;
+ const chartBox=hh('details',{class:'llmd'},hh('summary',{},'Paste the device\'s MIDI chart'),chart);if(llmS.chart)chartBox.open=true;
+ const status=hh('p',{class:'hint llmst'}),buttons=hh('div',{class:'r'});
+ const file=hh('input',{type:'file',accept:'.json',hidden:true});file.onchange=async()=>{const f=file.files[0];if(!f)return;try{const d=JSON.parse(await f.text());const list=d.format==='captainsmate-devices'?d.devices:d.format==='captainsmate-library'?d.devices||[]:[d];devImport(list);devManager(back)}catch(e){toast('That file is not JSON.')}};
+ let ctrl=null,timer=null;
+ async function lookup(){const nm=name.value.trim();if(!nm)return toast('Name the device first.');ctrl=new AbortController();const started=Date.now(),secs=(c.search!==false&&canSearch(c))?150:90,give=setTimeout(()=>ctrl&&ctrl.abort(),secs*1000);
+  const tick=()=>status.textContent='Asking '+LLM_PROVIDERS[c.provider].name+' about the '+nm+' ('+Math.round((Date.now()-started)/1000)+'s)';tick();timer=setInterval(tick,1000);
+  buttons.textContent='';buttons.append(hh('button',{type:'button',onclick:()=>ctrl&&ctrl.abort()},'Cancel'));
+  llmStop=()=>{clearInterval(timer);clearTimeout(give);if(ctrl){ctrl.abort();ctrl=null}};
+  try{const r=await askLlm(c,[{role:'user',text:llmDevicePrompt(nm,llmS.chart)}],ctrl.signal);llmStop();const rd=readDevice(extractJson(r.text));if(rd.err)throw new Error('Could not use the reply: '+rd.err+'. Try again, or pick a stronger model in LLM settings.');
+   devEdit(rd.dev,back,(r.dropped?'(The provider would not search the web with this key, so this is from memory.)\n\n':'')+llmProse(r.text),r.sources)}
+  catch(e){llmStop();status.textContent=e.name==='AbortError'?'Cancelled, or no reply in time.':e.message;drawButtons()}}
+ function pasteView(){const area=hh('textarea',{class:'llmta',rows:'10',placeholder:'Paste the whole reply, explanation and all.','aria-label':'An LLM reply'}),st=hh('p',{class:'hint llmst'});box.textContent='';
+  box.append(hh('h2',{},'Paste a device from an LLM'),area,st,hh('div',{class:'r'},hh('button',{type:'button',onclick:()=>devManager(back)},'Back'),hh('button',{type:'button',class:'pri',onclick:()=>{const t=area.value,rd=readDevice(extractJson(t));if(rd.err){st.textContent='Could not use that reply: '+rd.err+'.';return}devEdit(rd.dev,back,llmProse(t))}},'Check this device')));area.focus()}
+ function drawButtons(){buttons.textContent='';buttons.append(hh('button',{type:'button',onclick:()=>back?back():llmClose()},back?'Back':'Close'),
+  hh('button',{type:'button',onclick:()=>devEdit({name:name.value.trim(),controls:[{name:'',type:'cc',cc:null,min:0,max:127,source:'you'}]},back)},'Add by hand'),
+  keyed?hh('button',{type:'button',class:'pri',onclick:lookup},'Look up with LLM'):hh('button',{type:'button',class:'pri',onclick:()=>llmSettings(()=>devManager(back))},'Add an LLM key'))}
+ const missing=builtinDevices().filter(b=>!devList().some(d=>d.id===b.id));
+ const list=devList().length?hh('div',{},devList().map(d=>{const mem=d.controls.filter(x=>x.source==='memory').length;
+   return hh('div',{class:'il devrow'},hh('span',{style:'flex:1'},hh('b',{},d.name),hh('small',{},d.controls.length+' control'+(d.controls.length===1?'':'s')+(d.channel?' · channel '+d.channel:'')+(mem?' · '+mem+' from memory, check them':''))),
+    hh('button',{type:'button',onclick:()=>devEdit(d,back)},'Edit'),hh('button',{type:'button',onclick:()=>devExport([d])},'Export'))})):hh('p',{class:'hint'},'No devices yet.');
+ box.append(hh('h2',{},'My devices'),hh('p',{},'A device is a checked list of the MIDI messages it understands. The key editor\'s "+ from device" menu and the LLM helper use it instead of guessing numbers. Devices are kept in this browser, and Back up all in the config bar saves them with your configs.'),
+  list,hh('h4',{},'Add a device'),name,chartBox,status,buttons,
+  hh('div',{class:'llmalt'},hh('button',{type:'button',class:'lnk',onclick:async()=>{const t=llmDevicePrompt(name.value.trim(),llmS.chart);try{await navigator.clipboard.writeText(t);status.textContent='Prompt copied. Paste it into any chat LLM, then bring the reply back with Paste a reply.'}catch(e){download('captainsmate-device-prompt.txt',t)}}},'Copy the prompt instead'),
+   hh('button',{type:'button',class:'lnk',onclick:pasteView},'Paste a reply'),hh('button',{type:'button',class:'lnk',onclick:()=>file.click()},'Import a file'),
+   devList().length>1?hh('button',{type:'button',class:'lnk',onclick:()=>devExport(devList())},'Export all'):null,
+   missing.length?hh('button',{type:'button',class:'lnk',onclick:()=>{DEV.items.push(...missing);devSave();render();devManager(back)}},'Restore built-in devices'):null,
+   hh('button',{type:'button',class:'lnk',onclick:()=>llmSettings(()=>devManager(back))},'LLM settings'),file));
+ drawButtons();llmOpen()}
+$('#bDevs').onclick=()=>devManager();
+// every render also saves the config into the library
+const _rL=render;render=function(){_rL();libTouch()};
+devInit();libInit();
 
 render();
 </script></body></html>
